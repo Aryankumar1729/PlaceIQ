@@ -17,7 +17,7 @@ Every placement season, 2M+ Indian BTech students face the same chaos — interv
 
 ## What It Does
 
-- **500+ real PYQs** scraped from GeeksforGeeks and LeetCode Discuss across 15+ companies
+- **1500+ real PYQs** scraped from GeeksforGeeks and LeetCode Discuss across 15+ companies
 - **Company-specific prep targets** — set a target for Google, Wipro, Atlassian separately and track progress per company
 - **AI-powered chat** using Groq (Llama 3.3 70B) to answer placement-related queries instantly
 - **Job application tracker** — track every drive, OA, interview round, and offer in one place
