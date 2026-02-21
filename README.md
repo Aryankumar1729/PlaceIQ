@@ -1,23 +1,127 @@
-# PlaceIQ — Campus Placement Intelligence Platform
+# PlaceIQ 🎯
 
-> Real placement data. Company-specific PYQs. AI-powered interview prep. Built for Indian BTech students.
+> Campus placement intelligence platform built for Indian BTech students tired of scattered WhatsApp forwards and outdated PDFs.
+
+![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=flat-square&logo=next.js)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-blue?style=flat-square&logo=postgresql)
+![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?style=flat-square&logo=prisma)
+![Groq](https://img.shields.io/badge/AI-Groq%20%2F%20Llama%203.3%2070B-orange?style=flat-square)
 
 ---
 
-## Quick Start
+## The Problem
 
-```bash
-# 1. Install dependencies
-npm install
+Every placement season, 2M+ Indian BTech students face the same chaos — interview questions scattered across 50 GFG tabs, company data buried in WhatsApp groups, and zero way to track which companies they've applied to. PlaceIQ fixes this.
 
-# 2. Set up environment
-cp .env.local.example .env.local
-# Fill in your GEMINI_API_KEY
+---
 
-# 3. Run dev server
-npm run dev
-# → http://localhost:3000
+## What It Does
+
+- **500+ real PYQs** scraped from GeeksforGeeks and LeetCode Discuss across 15+ companies
+- **Company-specific prep targets** — set a target for Google, Wipro, Atlassian separately and track progress per company
+- **AI-powered chat** using Groq (Llama 3.3 70B) to answer placement-related queries instantly
+- **Job application tracker** — track every drive, OA, interview round, and offer in one place
+- **Smart search** — search "arrays" → prep page with DSA questions, search "TCS" → company page
+- **JWT authentication** — secure register/login with bcrypt password hashing
+- **Real-time dashboard** — live company count, PYQ count, and student count from actual database
+
+---
+
+## Companies Covered
+
+| Company | PYQs | Type |
+|---------|------|------|
+| Tata Consultancy Services | 82+ | IT Services |
+| Infosys | 47+ | IT Services |
+| Cognizant | 104+ | IT Services |
+| Accenture | 89+ | IT Services |
+| HCL Technologies | 62+ | IT Services |
+| Google India | 97+ | Product |
+| Amazon | Scraping | Product |
+| Microsoft | Scraping | Product |
+| JP Morgan | Scraping | BFSI |
+| Goldman Sachs | Scraping | BFSI |
+| Natwest Group | Scraping | BFSI |
+| Wipro | Scraping | IT Services |
+| Atlassian | Scraping | Product |
+| Uber | Scraping | Product |
+| Visa | Scraping | Fintech |
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 14 (App Router), TypeScript, Tailwind CSS |
+| Backend | Next.js API Routes (serverless) |
+| Database | PostgreSQL (Neon serverless) |
+| ORM | Prisma 5.22 |
+| Auth | Custom JWT (jsonwebtoken + bcrypt) |
+| AI | Groq API — Llama 3.3 70B |
+| Scraper | Python (BeautifulSoup, Requests, psycopg2) |
+| Deployment | Vercel + Neon |
+| Fonts | Syne (headings) + DM Sans (body) |
+
+---
+
+## Features In Detail
+
+### 🔐 Authentication
+- Email + password registration with bcrypt hashing (12 rounds)
+- JWT tokens stored in httpOnly cookies (7-day expiry)
+- Middleware-based route protection
+- Profile management with college, branch, CGPA, grad year
+
+### 📚 Interview Prep
+- 500+ questions categorized as DSA, Aptitude, HR, Technical
+- Difficulty tagging (Easy / Medium / Hard)
+- Pagination with "Load More" (20 questions per page)
+- Filter by category + search by topic simultaneously
+- Company-specific question filtering
+
+### 🎯 Prep Targets
+- Set prep targets per company (Google OA, Wipro OA separately)
+- Track questions marked as done per company
+- Progress bar on dashboard (12/97 questions · 12%)
+- Visual progress — color changes green as you complete more
+
+### 🏢 Company Intelligence
+- Dedicated company detail pages with round breakdowns
+- CTC data, tier classification, campus visit info
+- Topic distribution (DSA % / Aptitude % / HR %)
+- Similar companies section
+
+### 📋 Job Tracker
+- Add applications with company, role, CTC, status
+- Status pipeline: Applied → OA → Interview → Offer / Rejected
+- Stats row showing count per status
+- Expandable cards with notes and next steps
+
+### 🤖 AI Chat
+- Powered by Groq (Llama 3.3 70B) — fastest inference available
+- Placement-context aware responses
+- Floating chat widget accessible from all pages
+
+---
+
+## Data Pipeline
+
 ```
+GFG / LeetCode Discuss
+        ↓
+Python Scraper (BeautifulSoup + GraphQL)
+        ↓
+Question extraction + classification
+        ↓
+PostgreSQL (Neon) via psycopg2
+        ↓
+Prisma ORM → Next.js API Routes
+        ↓
+React Frontend
+```
+
+Scraper auto-classifies questions into DSA / Aptitude / HR / Technical and tags difficulty based on keyword analysis. Unique constraint on `(question, companyId)` prevents duplicates on re-runs.
 
 ---
 
@@ -25,180 +129,99 @@ npm run dev
 
 ```
 placeiq/
-├── app/                        # Next.js App Router pages
-│   ├── layout.tsx              # Root layout (Navbar + Sidebar + ChatDrawer)
-│   ├── dashboard/page.tsx      # Main dashboard
-│   ├── prep/page.tsx           # Interview prep + PYQs
-│   ├── tracker/page.tsx        # Application tracker
-│   ├── resume/page.tsx         # Resume scorer
-│   ├── companies/page.tsx      # Company database
-│   └── api/
-│       ├── chat/route.ts       # AI chat endpoint (wire Gemini here)
-│       └── resume/score/route.ts  # Resume scoring endpoint
-│
+├── app/
+│   ├── api/
+│   │   ├── auth/          # register, login, logout, me
+│   │   ├── companies/     # list + detail
+│   │   ├── pyqs/          # paginated questions with search
+│   │   ├── applications/  # job tracker CRUD
+│   │   ├── prep-targets/  # company prep targets
+│   │   ├── progress/      # question completion tracking
+│   │   ├── stats/         # real-time dashboard counts
+│   │   └── chat/          # Groq AI chat
+│   ├── companies/[id]/    # company detail page
+│   ├── dashboard/
+│   ├── prep/
+│   ├── tracker/
+│   └── profile/
 ├── components/
-│   ├── layout/
-│   │   ├── Navbar.tsx
-│   │   └── Sidebar.tsx
-│   ├── ui/
-│   │   ├── HeroSearch.tsx
-│   │   ├── StatsRow.tsx
-│   │   ├── PrepHero.tsx
-│   │   ├── TrackerHero.tsx
-│   │   └── ResumeHero.tsx
-│   ├── cards/
-│   │   ├── CompanyGrid.tsx
-│   │   ├── PYQList.tsx
-│   │   ├── ApplicationList.tsx
-│   │   ├── ResumeUploader.tsx
-│   │   └── ResumeSampleScore.tsx
-│   └── chat/
-│       └── ChatDrawer.tsx      # Floating AI chat button + slide-in panel
-│
+│   ├── cards/             # PYQList, CompanyGrid, PrepTargets, Tracker
+│   ├── layout/            # Navbar, Sidebar
+│   └── ui/                # PrepHero, HeroSearch, ThemeSwitcher
+├── scraper/
+│   ├── main.py            # orchestrator
+│   ├── scraper.py         # GFG scraper
+│   ├── leetcode_scraper.py # LeetCode Discuss GraphQL scraper
+│   └── db.py              # Neon insert logic
 ├── lib/
-│   └── utils.ts                # cn(), formatCTC(), etc.
-│
-├── types/
-│   └── index.ts                # All TypeScript interfaces
-│
-└── app/globals.css             # Design tokens + custom CSS classes
+│   ├── auth.ts            # JWT + bcrypt helpers
+│   └── prisma.ts          # Prisma client singleton
+└── prisma/
+    ├── schema.prisma
+    └── seed.ts
 ```
 
 ---
 
-## Tech Stack
+## Getting Started
 
-| Layer | Tech |
-|-------|------|
-| Framework | Next.js 14 (App Router) |
-| Styling | Tailwind CSS + custom design tokens |
-| Fonts | Syne (headings) + DM Sans (body) |
-| AI | Gemini API via `@ai-sdk/google` |
-| Charts | Recharts |
-| Icons | Lucide React |
-| DB (next) | PostgreSQL + Prisma |
-| Scraper (next) | Python + BeautifulSoup/Playwright |
+```bash
+# Clone
+git clone https://github.com/yourusername/placeiq.git
+cd placeiq
 
----
+# Install
+npm install
 
-## Wiring the Real AI Chat
+# Environment variables
+cp .env.example .env.local
+# Fill in DATABASE_URL, JWT_SECRET, GROQ_API_KEY
 
-The mock AI in `app/api/chat/route.ts` is ready to swap:
+# Database
+npx prisma migrate dev
+npx prisma db seed
 
-```typescript
-// Install: npm install @google/generative-ai
-import { GoogleGenerativeAI } from "@google/generative-ai";
+# Run scraper
+cd scraper
+pip install -r requirements.txt
+python main.py
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+# Start dev server
+npm run dev
+```
 
-export async function POST(req: NextRequest) {
-  const { messages } = await req.json();
-  
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-  const chat = model.startChat({
-    history: messages.slice(0, -1).map((m: any) => ({
-      role: m.role === "user" ? "user" : "model",
-      parts: [{ text: m.content }],
-    })),
-    systemInstruction: SYSTEM_PROMPT,
-  });
+### Environment Variables
 
-  const result = await chat.sendMessage(messages.at(-1).content);
-  return NextResponse.json({ response: result.response.text() });
-}
+```env
+DATABASE_URL=postgresql://...
+JWT_SECRET=your_secret_here
+GROQ_API_KEY=gsk_...
+NEXTAUTH_URL=http://localhost:3000
 ```
 
 ---
 
-## 8-Week Build Roadmap
+## Roadmap
 
-### Week 1–2: Core UI + Data Layer
-- [x] Next.js scaffold with design system
-- [x] Navbar, Sidebar, all page routes
-- [x] Company cards, PYQ list, tracker, resume scorer UI
-- [x] Floating AI chat drawer
-- [ ] Set up PostgreSQL + Prisma schema
-- [ ] Seed database with 50 companies manually
-
-### Week 3–4: Scraper Pipeline
-- [ ] Python scraper for GeeksforGeeks interview experiences
-- [ ] Parse and clean PYQ data (company, difficulty, category, tags)
-- [ ] Nightly cron job to update database
-- [ ] Admin page to review + verify scraped questions
-
-### Week 5: Real AI Chat
-- [ ] Connect Gemini API to `/api/chat`
-- [ ] Build RAG: embed PYQs → store in pgvector → retrieve on query
-- [ ] Company-specific context injection in system prompt
-- [ ] Stream responses for faster feel
-
-### Week 6: Resume Scorer
-- [ ] PDF/DOCX text extraction (pdf-parse + mammoth)
-- [ ] Keyword matching against real JDs
-- [ ] ATS formatting checker
-- [ ] Score breakdown with actionable suggestions
-
-### Week 7: Polish + Auth
-- [ ] NextAuth with Google login
-- [ ] Save applications to DB
-- [ ] User prep score (based on questions solved)
-- [ ] Mobile responsive tweaks
-
-### Week 8: Launch
-- [ ] Deploy to Vercel (free tier)
-- [ ] Share in college WhatsApp groups
-- [ ] Collect feedback, fix top 3 issues
-- [ ] Add to resume with user count
+- [ ] User-submitted interview experiences (crowdsourced PYQ growth)
+- [ ] Email alerts for upcoming campus drives
+- [ ] AmbitionBox scraper integration
+- [ ] Mobile app (React Native)
+- [ ] College-specific drive calendar
+- [ ] Resume ATS scorer
 
 ---
 
-## Database Schema (Prisma — add next)
+## Why This Exists
 
-```prisma
-model Company {
-  id        String   @id @default(cuid())
-  name      String
-  type      String
-  baseCTC   Float
-  tier      String
-  pyqs      PYQ[]
-  createdAt DateTime @default(now())
-}
-
-model PYQ {
-  id         String   @id @default(cuid())
-  company    Company  @relation(fields: [companyId], references: [id])
-  companyId  String
-  question   String
-  difficulty String
-  category   String
-  tags       String[]
-  askedCount Int      @default(1)
-  lastSeen   DateTime
-  verified   Boolean  @default(false)
-}
-
-model Application {
-  id          String   @id @default(cuid())
-  userId      String
-  companyName String
-  role        String
-  status      String
-  appliedDate DateTime
-  notes       String?
-  createdAt   DateTime @default(now())
-}
-```
+Built this during placement season after watching batchmates scramble through 20 browser tabs trying to find "what does TCS ask in round 2". The data exists — it's just fragmented across the internet. PlaceIQ puts it in one place, organized, searchable, and personalized to your actual shortlists.
 
 ---
 
-## Resume Notes for Interviewers
+## License
 
-When explaining this project:
+MIT — use it, fork it, build on it.
 
-1. **The problem**: Tier-2 college students have no aggregated, reliable source of company-specific prep data. They guess.
-2. **The solution**: Scraped and structured 14k+ real interview questions by company, role, and topic. Added AI layer for personalized prep.
-3. **Technical depth**: RAG pipeline on PYQ database, NLP-based resume scoring, full-stack Next.js with TypeScript.
-4. **Real impact**: X students used it before their drives. [Fill in actual number]
+---
 
-Be ready to answer: "How is this different from GFG/Internshala?" → Answer: GFG has questions but no company-specific intelligence or personalization. We aggregate, clean, and add AI reasoning on top.
+*Built by a BTech student, for BTech students.*
