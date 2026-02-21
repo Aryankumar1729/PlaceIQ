@@ -216,7 +216,7 @@ export default function TrackerPage() {
           {applications.map((app) => (
             <div
               key={app.id}
-              className="card p-5 animate-fade-up hover:border-border-2 transition-all"
+              className="card p-5 animate-fade-up hover:border-border-2 transition-all overflow-visible"
             >
               <div className="flex items-center justify-between">
                 {/* Left */}
@@ -242,7 +242,7 @@ export default function TrackerPage() {
                     </button>
 
                     {/* pt-2 = invisible bridge between button and dropdown */}
-                    <div className="absolute right-0 top-6 pt-2 w-36 z-20 hidden group-hover:block">
+                    <div className="absolute right-0 top-6 pt-2 w-36 z-50 hidden group-hover:block">
                       <div
                         className="rounded-xl border border-border-2 shadow-card overflow-hidden"
                         style={{ background: "var(--surface)" }}

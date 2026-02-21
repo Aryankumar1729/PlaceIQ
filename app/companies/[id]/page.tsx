@@ -37,6 +37,7 @@ const difficultyDot: Record<string, string> = {
   Hard: "bg-accent-pink",
 };
 
+
 const roundData: Record<string, {
   rounds: { title: string; duration: string; difficulty: string; tags: string[] }[]
 }> = {
@@ -74,6 +75,7 @@ export default function CompanyDetailPage() {
   const [pyqs, setPyqs] = useState<PYQ[]>([]);
   const [similarCompanies, setSimilarCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
+  const [targetAdded, setTargetAdded] = useState(false);
 
   useEffect(() => {
     const id = params.id as string;
@@ -83,7 +85,7 @@ export default function CompanyDetailPage() {
       .then((companyData) => {
         setCompany(companyData);
 
-        // Use company NAME not id for PYQs
+        // Fetch PYQs using company name
         fetch(`/api/pyqs?company=${encodeURIComponent(companyData.name)}&page=1`)
           .then((r) => r.json())
           .then((pyqData) => setPyqs(pyqData.pyqs?.slice(0, 5) ?? []));
@@ -93,6 +95,14 @@ export default function CompanyDetailPage() {
           .then((r) => r.json())
           .then((data) => {
             setSimilarCompanies(data.filter((c: Company) => c.id !== companyData.id).slice(0, 3));
+          });
+
+        // Check if already in prep targets
+        fetch("/api/prep-targets")
+          .then((r) => r.json())
+          .then((targets) => {
+            const exists = targets.some((t: any) => t.companyId === companyData.id);
+            setTargetAdded(exists);
           });
 
         setLoading(false);
@@ -174,13 +184,37 @@ export default function CompanyDetailPage() {
           >
             🎯 Start Prep →
           </button>
-          <Link
-            href="/tracker"
-            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-border-2 text-sm text-muted hover:text-[var(--text)] hover:border-accent/40 transition-all"
+          <button
+            onClick={async () => {
+              // Add to job tracker
+              await fetch("/api/applications", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  companyName: company.name,
+                  role: "SDE",
+                  status: "Applied",
+                  ctc: `${company.baseCTC}L`,
+                }),
+              });
+
+              // Add to prep targets simultaneously
+              await fetch("/api/prep-targets", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ companyId: company.id }),
+              });
+
+              setTargetAdded(true);
+            }}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm transition-all ${targetAdded
+                ? "border-accent-green/40 text-accent-green bg-accent-green/10"
+                : "border-border-2 text-muted hover:text-[var(--text)] hover:border-accent/40"
+              }`}
           >
             <BookmarkPlus size={15} />
-            Add to Tracker
-          </Link>
+            {targetAdded ? "✅ Added to Tracker" : "Add to Tracker"}
+          </button>
         </div>
       </div>
 
