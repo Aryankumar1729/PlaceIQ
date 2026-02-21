@@ -215,13 +215,6 @@ NEXTAUTH_URL=http://localhost:3000
 ## Why This Exists
 
 Built this during placement season after watching batchmates scramble through 20 browser tabs trying to find "what does TCS ask in round 2". The data exists — it's just fragmented across the internet. PlaceIQ puts it in one place, organized, searchable, and personalized to your actual shortlists.
-
----
-
-## License
-
-MIT — use it, fork it, build on it.
-
 ---
 
 *Built by a BTech student, for BTech students.*
