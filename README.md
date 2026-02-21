@@ -37,15 +37,15 @@ Every placement season, 2M+ Indian BTech students face the same chaos — interv
 | Accenture | 89+ | IT Services |
 | HCL Technologies | 62+ | IT Services |
 | Google India | 97+ | Product |
-| Amazon | Scraping | Product |
-| Microsoft | Scraping | Product |
-| JP Morgan | Scraping | BFSI |
-| Goldman Sachs | Scraping | BFSI |
-| Natwest Group | Scraping | BFSI |
-| Wipro | Scraping | IT Services |
-| Atlassian | Scraping | Product |
-| Uber | Scraping | Product |
-| Visa | Scraping | Fintech |
+| Amazon | 50+ | Product |
+| Microsoft | 150+ | Product |
+| JP Morgan | 60+ | BFSI |
+| Goldman Sachs | 90+ | BFSI |
+| Natwest Group | 20+ | BFSI |
+| Wipro | 60+ | IT Services |
+| Atlassian | 90+ | Product |
+| Uber | 50+ | Product |
+| Visa | 120+ | Fintech |
 
 ---
 
