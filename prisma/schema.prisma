@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id          String   @id @default(cuid())
+  name        String
+  shortName   String
+  type        String
+  baseCTC     Float
+  tier        String
+  visitsTier2 Boolean  @default(false)
+  rounds      Int      @default(3)
+  pyqs        PYQ[]
+  createdAt   DateTime @default(now())
+  prepTargets      PrepTarget[]
+  @@unique([name])
+}
+
+model PYQ {
+  id         String   @id @default(cuid())
+  company    Company  @relation(fields: [companyId], references: [id])
+  companyId  String
+  question   String
+  difficulty String
+  category   String
+  tags       String[]
+  askedCount Int      @default(1)
+  lastSeen   DateTime
+  verified   Boolean  @default(false)
+  source     String?
+  createdAt  DateTime @default(now())
+  progress         UserPYQProgress[]
+
+
+  @@unique([question, companyId])
+}
+
+model Application {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName String
+  role        String
+  status      String
+  ctc         String?
+  appliedDate DateTime
+  notes       String?
+  nextStep    String?
+  createdAt   DateTime @default(now())
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  password     String
+  college      String?
+  branch       String?
+  cgpa         Float?
+  gradYear     Int?
+  applications Application[]
+  createdAt    DateTime      @default(now())
+  prepTargets      PrepTarget[]
+  progress         UserPYQProgress[]
+}
+
+model PrepTarget {
+  id        String   @id @default(cuid())
+  userId    String
+  companyId String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, companyId])
+}
+
+model UserPYQProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  pyqId     String
+  companyId String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pyq       PYQ      @relation(fields: [pyqId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, pyqId])
+}

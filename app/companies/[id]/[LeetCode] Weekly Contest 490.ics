@@ -1,0 +1,12 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Tri Tech Computers//node-icalendar//EN
+BEGIN:VEVENT
+DTSTAMP:20260221T163420Z
+UID:LeetCode_weekly-contest-490
+LOCATION:https://leetcode.com/contest/weekly-contest-490
+SUMMARY:[LeetCode] - Weekly Contest 490
+DTSTART:20260222T023000Z
+DTEND:20260222T040000Z
+END:VEVENT
+END:VCALENDAR
