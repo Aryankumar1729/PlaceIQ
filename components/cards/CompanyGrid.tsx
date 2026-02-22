@@ -1,150 +1,113 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 type Company = {
   id: string;
   name: string;
-  short: string;
+  shortName: string;
   type: string;
-  ctc: string;
-  pyqs: number;
+  baseCTC: number;
   rounds: number;
-  barColors: string[];
-  barWidths: string[];
-  barLabel: string;
-  accentClass: string;
-  logoClass: string;
-  topColor: string;
+  visitsTier2: boolean;
+  tier: string;
+  _count: { pyqs: number };
 };
 
-const companies: Company[] = [
-  {
-    id: "tcs",
-    name: "Tata Consultancy Services",
-    short: "TCS",
-    type: "IT Services · Visits 200+ colleges",
-    ctc: "3.6L",
-    pyqs: 847,
-    rounds: 4,
-    barColors: ["#6c63ff", "#ff6584", "#43e97b"],
-    barWidths: ["35%", "40%", "25%"],
-    barLabel: "DSA · Aptitude · Verbal",
-    accentClass: "text-accent",
-    logoClass: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
-    topColor: "from-blue-600 to-blue-400",
-  },
-  {
-    id: "google",
-    name: "Google India",
-    short: "G",
-    type: "Product · Top-tier · Off-campus",
-    ctc: "28L",
-    pyqs: 312,
-    rounds: 5,
-    barColors: ["#6c63ff", "#4285f4", "#43e97b"],
-    barWidths: ["70%", "20%", "10%"],
-    barLabel: "DSA heavy",
-    accentClass: "text-accent-green",
-    logoClass: "bg-blue-400/10 text-blue-300 border border-blue-400/20",
-    topColor: "from-blue-500 to-green-500",
-  },
-  {
-    id: "infosys",
-    name: "Infosys",
-    short: "INF",
-    type: "IT Services · SP + PP tracks",
-    ctc: "6.5L",
-    pyqs: 623,
-    rounds: 3,
-    barColors: ["#6c63ff", "#ff6584", "#43e97b"],
-    barWidths: ["20%", "55%", "25%"],
-    barLabel: "Aptitude heavy",
-    accentClass: "text-accent",
-    logoClass: "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20",
-    topColor: "from-cyan-500 to-blue-500",
-  },
-  {
-    id: "amazon",
-    name: "Amazon",
-    short: "AMZ",
-    type: "E-commerce · SDE roles",
-    ctc: "18L",
-    pyqs: 489,
-    rounds: 4,
-    barColors: ["#6c63ff", "#ff9900", "#43e97b"],
-    barWidths: ["45%", "40%", "15%"],
-    barLabel: "LP + DSA",
-    accentClass: "text-accent-green",
-    logoClass: "bg-orange-500/10 text-orange-400 border border-orange-500/20",
-    topColor: "from-orange-500 to-yellow-400",
-  },
-];
-
 export default function CompanyGrid() {
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/companies")
+      .then((r) => r.json())
+      .then((data) => {
+        // Sort by PYQ count descending, take top 4
+        const sorted = data
+          .sort((a: Company, b: Company) => b._count.pyqs - a._count.pyqs)
+          .slice(0, 4);
+        setCompanies(sorted);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-syne font-bold text-xl">Trending Companies</h2>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="card p-5 h-40 animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="font-syne text-lg font-bold">Trending Companies</h2>
+        <h2 className="font-syne font-bold text-xl">Trending Companies</h2>
         <Link href="/companies" className="text-xs text-accent hover:underline">
           View all →
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 stagger">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {companies.map((c) => (
-          <Link
-            key={c.id}
-            href={`/prep?company=${c.name}`}
-            className="card p-5 block hover:-translate-y-1 hover:shadow-card transition-all duration-200 animate-fade-up group relative overflow-hidden"
-          >
-            {/* Top accent line */}
-            <div
-              className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${c.topColor} opacity-0 group-hover:opacity-100 transition-opacity`}
-            />
-
-            {/* Header */}
+          <div key={c.id} className="card p-5 hover:border-border-2 transition-all">
             <div className="flex items-center gap-3 mb-4">
-              <div
-                className={`w-10 h-10 rounded-xl flex items-center justify-center font-syne font-bold text-sm shrink-0 ${c.logoClass}`}
-              >
-                {c.short}
+              <div className="w-10 h-10 rounded-xl bg-accent/20 border border-accent/30 flex items-center justify-center font-syne font-bold text-xs text-accent">
+                {c.shortName.slice(0, 3)}
               </div>
               <div>
-                <p className="font-syne font-bold text-[15px]">{c.name}</p>
-                <p className="text-xs text-muted mt-0.5">{c.type}</p>
+                <p className="font-syne font-bold text-sm">{c.name}</p>
+                <p className="text-[11px] text-muted">
+                  {c.type} · {c.visitsTier2 ? "Visits 200+ colleges" : "Off-campus"}
+                </p>
               </div>
             </div>
 
-            {/* Stats */}
             <div className="grid grid-cols-3 gap-2 mb-4">
-              {[
-                { val: c.ctc, lbl: "Base CTC", color: c.accentClass },
-                { val: c.pyqs.toString(), lbl: "PYQs", color: "text-accent-green" },
-                { val: `${c.rounds} Rds`, lbl: "Process", color: "text-[var(--text)]" },
-              ].map((s) => (
-                <div key={s.lbl} className="bg-surface2 rounded-lg py-2.5 text-center">
-                  <p className={`font-syne font-bold text-base ${s.color}`}>{s.val}</p>
-                  <p className="text-[10px] text-muted mt-0.5">{s.lbl}</p>
-                </div>
-              ))}
+              <div className="bg-surface2 rounded-lg p-2 text-center">
+                <p className="font-syne font-bold text-sm text-accent">{c.baseCTC}L</p>
+                <p className="text-[10px] text-muted">Base CTC</p>
+              </div>
+              <div className="bg-surface2 rounded-lg p-2 text-center">
+                <p className="font-syne font-bold text-sm text-accent-green">{c._count.pyqs}</p>
+                <p className="text-[10px] text-muted">PYQs</p>
+              </div>
+              <div className="bg-surface2 rounded-lg p-2 text-center">
+                <p className="font-syne font-bold text-sm">{c.rounds} Rds</p>
+                <p className="text-[10px] text-muted">Process</p>
+              </div>
             </div>
 
-            {/* Topic bar */}
-            <div>
-              <div className="flex justify-between text-[11px] text-muted mb-1.5">
-                <span>Topic distribution</span>
-                <span>{c.barLabel}</span>
-              </div>
-              <div className="flex gap-0.5 h-1 rounded-full overflow-hidden bg-surface2">
-                {c.barColors.map((color, i) => (
-                  <div
-                    key={i}
-                    className="h-full rounded-sm"
-                    style={{ width: c.barWidths[i], background: color }}
-                  />
-                ))}
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] text-muted">
+                {c.visitsTier2 ? "✅ Visits Tier-2" : "🎯 Off-campus"}
+              </span>
+              <div className="flex gap-2">
+                <Link
+                  href={`/prep?company=${encodeURIComponent(c.name)}`}
+                  className="text-xs px-3 py-1.5 rounded-xl font-medium transition-all text-white hover:scale-105 hover:shadow-[0_0_12px_rgba(59,130,246,0.6)] active:scale-95"
+                  style={{ background: "#3b82f6" }}
+                >
+                  View PYQs →
+                </Link>
+                <Link
+                  href={`/companies/${c.id}`}
+                  className="text-xs px-3 py-1.5 rounded-xl font-medium transition-all text-white hover:scale-105 hover:shadow-[0_0_12px_rgba(29,78,216,0.6)] active:scale-95"
+                  style={{ background: "#1d4ed8" }}
+                >
+                  View Details
+                </Link>
               </div>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </div>
