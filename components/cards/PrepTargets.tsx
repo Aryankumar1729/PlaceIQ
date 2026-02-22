@@ -67,7 +67,7 @@ export default function PrepTargets() {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 max-h-72 overflow-y-auto pr-1">
           {targets.map((t) => {
             const pct = t.total > 0 ? Math.round((t.done / t.total) * 100) : 0;
             return (

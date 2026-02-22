@@ -16,7 +16,6 @@ const mainLinks = [
   { href: "/companies", label: "Companies", icon: Building2, badge: "248" },
   { href: "/prep", label: "Interview Prep", icon: ClipboardList },
   { href: "/tracker", label: "Job Tracker", icon: BarChart3 },
-  { href: "/submit", label: "Submit Question", icon: PlusCircle },
 ];
 
 const collegeLinks = [
