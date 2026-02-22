@@ -1,5 +1,5 @@
 "use client";
-
+import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -16,6 +16,7 @@ const mainLinks = [
   { href: "/companies", label: "Companies", icon: Building2, badge: "248" },
   { href: "/prep", label: "Interview Prep", icon: ClipboardList },
   { href: "/tracker", label: "Job Tracker", icon: BarChart3 },
+  { href: "/submit", label: "Submit Question", icon: PlusCircle },
 ];
 
 const collegeLinks = [
@@ -67,6 +68,23 @@ export default function Sidebar() {
           )}
         </Link>
       ))}
+      {/* Contribute Form */}
+      <div className="mt-6">
+        <p className="text-[10px] font-semibold tracking-widest uppercase text-muted-2 mb-2 px-3">
+          Contribute
+        </p>
+        <Link
+          href="/submit"
+          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${pathname === "/submit"
+              ? "bg-surface2 text-[var(--text)]"
+              : "text-muted hover:text-[var(--text)] hover:bg-surface2"
+            }`}
+        >
+          <PlusCircle size={16} />
+          Submit Question
+        </Link>
+      </div>
+
 
       {/* Drive alert */}
       <div className="mt-auto mx-1 p-3 rounded-xl bg-accent/8 border border-accent/15">

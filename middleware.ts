@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const protectedRoutes = ["/dashboard", "/prep", "/tracker", "/resume","/profile"];
+const protectedRoutes = ["/dashboard", "/prep", "/tracker", "/resume", "/profile", "/submit"];
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("placeiq_token")?.value;

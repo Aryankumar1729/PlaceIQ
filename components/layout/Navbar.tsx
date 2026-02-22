@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { User, LogOut, ChevronDown } from "lucide-react";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
+import { PlusCircle } from "lucide-react";
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard" },
@@ -70,7 +71,13 @@ export default function Navbar() {
           </li>
         ))}
       </ul>
-
+      <Link
+        href="/submit"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-accent/30 text-accent text-xs font-medium hover:bg-accent/10 transition-all"
+      >
+        <PlusCircle size={13} />
+        Submit Question
+      </Link>
       {/* Right side */}
       <div className="flex items-center gap-3">
         <ThemeSwitcher />

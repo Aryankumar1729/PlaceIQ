@@ -1,15 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 type Stats = {
   companies: number;
   pyqs: number;
   users: number;
+  prepScore: string;
 };
 
 export default function StatsRow() {
-  const [stats, setStats] = useState<Stats>({ companies: 0, pyqs: 0, users: 0 });
+  const [stats, setStats] = useState<Stats>({ 
+    companies: 0, pyqs: 0, users: 0, prepScore: "—" 
+  });
 
   useEffect(() => {
     fetch("/api/stats")
@@ -21,7 +24,7 @@ export default function StatsRow() {
     { label: "COMPANIES TRACKED", value: stats.companies.toString(), sub: "Updated weekly", color: "text-accent" },
     { label: "PYQS COLLECTED", value: stats.pyqs > 999 ? `${(stats.pyqs / 1000).toFixed(1)}k` : stats.pyqs.toString(), sub: "Verified from open sources", color: "text-accent-green" },
     { label: "STUDENTS JOINED", value: stats.users.toString(), sub: "And growing", color: "text-accent-pink" },
-    { label: "YOUR PREP SCORE", value: "—", sub: "Complete profile", color: "text-[var(--text)]" },
+    { label: "YOUR PREP SCORE", value: stats.prepScore ?? "—", sub: stats.prepScore === "—" ? "Add a prep target" : "Across your targets", color: "text-accent" },
   ];
 
   return (
