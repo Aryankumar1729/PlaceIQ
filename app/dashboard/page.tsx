@@ -4,7 +4,7 @@ import CompanyGrid from "@/components/cards/CompanyGrid";
 import PrepTargets from "@/components/cards/PrepTargets";
 import DashboardGreeting from "@/components/ui/DashboardGreeting";
 import TrackerSummary from "@/components/cards/TrackerSummary";
-
+import SuggestedNextStep from "@/components/cards/SuggestedNextStep";
 
 
 export default function DashboardPage() {
@@ -13,9 +13,9 @@ export default function DashboardPage() {
       <DashboardGreeting />
       <HeroSearch />
       <StatsRow />
+      <SuggestedNextStep />
       <PrepTargets />
       <TrackerSummary />
-
       <CompanyGrid />
     </div>
   );

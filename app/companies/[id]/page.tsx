@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, BookmarkPlus, ExternalLink, ChevronRight } from "lucide-react";
+import PrepProgressRing from "@/components/ui/PrepProgressRing";
 
 type Company = {
   id: string;
@@ -36,7 +37,6 @@ const difficultyDot: Record<string, string> = {
   Medium: "bg-yellow-400",
   Hard: "bg-accent-pink",
 };
-
 
 const roundData: Record<string, {
   rounds: { title: string; duration: string; difficulty: string; tags: string[] }[]
@@ -76,6 +76,10 @@ export default function CompanyDetailPage() {
   const [similarCompanies, setSimilarCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const [targetAdded, setTargetAdded] = useState(false);
+  const [hasTarget, setHasTarget] = useState(false);
+  const [difficultyCounts, setDifficultyCounts] = useState({
+    easy: 0, medium: 0, hard: 0
+  });
 
   useEffect(() => {
     const id = params.id as string;
@@ -85,10 +89,22 @@ export default function CompanyDetailPage() {
       .then((companyData) => {
         setCompany(companyData);
 
-        // Fetch PYQs using company name
+        // Fetch top 5 PYQs
         fetch(`/api/pyqs?company=${encodeURIComponent(companyData.name)}&page=1`)
           .then((r) => r.json())
           .then((pyqData) => setPyqs(pyqData.pyqs?.slice(0, 5) ?? []));
+
+        // Fetch difficulty breakdown
+        fetch(`/api/pyqs?company=${encodeURIComponent(companyData.name)}&page=1&limit=1000`)
+          .then((r) => r.json())
+          .then((data) => {
+            const all = data.pyqs ?? [];
+            setDifficultyCounts({
+              easy: all.filter((q: any) => q.difficulty === "Easy").length,
+              medium: all.filter((q: any) => q.difficulty === "Medium").length,
+              hard: all.filter((q: any) => q.difficulty === "Hard").length,
+            });
+          });
 
         // Fetch similar companies
         fetch(`/api/companies?tier=${companyData.tier}`)
@@ -103,6 +119,7 @@ export default function CompanyDetailPage() {
           .then((targets) => {
             const exists = targets.some((t: any) => t.companyId === companyData.id);
             setTargetAdded(exists);
+            setHasTarget(exists);
           });
 
         setLoading(false);
@@ -178,6 +195,8 @@ export default function CompanyDetailPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ companyId: company.id }),
               });
+              setHasTarget(true);
+              setTargetAdded(true);
               window.location.href = `/prep?company=${encodeURIComponent(company.name)}`;
             }}
             className="btn-primary flex items-center gap-2"
@@ -186,7 +205,6 @@ export default function CompanyDetailPage() {
           </button>
           <button
             onClick={async () => {
-              // Add to job tracker
               await fetch("/api/applications", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -197,20 +215,19 @@ export default function CompanyDetailPage() {
                   ctc: `${company.baseCTC}L`,
                 }),
               });
-
-              // Add to prep targets simultaneously
               await fetch("/api/prep-targets", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ companyId: company.id }),
               });
-
               setTargetAdded(true);
+              setHasTarget(true);
             }}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm transition-all ${targetAdded
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm transition-all ${
+              targetAdded
                 ? "border-accent-green/40 text-accent-green bg-accent-green/10"
                 : "border-border-2 text-muted hover:text-[var(--text)] hover:border-accent/40"
-              }`}
+            }`}
           >
             <BookmarkPlus size={15} />
             {targetAdded ? "✅ Added to Tracker" : "Add to Tracker"}
@@ -273,6 +290,16 @@ export default function CompanyDetailPage() {
           ))}
         </div>
       </div>
+
+      {/* Progress Ring — only when prep target exists */}
+      {hasTarget && (
+        <PrepProgressRing
+          companyId={company.id}
+          totalEasy={difficultyCounts.easy}
+          totalMedium={difficultyCounts.medium}
+          totalHard={difficultyCounts.hard}
+        />
+      )}
 
       {/* Top PYQs */}
       <div className="mb-6 animate-fade-up">

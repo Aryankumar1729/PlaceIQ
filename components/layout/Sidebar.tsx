@@ -2,6 +2,7 @@
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   Building2,
@@ -11,20 +12,28 @@ import {
   Users,
 } from "lucide-react";
 
-const mainLinks = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/companies", label: "Companies", icon: Building2, badge: "248" },
-  { href: "/prep", label: "Interview Prep", icon: ClipboardList },
-  { href: "/tracker", label: "Job Tracker", icon: BarChart3 },
-];
-
-const collegeLinks = [
-  { href: "/resume", label: "Resume Score", icon: FileText },
-  { href: "/alumni", label: "Alumni Network", icon: Users, badge: "New" },
-];
-
 export default function Sidebar() {
   const pathname = usePathname();
+  const [companyCount, setCompanyCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch("/api/stats")
+      .then((r) => r.json())
+      .then((data) => setCompanyCount(data.companies));
+  }, []);
+
+  const mainLinks = [
+    { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { href: "/companies", label: "Companies", icon: Building2, badge: companyCount?.toString() ?? "..." },
+    { href: "/prep", label: "Interview Prep", icon: ClipboardList },
+    { href: "/tracker", label: "Job Tracker", icon: BarChart3 },
+  ];
+
+  const collegeLinks = [
+    { href: "/resume", label: "Resume Score", icon: FileText },
+    { href: "/alumni", label: "Alumni Network", icon: Users, badge: "New" },
+  ];
+
 
   return (
     <aside className="hidden lg:flex flex-col w-64 border-r border-border px-4 py-6 gap-1 shrink-0 sticky top-[65px] h-[calc(100vh-65px)] overflow-y-auto">

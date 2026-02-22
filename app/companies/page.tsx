@@ -96,8 +96,8 @@ export default function CompaniesPage() {
                 key={t}
                 onClick={() => setTier(t)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${tier === t
-                    ? "bg-surface2 text-[var(--text)]"
-                    : "text-muted hover:text-[var(--text)]"
+                  ? "bg-surface2 text-[var(--text)]"
+                  : "text-muted hover:text-[var(--text)]"
                   }`}
               >
                 {t === "All" ? "All Tiers" : tierLabel[t] ?? t}
@@ -112,8 +112,8 @@ export default function CompaniesPage() {
                 key={t}
                 onClick={() => setType(t)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${type === t
-                    ? "bg-surface2 text-[var(--text)]"
-                    : "text-muted hover:text-[var(--text)]"
+                  ? "bg-surface2 text-[var(--text)]"
+                  : "text-muted hover:text-[var(--text)]"
                   }`}
               >
                 {t}
@@ -189,13 +189,27 @@ export default function CompaniesPage() {
               </div>
 
               {/* Footer */}
-              <div className="flex items-center justify-between text-[11px] text-muted">
-                <span>
+              <div className="flex items-center justify-between mt-3">
+                <span className="text-xs text-muted">
                   {c.visitsTier2 ? "✅ Visits Tier-2" : "🎯 Off-campus"}
                 </span>
-                <span className="text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                  View PYQs →
-                </span>
+                <div className="flex items-center gap-3">
+                  <Link
+                    href={`/prep?company=${encodeURIComponent(c.name)}`}
+                    className="text-xs px-3 py-1.5 rounded-xl font-medium transition-all text-white hover:scale-105 hover:shadow-[0_0_12px_rgba(59,130,246,0.6)] active:scale-95"
+                    style={{ background: "#3b82f6" }}
+                  >
+                    View PYQs
+                  </Link>
+                  <Link
+                    href={`/companies/${c.id}`}
+                    className="text-xs px-3 py-1.5 rounded-xl font-medium transition-all text-white hover:scale-105 hover:shadow-[0_0_12px_rgba(29,78,216,0.6)] active:scale-95"
+                    style={{ background: "#1d4ed8" }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    View Details
+                  </Link>
+                </div>
               </div>
             </Link>
           ))}
