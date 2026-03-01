@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import { prisma } from "@/lib/prisma";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
 
 function generateOtp(): string {
   return Math.floor(100000 + Math.random() * 900000).toString();
@@ -38,9 +44,9 @@ export async function POST(req: NextRequest) {
       data: { email, code, expiresAt },
     });
 
-    // Send OTP via Resend
-    await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL ?? "PlaceIQ <onboarding@resend.dev>",
+    // Send OTP via Gmail SMTP
+    await transporter.sendMail({
+      from: `PlaceIQ <${process.env.GMAIL_USER}>`,
       to: email,
       subject: "PlaceIQ — Verify your email",
       html: `
@@ -59,6 +65,7 @@ export async function POST(req: NextRequest) {
       `,
     });
 
+    console.log("OTP email sent to:", email);
     return NextResponse.json({ message: "OTP sent successfully" });
   } catch (err) {
     console.error("Send OTP error:", err);

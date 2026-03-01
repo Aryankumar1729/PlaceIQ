@@ -17,12 +17,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div className="flex">
-        <Sidebar />
-        <div className="flex-1 mesh-gradient min-h-screen">
-          <Navbar />
-          <main className="max-w-7xl mx-auto px-6 md:px-12 py-8">{children}</main>
-        </div>
+      <Sidebar />
+      <div className="ml-20 mesh-gradient min-h-screen">
+        <Navbar />
+        <main className="max-w-7xl mx-auto px-6 md:px-12 py-8">{children}</main>
       </div>
       <ChatDrawer />
     </>

@@ -38,7 +38,7 @@ export default function Sidebar() {
   const isActive = (href: string) => pathname.startsWith(href);
 
   return (
-    <aside className="w-20 min-h-screen flex flex-col items-center py-8 border-r border-white/5 sticky top-0 bg-background-dark z-50 shrink-0">
+    <aside className="w-20 fixed top-0 left-0 h-screen flex flex-col items-center py-8 border-r border-white/5 bg-background-dark z-50">
       {/* Logo */}
       <div className="mb-12">
         <Link href="/dashboard" className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary/20">
