@@ -75,7 +75,7 @@ export default function CompanyDetailPage() {
   const [pyqs, setPyqs] = useState<PYQ[]>([]);
   const [similarCompanies, setSimilarCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
-  const [targetAdded, setTargetAdded] = useState(false);
+  const [inTracker, setInTracker] = useState(false);
   const [hasTarget, setHasTarget] = useState(false);
   const [difficultyCounts, setDifficultyCounts] = useState({
     easy: 0, medium: 0, hard: 0
@@ -118,8 +118,15 @@ export default function CompanyDetailPage() {
           .then((r) => r.json())
           .then((targets) => {
             const exists = targets.some((t: any) => t.companyId === companyData.id);
-            setTargetAdded(exists);
             setHasTarget(exists);
+          });
+
+        // Check if already in tracker (applications)
+        fetch("/api/applications")
+          .then((r) => r.json())
+          .then((apps) => {
+            const exists = Array.isArray(apps) && apps.some((a: any) => a.companyName === companyData.name);
+            setInTracker(exists);
           });
 
         setLoading(false);
@@ -190,21 +197,24 @@ export default function CompanyDetailPage() {
         <div className="flex gap-3">
           <button
             onClick={async () => {
-              await fetch("/api/prep-targets", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ companyId: company.id }),
-              });
-              setHasTarget(true);
-              setTargetAdded(true);
+              if (!hasTarget) {
+                await fetch("/api/prep-targets", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ companyId: company.id }),
+                });
+                setHasTarget(true);
+              }
               window.location.href = `/prep?company=${encodeURIComponent(company.name)}`;
             }}
             className="btn-primary flex items-center gap-2"
           >
-            🎯 Start Prep →
+            {hasTarget ? "📚 Continue Prep →" : "🎯 Start Prep →"}
           </button>
           <button
+            disabled={inTracker}
             onClick={async () => {
+              if (inTracker) return;
               await fetch("/api/applications", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -215,22 +225,24 @@ export default function CompanyDetailPage() {
                   ctc: `${company.baseCTC}L`,
                 }),
               });
-              await fetch("/api/prep-targets", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ companyId: company.id }),
-              });
-              setTargetAdded(true);
-              setHasTarget(true);
+              if (!hasTarget) {
+                await fetch("/api/prep-targets", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ companyId: company.id }),
+                });
+                setHasTarget(true);
+              }
+              setInTracker(true);
             }}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm transition-all ${
-              targetAdded
+              inTracker
                 ? "border-green-400/40 text-green-400 bg-green-400/10"
                 : "border-white/10 text-slate-400 hover:text-slate-100 hover:border-primary/40"
             }`}
           >
             <BookmarkPlus size={15} />
-            {targetAdded ? "✅ Added to Tracker" : "Add to Tracker"}
+            {inTracker ? "✅ Added to Tracker" : "Add to Tracker"}
           </button>
         </div>
       </div>

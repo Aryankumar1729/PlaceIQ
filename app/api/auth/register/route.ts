@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { hashPassword, signToken } from "@/lib/auth";
+import { hashPassword } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,31 +11,35 @@ export async function POST(req: NextRequest) {
     }
 
     const existing = await prisma.user.findUnique({ where: { email } });
-    if (existing) {
+    if (existing && existing.emailVerified) {
       return NextResponse.json({ error: "Email already registered" }, { status: 400 });
     }
 
     const hashed = await hashPassword(password);
-    const user = await prisma.user.create({
-      data: { name, email, password : hashed, college, branch, gradYear: gradYear ? parseInt(gradYear) : null },
-    });
 
-    const token = signToken({ userId: user.id, email: user.email });
+    if (existing && !existing.emailVerified) {
+      // User exists but never verified — update their info
+      await prisma.user.update({
+        where: { email },
+        data: { name, password: hashed, college, branch, gradYear: gradYear ? parseInt(gradYear) : null },
+      });
+    } else {
+      await prisma.user.create({
+        data: {
+          name,
+          email,
+          password: hashed,
+          provider: "email",
+          emailVerified: false,
+          college,
+          branch,
+          gradYear: gradYear ? parseInt(gradYear) : null,
+        },
+      });
+    }
 
-    const res = NextResponse.json({
-      message: "Account created successfully",
-      user: { id: user.id, name: user.name, email: user.email },
-    });
-
-    res.cookies.set("placeiq_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-      path: "/",
-    });
-
-    return res;
+    // Don't auto-login — require OTP verification first
+    return NextResponse.json({ message: "Account created. Please verify your email." });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "Something went wrong" }, { status: 500 });

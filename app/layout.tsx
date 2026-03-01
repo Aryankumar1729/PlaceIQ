@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Sidebar from "@/components/layout/Sidebar";
-import ChatDrawer from "@/components/chat/ChatDrawer";
+import AppShell from "@/components/layout/AppShell";
 import { ThemeProvider } from "@/components/providers/ThemeContext";
 
 const inter = Inter({
@@ -36,14 +34,7 @@ export default function RootLayout({
     <html lang="en" className={`dark ${inter.variable} ${jakarta.variable}`}>
       <body className="bg-background-dark text-slate-100 antialiased min-h-screen">
         <ThemeProvider>
-          <div className="flex">
-            <Sidebar />
-            <div className="flex-1 mesh-gradient min-h-screen">
-              <Navbar />
-              <main className="max-w-7xl mx-auto px-6 md:px-12 py-8">{children}</main>
-            </div>
-          </div>
-          <ChatDrawer />
+          <AppShell>{children}</AppShell>
         </ThemeProvider>
       </body>
     </html>

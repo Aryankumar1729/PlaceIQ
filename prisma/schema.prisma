@@ -56,18 +56,20 @@ model Application {
 }
 
 model User {
-  id           String        @id @default(cuid())
-  name         String
-  email        String        @unique
-  password     String
-  college      String?
-  branch       String?
-  cgpa         Float?
-  gradYear     Int?
-  applications Application[]
-  createdAt    DateTime      @default(now())
-  prepTargets      PrepTarget[]
-  progress         UserPYQProgress[]
+  id            String        @id @default(cuid())
+  name          String
+  email         String        @unique
+  password      String?
+  provider      String        @default("email")
+  emailVerified Boolean       @default(false)
+  college       String?
+  branch        String?
+  cgpa          Float?
+  gradYear      Int?
+  applications  Application[]
+  createdAt     DateTime      @default(now())
+  prepTargets   PrepTarget[]
+  progress      UserPYQProgress[]
 }
 
 model PrepTarget {
@@ -91,4 +93,14 @@ model UserPYQProgress {
   createdAt DateTime @default(now())
 
   @@unique([userId, pyqId])
+}
+
+model Otp {
+  id        String   @id @default(cuid())
+  email     String
+  code      String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Plus, Trash2, ChevronDown } from "lucide-react";
 
 type Application = {
@@ -43,6 +43,19 @@ export default function TrackerPage() {
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [openStatusId, setOpenStatusId] = useState<string | null>(null);
+  const [dropdownPos, setDropdownPos] = useState<{ top: number; left: number } | null>(null);
+  const statusBtnRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
+  const toggleStatusDropdown = (id: string) => {
+    if (openStatusId === id) { setOpenStatusId(null); setDropdownPos(null); return; }
+    const btn = statusBtnRefs.current[id];
+    if (btn) {
+      const rect = btn.getBoundingClientRect();
+      setDropdownPos({ top: rect.bottom + 4, left: rect.right - 144 }); // 144 = w-36
+    }
+    setOpenStatusId(id);
+  };
 
   useEffect(() => {
     fetch("/api/applications")
@@ -216,7 +229,7 @@ export default function TrackerPage() {
           {applications.map((app) => (
             <div
               key={app.id}
-              className="card p-5 animate-fade-up hover:border-white/10 transition-all overflow-visible"
+              className="card p-5 animate-fade-up hover:border-white/10 transition-all"
             >
               <div className="flex items-center justify-between">
                 {/* Left */}
@@ -232,36 +245,16 @@ export default function TrackerPage() {
 
                 {/* Right */}
                 <div className="flex items-center gap-2">
-                  {/* Status dropdown with hover bridge */}
-                  <div className="relative group">
+                  {/* Status dropdown — click to toggle */}
+                  <div className="relative">
                     <button
+                      ref={(el) => { statusBtnRefs.current[app.id] = el; }}
+                      onClick={() => toggleStatusDropdown(app.id)}
                       className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border flex items-center gap-1 ${statusStyle[app.status] ?? ""}`}
                     >
                       {app.status}
-                      <ChevronDown size={10} />
+                      <ChevronDown size={10} className={`transition-transform ${openStatusId === app.id ? "rotate-180" : ""}`} />
                     </button>
-
-                    {/* pt-2 = invisible bridge between button and dropdown */}
-                    <div className="absolute right-0 top-6 pt-2 w-36 z-50 hidden group-hover:block">
-                      <div
-                        className="rounded-xl border border-white/10 shadow-xl overflow-hidden"
-                        style={{ background: "#121216" }}
-                      >
-                        {statusOptions.map((s) => (
-                          <button
-                            key={s}
-                            onClick={() => handleStatusChange(app.id, s)}
-                            className={`w-full text-left px-3 py-2.5 text-xs transition-all hover:bg-white/5 ${
-                              app.status === s
-                                ? "text-slate-100 font-medium"
-                                : "text-slate-400 hover:text-slate-100"
-                            }`}
-                          >
-                            {s}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
                   </div>
 
                   {/* Expand */}
@@ -296,6 +289,35 @@ export default function TrackerPage() {
             </div>
           ))}
         </div>
+      )}
+
+      {/* Fixed-position status dropdown (renders above all cards) */}
+      {openStatusId && dropdownPos && (
+        <>
+          <div className="fixed inset-0 z-[90]" onClick={() => { setOpenStatusId(null); setDropdownPos(null); }} />
+          <div
+            className="fixed w-36 z-[100] rounded-xl border border-white/10 shadow-2xl overflow-hidden"
+            style={{ top: dropdownPos.top, left: dropdownPos.left, background: "#121216" }}
+          >
+            {statusOptions.map((s) => (
+              <button
+                key={s}
+                onClick={() => {
+                  handleStatusChange(openStatusId, s);
+                  setOpenStatusId(null);
+                  setDropdownPos(null);
+                }}
+                className={`w-full text-left px-3 py-2.5 text-xs transition-all hover:bg-white/5 ${
+                  applications.find((a) => a.id === openStatusId)?.status === s
+                    ? "text-slate-100 font-medium"
+                    : "text-slate-400 hover:text-slate-100"
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

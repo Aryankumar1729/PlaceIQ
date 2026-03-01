@@ -28,6 +28,14 @@ export async function POST(req: NextRequest) {
 
   const { companyName, role, status, ctc, notes, nextStep } = await req.json();
 
+  // Prevent duplicate company+role for the same user
+  const existing = await prisma.application.findFirst({
+    where: { userId: payload.userId, companyName, role },
+  });
+  if (existing) {
+    return NextResponse.json({ error: "You already have an application for this company & role." }, { status: 409 });
+  }
+
   const application = await prisma.application.create({
     data: {
       userId: payload.userId,

@@ -11,6 +11,10 @@ type User = {
   branch?: string;
   cgpa?: number;
   gradYear?: number;
+  provider: string;
+  emailVerified: boolean;
+  createdAt: string;
+  _count: { applications: number; prepTargets: number; progress: number };
 };
 
 export default function ProfilePage() {
@@ -21,11 +25,7 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
   const [form, setForm] = useState({
-    name: "",
-    college: "",
-    branch: "",
-    cgpa: "",
-    gradYear: "",
+    name: "", college: "", branch: "", cgpa: "", gradYear: "",
   });
 
   useEffect(() => {
@@ -60,9 +60,9 @@ export default function ProfilePage() {
         gradYear: form.gradYear ? parseInt(form.gradYear) : null,
       }),
     });
-    const data = await res.json();
     if (res.ok) {
-      setUser(data.user);
+      const data = await res.json();
+      setUser((u) => u ? { ...u, ...data.user } : u);
       setEditing(false);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
@@ -75,42 +75,62 @@ export default function ProfilePage() {
     window.location.href = "/login";
   };
 
+  /* ---------- Loading skeleton ---------- */
   if (loading) {
     return (
       <div className="p-8 lg:p-10 max-w-2xl">
         <div className="animate-pulse space-y-4">
           <div className="h-8 bg-white/5 rounded w-1/3" />
-          <div className="h-40 bg-white/5 rounded-2xl" />
+          <div className="h-48 bg-white/5 rounded-2xl" />
         </div>
       </div>
     );
   }
 
+  const joined = user?.createdAt
+    ? new Date(user.createdAt).toLocaleDateString("en-IN", { month: "short", year: "numeric" })
+    : "";
+
+  const stats = [
+    { label: "Applications", value: user?._count.applications ?? 0 },
+    { label: "Target Cos.", value: user?._count.prepTargets ?? 0 },
+    { label: "PYQs Solved", value: user?._count.progress ?? 0 },
+  ];
+
+
   return (
-    <div className="p-8 lg:p-10 max-w-2xl">
+    <div className="p-8 lg:p-10 max-w-2xl space-y-5">
       {/* Header */}
-      <div className="mb-8 animate-fade-up">
-        <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
-          ● Your Profile
-        </p>
-        <h1 className="font-display text-4xl font-extrabold tracking-tight mb-2">
+      <div className="animate-fade-up">
+        <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">● Profile</p>
+        <h1 className="font-display text-4xl font-extrabold tracking-tight mb-1">
           Hey, <span className="text-gradient">{user?.name?.split(" ")[0]}</span> 👋
         </h1>
         <p className="text-slate-400 text-[15px]">
-          Manage your profile and placement details.
+          Manage your account and placement details.
         </p>
       </div>
 
-      {/* Success message */}
+      {/* Success */}
       {success && (
-        <div className="mb-4 px-4 py-3 rounded-xl bg-green-400/10 border border-green-400/20 text-green-400 text-sm animate-fade-up">
-          ✅ Profile updated successfully
+        <div className="px-4 py-3 rounded-xl bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 text-sm animate-fade-up">
+          Profile updated successfully
         </div>
       )}
 
+      {/* Quick stats */}
+      <div className="grid grid-cols-3 gap-3 animate-fade-up">
+        {stats.map((s) => (
+          <div key={s.label} className="card p-4 text-center">
+            <p className="font-display text-2xl font-bold text-slate-100">{s.value}</p>
+            <p className="text-[11px] text-slate-500 uppercase tracking-wider mt-1">{s.label}</p>
+          </div>
+        ))}
+      </div>
+
       {/* Profile card */}
-      <div className="card p-6 mb-4 animate-fade-up">
-        {/* Avatar + name */}
+      <div className="card p-6 animate-fade-up">
+        {/* Avatar row */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center font-display font-bold text-xl text-primary">
@@ -118,7 +138,17 @@ export default function ProfilePage() {
             </div>
             <div>
               <p className="font-display font-bold text-lg">{user?.name}</p>
-              <p className="text-sm text-slate-400">{user?.email}</p>
+              <div className="flex items-center gap-2 text-sm text-slate-400">
+                <span>{user?.email}</span>
+                {user?.provider === "google" && (
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                    Google
+                  </span>
+                )}
+              </div>
+              {joined && (
+                <p className="text-[11px] text-slate-600 mt-0.5">Joined {joined}</p>
+              )}
             </div>
           </div>
           <button
@@ -129,7 +159,7 @@ export default function ProfilePage() {
                 : "border-white/10 text-slate-400 hover:text-slate-100 hover:border-primary/40"
             }`}
           >
-            {editing ? "Cancel" : "Edit Profile"}
+            {editing ? "Cancel" : "Edit"}
           </button>
         </div>
 
@@ -137,98 +167,59 @@ export default function ProfilePage() {
         <div className="grid grid-cols-1 gap-4">
           {/* Name */}
           <div>
-            <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">
-              Full Name
-            </label>
+            <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">Full Name</label>
             {editing ? (
-              <input
-                className="input-field"
-                value={form.name}
-                onChange={(e) => update("name", e.target.value)}
-              />
+              <input className="input-field" value={form.name} onChange={(e) => update("name", e.target.value)} />
             ) : (
-              <p className="text-sm py-2.5">{user?.name || "—"}</p>
+              <p className="text-sm py-2.5 text-slate-300">{user?.name || "—"}</p>
             )}
           </div>
 
           {/* Email — not editable */}
           <div>
-            <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">
-              Email
-            </label>
-            <p className="text-sm py-2.5 text-slate-400">{user?.email}</p>
+            <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">Email</label>
+            <p className="text-sm py-2.5 text-slate-500">{user?.email}</p>
           </div>
 
           {/* College */}
           <div>
-            <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">
-              College
-            </label>
+            <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">College</label>
             {editing ? (
-              <input
-                className="input-field"
-                placeholder="e.g. DTU, VIT, AKTU"
-                value={form.college}
-                onChange={(e) => update("college", e.target.value)}
-              />
+              <input className="input-field" placeholder="e.g. DTU, VIT, AKTU" value={form.college} onChange={(e) => update("college", e.target.value)} />
             ) : (
-              <p className="text-sm py-2.5">{user?.college || "—"}</p>
+              <p className="text-sm py-2.5 text-slate-300">{user?.college || "—"}</p>
             )}
           </div>
 
-          {/* Branch + Grad Year */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* Branch / Grad Year / CGPA */}
+          <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">
-                Branch
-              </label>
+              <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">Branch</label>
               {editing ? (
-                <input
-                  className="input-field"
-                  placeholder="e.g. CSE, ECE"
-                  value={form.branch}
-                  onChange={(e) => update("branch", e.target.value)}
-                />
+                <input className="input-field" placeholder="e.g. CSE" value={form.branch} onChange={(e) => update("branch", e.target.value)} />
               ) : (
-                <p className="text-sm py-2.5">{user?.branch || "—"}</p>
+                <p className="text-sm py-2.5 text-slate-300">{user?.branch || "—"}</p>
               )}
             </div>
             <div>
-              <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">
-                Grad Year
-              </label>
+              <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">Grad Year</label>
               {editing ? (
-                <input
-                  className="input-field"
-                  placeholder="e.g. 2026"
-                  value={form.gradYear}
-                  onChange={(e) => update("gradYear", e.target.value)}
-                />
+                <input className="input-field" placeholder="e.g. 2026" value={form.gradYear} onChange={(e) => update("gradYear", e.target.value)} />
               ) : (
-                <p className="text-sm py-2.5">{user?.gradYear || "—"}</p>
+                <p className="text-sm py-2.5 text-slate-300">{user?.gradYear || "—"}</p>
               )}
             </div>
-          </div>
-
-          {/* CGPA */}
-          <div>
-            <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">
-              CGPA
-            </label>
-            {editing ? (
-              <input
-                className="input-field"
-                placeholder="e.g. 8.5"
-                value={form.cgpa}
-                onChange={(e) => update("cgpa", e.target.value)}
-              />
-            ) : (
-              <p className="text-sm py-2.5">{user?.cgpa || "—"}</p>
-            )}
+            <div>
+              <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">CGPA</label>
+              {editing ? (
+                <input className="input-field" placeholder="e.g. 8.5" value={form.cgpa} onChange={(e) => update("cgpa", e.target.value)} />
+              ) : (
+                <p className="text-sm py-2.5 text-slate-300">{user?.cgpa || "—"}</p>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Save button */}
         {editing && (
           <button
             onClick={handleSave}
