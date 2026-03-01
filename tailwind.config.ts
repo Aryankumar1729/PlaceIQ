@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,35 +10,23 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        syne: ["var(--font-syne)", "sans-serif"],
-        dm: ["var(--font-dm-sans)", "sans-serif"],
+        sans: ["var(--font-inter)", "Inter", "sans-serif"],
+        display: ["var(--font-display)", "Plus Jakarta Sans", "sans-serif"],
       },
       colors: {
-        bg: "#0a0a0f",
-        surface: "#111118",
-        surface2: "#1a1a24",
-        accent: {
-          DEFAULT: "#6c63ff",
-          pink: "#ff6584",
-          green: "#43e97b",
-        },
-        border: {
-          DEFAULT: "rgba(255,255,255,0.06)",
-          2: "rgba(255,255,255,0.1)",
-        },
-        muted: {
-          DEFAULT: "#7878a0",
-          2: "#4a4a68",
-        },
+        primary: "#6366f1",
+        "background-light": "#ffffff",
+        "background-dark": "#0a0a0c",
+        "card-dark": "#121216",
+        "card-dark-2": "#18181c",
       },
       borderRadius: {
-        "2xl": "16px",
-        "3xl": "20px",
+        DEFAULT: "12px",
+        xl: "20px",
       },
       boxShadow: {
-        glow: "0 0 24px rgba(108,99,255,0.4)",
-        "glow-green": "0 0 12px rgba(67,233,123,0.4)",
-        "glow-pink": "0 0 12px rgba(255,101,132,0.4)",
+        glow: "0 0 24px rgba(99,102,241,0.3)",
+        "glow-sm": "0 0 12px rgba(99,102,241,0.2)",
         card: "0 8px 32px rgba(0,0,0,0.4)",
       },
       animation: {
@@ -54,11 +43,6 @@ const config: Config = {
           "0%": { opacity: "0", transform: "scale(0.9) translateY(20px)" },
           "100%": { opacity: "1", transform: "scale(1) translateY(0)" },
         },
-      },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "hero-glow":
-          "radial-gradient(ellipse 80% 50% at 20% -10%, rgba(108,99,255,0.1) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 110%, rgba(255,101,132,0.06) 0%, transparent 60%)",
       },
     },
   },

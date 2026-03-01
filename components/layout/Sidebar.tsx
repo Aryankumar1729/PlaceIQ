@@ -1,5 +1,4 @@
 "use client";
-import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -10,96 +9,95 @@ import {
   BarChart3,
   FileText,
   Users,
+  PlusCircle,
 } from "lucide-react";
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [companyCount, setCompanyCount] = useState<number | null>(null);
+  const [user, setUser] = useState<{ name?: string } | null>(null);
 
   useEffect(() => {
-    fetch("/api/stats")
+    fetch("/api/auth/me")
       .then((r) => r.json())
-      .then((data) => setCompanyCount(data.companies));
+      .then((data) => setUser(data.user))
+      .catch(() => {});
   }, []);
 
   const mainLinks = [
-    { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/companies", label: "Companies", icon: Building2, badge: companyCount?.toString() ?? "..." },
-    { href: "/prep", label: "Interview Prep", icon: ClipboardList },
-    { href: "/tracker", label: "Job Tracker", icon: BarChart3 },
+    { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+    { href: "/companies", icon: Building2, label: "Companies" },
+    { href: "/prep", icon: ClipboardList, label: "Prep" },
+    { href: "/tracker", icon: BarChart3, label: "Tracker" },
   ];
 
-  const collegeLinks = [
-    { href: "/resume", label: "Resume Score", icon: FileText },
-    { href: "/alumni", label: "Alumni Network", icon: Users, badge: "New" },
+  const secondaryLinks = [
+    { href: "/resume", icon: FileText, label: "Resume" },
+    { href: "/submit", icon: PlusCircle, label: "Submit" },
   ];
 
+  const isActive = (href: string) => pathname.startsWith(href);
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 border-r border-border px-4 py-6 gap-1 shrink-0 sticky top-[65px] h-[calc(100vh-65px)] overflow-y-auto">
-      {/* Main nav */}
-      <p className="text-[10px] font-semibold tracking-[1.5px] uppercase text-muted-2 px-3 py-2">
-        Explore
-      </p>
-      {mainLinks.map(({ href, label, icon: Icon, badge }) => (
-        <Link
-          key={href}
-          href={href}
-          className={`sidebar-item ${pathname.startsWith(href) ? "active" : ""}`}
-        >
-          <Icon size={17} className="shrink-0 opacity-70" />
-          <span className="flex-1">{label}</span>
-          {badge && (
-            <span className="badge bg-accent/15 text-accent border border-accent/20 text-[10px] px-2 py-0.5 rounded-full font-semibold">
-              {badge}
-            </span>
-          )}
-        </Link>
-      ))}
-
-      {/* College nav */}
-      <p className="text-[10px] font-semibold tracking-[1.5px] uppercase text-muted-2 px-3 py-2 mt-3">
-        Your College
-      </p>
-      {collegeLinks.map(({ href, label, icon: Icon, badge }) => (
-        <Link
-          key={href}
-          href={href}
-          className={`sidebar-item ${pathname.startsWith(href) ? "active" : ""}`}
-        >
-          <Icon size={17} className="shrink-0 opacity-70" />
-          <span className="flex-1">{label}</span>
-          {badge && (
-            <span className="badge bg-accent-green/15 text-accent-green border border-accent-green/20 text-[10px] px-2 py-0.5 rounded-full font-semibold">
-              {badge}
-            </span>
-          )}
-        </Link>
-      ))}
-      {/* Contribute Form */}
-      <div className="mt-6">
-        <p className="text-[10px] font-semibold tracking-widest uppercase text-muted-2 mb-2 px-3">
-          Contribute
-        </p>
-        <Link
-          href="/submit"
-          className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${pathname === "/submit"
-              ? "bg-surface2 text-[var(--text)]"
-              : "text-muted hover:text-[var(--text)] hover:bg-surface2"
-            }`}
-        >
-          <PlusCircle size={16} />
-          Submit Question
+    <aside className="w-20 min-h-screen flex flex-col items-center py-8 border-r border-white/5 sticky top-0 bg-background-dark z-50 shrink-0">
+      {/* Logo */}
+      <div className="mb-12">
+        <Link href="/dashboard" className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-primary/20">
+          P
         </Link>
       </div>
 
+      {/* Main nav icons */}
+      <nav className="flex flex-col gap-3 flex-1 items-center">
+        {mainLinks.map(({ href, icon: Icon, label }) => (
+          <Link
+            key={href}
+            href={href}
+            className={`p-3 rounded-xl transition-all group relative ${
+              isActive(href)
+                ? "sidebar-icon-active text-white shadow-lg shadow-primary/20"
+                : "text-slate-400 hover:bg-white/5"
+            }`}
+            title={label}
+          >
+            <Icon size={20} />
+            {/* Tooltip */}
+            <span className="absolute left-full ml-3 px-2 py-1 rounded-lg bg-card-dark border border-white/10 text-xs text-white whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50">
+              {label}
+            </span>
+          </Link>
+        ))}
 
-      {/* Drive alert */}
-      <div className="mt-auto mx-1 p-3 rounded-xl bg-accent/8 border border-accent/15">
-        <p className="text-xs font-semibold mb-1">Drive season approaching</p>
-        <p className="text-[11px] text-muted leading-relaxed">
-          TCS, Infosys drives in 3 weeks. 12 companies visiting your campus.
-        </p>
+        {/* Divider */}
+        <div className="w-8 h-px bg-white/5 my-2" />
+
+        {secondaryLinks.map(({ href, icon: Icon, label }) => (
+          <Link
+            key={href}
+            href={href}
+            className={`p-3 rounded-xl transition-all group relative ${
+              isActive(href)
+                ? "sidebar-icon-active text-white shadow-lg shadow-primary/20"
+                : "text-slate-400 hover:bg-white/5"
+            }`}
+            title={label}
+          >
+            <Icon size={20} />
+            <span className="absolute left-full ml-3 px-2 py-1 rounded-lg bg-card-dark border border-white/10 text-xs text-white whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity z-50">
+              {label}
+            </span>
+          </Link>
+        ))}
+      </nav>
+
+      {/* User avatar at bottom */}
+      <div className="mt-auto">
+        <Link
+          href="/profile"
+          className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20 p-0.5 flex items-center justify-center bg-primary/10 text-primary font-bold text-sm"
+          title="Profile"
+        >
+          {user?.name?.charAt(0).toUpperCase() ?? "?"}
+        </Link>
       </div>
     </aside>
   );

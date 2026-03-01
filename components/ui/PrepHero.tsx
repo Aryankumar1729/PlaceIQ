@@ -18,10 +18,10 @@ export default function PrepHero() {
 
   return (
     <div className="mb-8 animate-fade-up">
-      <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">
+      <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
         ● Interview Prep
       </p>
-      <h1 className="font-syne text-4xl font-extrabold tracking-tight mb-2">
+      <h1 className="font-display text-4xl font-extrabold tracking-tight mb-2">
         {company ? (
           <>{company} — <span className="text-gradient">most asked</span></>
         ) : searchParam ? (
@@ -30,18 +30,18 @@ export default function PrepHero() {
           <>Most asked questions<br /><span className="text-gradient">by company</span></>
         )}
       </h1>
-      <p className="text-muted text-[15px] mb-6">
+      <p className="text-slate-400 text-[15px] mb-6">
         {company
           ? `Showing questions specifically asked in ${company} interviews.`
           : "Sourced from real interview experiences. Updated monthly."}
       </p>
 
       {/* Search bar */}
-      <div className="flex gap-3 p-2 bg-surface border border-border rounded-2xl max-w-xl">
+      <div className="flex gap-3 p-2 bg-card-dark border border-white/5 rounded-2xl max-w-xl">
         <div className="flex items-center gap-3 flex-1 px-3">
-          <Search size={16} className="text-muted shrink-0" />
+          <Search size={16} className="text-slate-500 shrink-0" />
           <input
-            className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted"
+            className="flex-1 bg-transparent text-sm outline-none placeholder:text-slate-500"
             placeholder="Search by topic, e.g. arrays, DP, SQL..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -53,7 +53,7 @@ export default function PrepHero() {
                 setQuery("");
                 router.push("/prep");
               }}
-              className="text-muted hover:text-[var(--text)] transition-colors text-xs"
+              className="text-slate-400 hover:text-slate-100 transition-colors text-xs"
             >
               ✕
             </button>

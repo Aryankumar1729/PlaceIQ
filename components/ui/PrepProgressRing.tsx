@@ -56,7 +56,7 @@ export default function PrepProgressRing({
               cy={size / 2}
               r={radius}
               fill="none"
-              stroke="var(--surface2)"
+              stroke="rgba(255,255,255,0.05)"
               strokeWidth={strokeWidth}
             />
             {/* Progress circle */}
@@ -65,7 +65,7 @@ export default function PrepProgressRing({
               cy={size / 2}
               r={radius}
               fill="none"
-              stroke={pct === 100 ? "var(--accent-green)" : "var(--accent)"}
+              stroke={pct === 100 ? "#4ade80" : "#6366f1"}
               strokeWidth={strokeWidth}
               strokeLinecap="round"
               strokeDasharray={circumference}
@@ -75,48 +75,48 @@ export default function PrepProgressRing({
           </svg>
           {/* Center text */}
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <p className="font-syne font-extrabold text-base leading-none">{pct}%</p>
+            <p className="font-display font-extrabold text-base leading-none">{pct}%</p>
           </div>
         </div>
 
         {/* Stats */}
         <div className="flex-1">
           <div className="flex items-center justify-between mb-1">
-            <p className="font-syne font-bold text-sm">Overall Progress</p>
-            <p className="text-xs text-muted">{done}/{total}</p>
+            <p className="font-display font-bold text-sm">Overall Progress</p>
+            <p className="text-xs text-slate-400">{done}/{total}</p>
           </div>
 
           <div className="flex flex-col gap-1.5 mt-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-accent-green" />
-                <span className="text-xs text-muted">Easy</span>
+                <span className="w-2 h-2 rounded-full bg-green-400" />
+                <span className="text-xs text-slate-400">Easy</span>
               </div>
               <span className="text-xs font-medium">
-                <span className="text-accent-green">{progress.easy}</span>
-                <span className="text-muted">/{totalEasy}</span>
+                <span className="text-green-400">{progress.easy}</span>
+                <span className="text-slate-500">/{totalEasy}</span>
               </span>
             </div>
 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-yellow-400" />
-                <span className="text-xs text-muted">Medium</span>
+                <span className="text-xs text-slate-400">Medium</span>
               </div>
               <span className="text-xs font-medium">
                 <span className="text-yellow-400">{progress.medium}</span>
-                <span className="text-muted">/{totalMedium}</span>
+                <span className="text-slate-500">/{totalMedium}</span>
               </span>
             </div>
 
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-accent-pink" />
-                <span className="text-xs text-muted">Hard</span>
+                <span className="w-2 h-2 rounded-full bg-pink-400" />
+                <span className="text-xs text-slate-400">Hard</span>
               </div>
               <span className="text-xs font-medium">
-                <span className="text-accent-pink">{progress.hard}</span>
-                <span className="text-muted">/{totalHard}</span>
+                <span className="text-pink-400">{progress.hard}</span>
+                <span className="text-slate-500">/{totalHard}</span>
               </span>
             </div>
           </div>

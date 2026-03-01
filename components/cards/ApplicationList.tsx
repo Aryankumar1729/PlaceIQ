@@ -21,17 +21,17 @@ const apps: Application[] = [
 ];
 
 const statusConfig: Record<Status, { color: string; glow: string; label: string }> = {
-  offer: { color: "bg-accent-green", glow: "shadow-glow-green", label: "Offer" },
+  offer: { color: "bg-green-400", glow: "shadow-[0_0_8px_rgba(74,222,128,0.5)]", label: "Offer" },
   interview: { color: "bg-yellow-400", glow: "shadow-[0_0_8px_rgba(250,204,21,0.5)]", label: "Interview" },
-  applied: { color: "bg-accent", glow: "shadow-glow", label: "Applied" },
-  rejected: { color: "bg-accent-pink", glow: "shadow-glow-pink", label: "Rejected" },
+  applied: { color: "bg-primary", glow: "shadow-[0_0_8px_rgba(99,102,241,0.5)]", label: "Applied" },
+  rejected: { color: "bg-pink-400", glow: "shadow-[0_0_8px_rgba(244,114,182,0.5)]", label: "Rejected" },
 };
 
 const summaryStats = [
-  { label: "Applied", value: 8, color: "text-accent" },
+  { label: "Applied", value: 8, color: "text-primary" },
   { label: "Interviews", value: 3, color: "text-yellow-400" },
-  { label: "Offers", value: 1, color: "text-accent-green" },
-  { label: "Rejected", value: 2, color: "text-accent-pink" },
+  { label: "Offers", value: 1, color: "text-green-400" },
+  { label: "Rejected", value: 2, color: "text-pink-400" },
 ];
 
 export default function ApplicationList() {
@@ -42,16 +42,16 @@ export default function ApplicationList() {
       {/* Summary */}
       <div className="grid grid-cols-4 gap-3 mb-8 stagger">
         {summaryStats.map((s) => (
-          <div key={s.label} className="stat-card animate-fade-up text-center">
-            <p className="text-[11px] uppercase tracking-wider text-muted mb-2">{s.label}</p>
-            <p className={`font-syne text-3xl font-bold ${s.color}`}>{s.value}</p>
+          <div key={s.label} className="card text-center animate-fade-up p-4">
+            <p className="text-[11px] uppercase tracking-wider text-slate-400 mb-2">{s.label}</p>
+            <p className={`font-display text-3xl font-bold ${s.color}`}>{s.value}</p>
           </div>
         ))}
       </div>
 
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="font-syne text-lg font-bold">Applications</h2>
+        <h2 className="font-display text-lg font-bold">Applications</h2>
         <button className="btn-primary text-xs py-2 px-4">+ Add Application</button>
       </div>
 
@@ -69,9 +69,9 @@ export default function ApplicationList() {
                 <p className="text-sm font-medium truncate">
                   {app.company} — {app.note}
                 </p>
-                <p className="text-xs text-muted mt-0.5">{app.role}</p>
+                <p className="text-xs text-slate-400 mt-0.5">{app.role}</p>
               </div>
-              <span className="text-xs text-muted-2 shrink-0">{app.date}</span>
+              <span className="text-xs text-slate-600 shrink-0">{app.date}</span>
             </div>
           );
         })}

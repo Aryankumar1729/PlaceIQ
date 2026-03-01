@@ -17,19 +17,19 @@ type Application = {
 const statusOptions = ["Applied", "OA", "Interview", "Offer", "Rejected"];
 
 const statusStyle: Record<string, string> = {
-  Offer: "text-accent-green border-accent-green/30 bg-accent-green/10",
+  Offer: "text-green-400 border-green-400/30 bg-green-400/10",
   Interview: "text-yellow-400 border-yellow-400/30 bg-yellow-400/10",
-  OA: "text-accent border-accent/30 bg-accent/10",
-  Applied: "text-muted border-border bg-surface2",
-  Rejected: "text-accent-pink border-accent-pink/30 bg-accent-pink/10",
+  OA: "text-primary border-primary/30 bg-primary/10",
+  Applied: "text-slate-400 border-white/10 bg-white/5",
+  Rejected: "text-pink-400 border-pink-400/30 bg-pink-400/10",
 };
 
 const statusDot: Record<string, string> = {
-  Offer: "bg-accent-green shadow-[0_0_8px_#43e97b]",
+  Offer: "bg-green-400 shadow-[0_0_8px_#4ade80]",
   Interview: "bg-yellow-400 shadow-[0_0_8px_#facc15]",
-  OA: "bg-accent shadow-[0_0_8px_#6c63ff]",
-  Applied: "bg-muted",
-  Rejected: "bg-accent-pink shadow-[0_0_8px_#ff6584]",
+  OA: "bg-primary shadow-[0_0_8px_#6366f1]",
+  Applied: "bg-slate-500",
+  Rejected: "bg-pink-400 shadow-[0_0_8px_#f472b6]",
 };
 
 const emptyForm = {
@@ -92,15 +92,15 @@ export default function TrackerPage() {
     <div className="p-8 lg:p-10 max-w-4xl">
       {/* Hero */}
       <div className="mb-8 animate-fade-up">
-        <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">
+        <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
           ● Job Tracker
         </p>
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="font-syne text-4xl font-extrabold tracking-tight mb-2">
+            <h1 className="font-display text-4xl font-extrabold tracking-tight mb-2">
               Your <span className="text-gradient">applications</span>
             </h1>
-            <p className="text-muted text-[15px]">
+            <p className="text-slate-400 text-[15px]">
               Track every drive, OA, and interview in one place.
             </p>
           </div>
@@ -118,23 +118,23 @@ export default function TrackerPage() {
       <div className="grid grid-cols-5 gap-3 mb-8 animate-fade-up">
         {stats.map((s) => (
           <div key={s.label} className="card p-3 text-center">
-            <p className={`font-syne font-bold text-xl ${
-              s.label === "Offer" ? "text-accent-green" :
-              s.label === "Rejected" ? "text-accent-pink" :
+            <p className={`font-display font-bold text-xl ${
+              s.label === "Offer" ? "text-green-400" :
+              s.label === "Rejected" ? "text-pink-400" :
               s.label === "Interview" ? "text-yellow-400" :
-              s.label === "OA" ? "text-accent" : "text-[var(--text)]"
+              s.label === "OA" ? "text-primary" : "text-slate-100"
             }`}>
               {s.count}
             </p>
-            <p className="text-[10px] text-muted mt-0.5">{s.label}</p>
+            <p className="text-[10px] text-slate-500 mt-0.5">{s.label}</p>
           </div>
         ))}
       </div>
 
       {/* Add form */}
       {showForm && (
-        <div className="card p-6 mb-6 border-accent/20 animate-fade-up">
-          <p className="font-syne font-bold text-sm mb-4">New Application</p>
+        <div className="card p-6 mb-6 border-primary/20 animate-fade-up">
+          <p className="font-display font-bold text-sm mb-4">New Application</p>
           <div className="grid grid-cols-2 gap-3 mb-3">
             <input
               className="input-field"
@@ -187,7 +187,7 @@ export default function TrackerPage() {
             </button>
             <button
               onClick={() => setShowForm(false)}
-              className="px-4 py-2 rounded-lg border border-border text-sm text-muted hover:text-[var(--text)] transition-all"
+              className="px-4 py-2 rounded-lg border border-white/10 text-sm text-slate-400 hover:text-slate-100 transition-all"
             >
               Cancel
             </button>
@@ -200,31 +200,31 @@ export default function TrackerPage() {
         <div className="flex flex-col gap-3">
           {[1, 2, 3].map((i) => (
             <div key={i} className="card p-5 animate-pulse">
-              <div className="h-4 bg-surface2 rounded w-1/3 mb-2" />
-              <div className="h-3 bg-surface2 rounded w-1/4" />
+              <div className="h-4 bg-white/5 rounded w-1/3 mb-2" />
+              <div className="h-3 bg-white/5 rounded w-1/4" />
             </div>
           ))}
         </div>
       ) : applications.length === 0 ? (
-        <div className="card p-12 text-center text-muted animate-fade-up">
+        <div className="card p-12 text-center text-slate-400 animate-fade-up">
           <div className="text-4xl mb-3">📋</div>
           <p className="text-sm mb-1">No applications yet.</p>
-          <p className="text-xs text-muted-2">Click "Add Application" to start tracking.</p>
+          <p className="text-xs text-slate-600">Click "Add Application" to start tracking.</p>
         </div>
       ) : (
         <div className="flex flex-col gap-3 stagger">
           {applications.map((app) => (
             <div
               key={app.id}
-              className="card p-5 animate-fade-up hover:border-border-2 transition-all overflow-visible"
+              className="card p-5 animate-fade-up hover:border-white/10 transition-all overflow-visible"
             >
               <div className="flex items-center justify-between">
                 {/* Left */}
                 <div className="flex items-center gap-3">
-                  <span className={`w-2 h-2 rounded-full shrink-0 ${statusDot[app.status] ?? "bg-muted"}`} />
+                  <span className={`w-2 h-2 rounded-full shrink-0 ${statusDot[app.status] ?? "bg-slate-500"}`} />
                   <div>
-                    <p className="font-syne font-bold text-sm">{app.companyName}</p>
-                    <p className="text-xs text-muted">
+                    <p className="font-display font-bold text-sm">{app.companyName}</p>
+                    <p className="text-xs text-slate-400">
                       {app.role} {app.ctc ? `· ${app.ctc}` : ""}
                     </p>
                   </div>
@@ -244,17 +244,17 @@ export default function TrackerPage() {
                     {/* pt-2 = invisible bridge between button and dropdown */}
                     <div className="absolute right-0 top-6 pt-2 w-36 z-50 hidden group-hover:block">
                       <div
-                        className="rounded-xl border border-border-2 shadow-card overflow-hidden"
-                        style={{ background: "var(--surface)" }}
+                        className="rounded-xl border border-white/10 shadow-xl overflow-hidden"
+                        style={{ background: "#121216" }}
                       >
                         {statusOptions.map((s) => (
                           <button
                             key={s}
                             onClick={() => handleStatusChange(app.id, s)}
-                            className={`w-full text-left px-3 py-2.5 text-xs transition-all hover:bg-surface2 ${
+                            className={`w-full text-left px-3 py-2.5 text-xs transition-all hover:bg-white/5 ${
                               app.status === s
-                                ? "text-[var(--text)] font-medium"
-                                : "text-muted hover:text-[var(--text)]"
+                                ? "text-slate-100 font-medium"
+                                : "text-slate-400 hover:text-slate-100"
                             }`}
                           >
                             {s}
@@ -267,7 +267,7 @@ export default function TrackerPage() {
                   {/* Expand */}
                   <button
                     onClick={() => setExpandedId(expandedId === app.id ? null : app.id)}
-                    className="w-7 h-7 rounded-lg bg-surface2 border border-border flex items-center justify-center text-muted hover:text-[var(--text)] transition-all"
+                    className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-slate-100 transition-all"
                   >
                     <ChevronDown
                       size={13}
@@ -278,7 +278,7 @@ export default function TrackerPage() {
                   {/* Delete */}
                   <button
                     onClick={() => handleDelete(app.id)}
-                    className="w-7 h-7 rounded-lg bg-surface2 border border-border flex items-center justify-center text-muted hover:text-accent-pink transition-all"
+                    className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-pink-400 transition-all"
                   >
                     <Trash2 size={13} />
                   </button>
@@ -287,7 +287,7 @@ export default function TrackerPage() {
 
               {/* Expanded details */}
               {expandedId === app.id && (
-                <div className="mt-4 pt-4 border-t border-border text-xs text-muted space-y-1.5 animate-fade-up">
+                <div className="mt-4 pt-4 border-t border-white/5 text-xs text-slate-400 space-y-1.5 animate-fade-up">
                   <p>📅 Applied: {new Date(app.appliedDate).toLocaleDateString("en-IN")}</p>
                   {app.nextStep && <p>⏭ Next: {app.nextStep}</p>}
                   {app.notes && <p>📝 Notes: {app.notes}</p>}

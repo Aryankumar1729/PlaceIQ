@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, X, Send, PanelRight, PanelRightClose } from "lucide-react";
 
-
 type Message = {
   role: "user" | "bot";
   content: string;
@@ -14,8 +13,6 @@ const suggestions = [
   "Infosys SP cutoff criteria",
   "Amazon SDE most asked topics",
 ];
-
-
 
 export default function ChatDrawer() {
   const [open, setOpen] = useState(false);
@@ -56,6 +53,7 @@ export default function ChatDrawer() {
       setLoading(false);
     }
   };
+
   return (
     <>
       {/* Overlay when expanded */}
@@ -66,58 +64,52 @@ export default function ChatDrawer() {
         />
       )}
 
-      {/* Floating button — hide when expanded */}
+      {/* Floating button */}
       {!expanded && (
         <button
           onClick={() => setOpen((v) => !v)}
-          className="fixed bottom-7 right-7 z-50 w-14 h-14 rounded-full bg-accent flex items-center justify-center shadow-glow transition-transform duration-200 hover:scale-105 active:scale-95"
+          className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center shadow-xl shadow-primary/40 hover:scale-110 transition-transform active:scale-95"
           aria-label="Open AI chat"
         >
-          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-accent-green border-2 border-bg animate-pulse" />
-          {open ? <X size={22} color="white" /> : <MessageCircle size={22} color="white" />}
+          <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-background-dark rounded-full" />
+          {open ? <X size={22} /> : <MessageCircle size={22} />}
         </button>
       )}
 
-      {/* Chat panel — drawer or sidebar */}
+      {/* Chat panel */}
       {(open || expanded) && (
         <div
-          className={`fixed z-50 flex flex-col border border-border-2 shadow-[0_20px_60px_rgba(0,0,0,0.6)] transition-all duration-300
+          className={`fixed z-50 flex flex-col border border-white/10 shadow-2xl shadow-black/40 transition-all duration-300
           ${expanded
-              ? "top-0 right-0 h-full w-[380px] rounded-none border-r-0 border-t-0 border-b-0 animate-none"
-              : "bottom-28 right-7 w-[360px] max-h-[560px] rounded-[18px] animate-slide-in-drawer"
+              ? "top-0 right-0 h-full w-[380px] rounded-none animate-none"
+              : "bottom-28 right-8 w-[360px] max-h-[560px] rounded-2xl animate-slide-in-drawer"
             }`}
-          style={{ background: "var(--surface)" }}
+          style={{ background: "#121216" }}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-border shrink-0">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-white/5 shrink-0">
             <div>
-              <div className="flex items-center gap-2 font-syne font-bold text-sm">
+              <div className="flex items-center gap-2 font-display font-bold text-sm text-white">
                 <span
-                  className="w-2 h-2 rounded-full bg-accent-green"
-                  style={{ boxShadow: "0 0 8px #43e97b", animation: "pulse-glow 1.5s infinite" }}
+                  className="w-2 h-2 rounded-full bg-green-500"
+                  style={{ boxShadow: "0 0 8px #22c55e", animation: "pulse-glow 1.5s infinite" }}
                 />
                 PlaceIQ AI
               </div>
-              <p className="text-[11px] text-muted mt-0.5">Ask anything about your upcoming drives</p>
+              <p className="text-[11px] text-slate-500 mt-0.5">Ask anything about your upcoming drives</p>
             </div>
 
             <div className="flex items-center gap-2">
-              {/* Expand / collapse sidebar button */}
               <button
                 onClick={() => { setExpanded((v) => !v); setOpen(true); }}
-                className="w-8 h-8 rounded-lg bg-surface2 border border-border flex items-center justify-center text-muted hover:text-[var(--text)] transition-colors"
+                className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
                 title={expanded ? "Collapse" : "Open as sidebar"}
               >
-                {expanded
-                  ? <PanelRightClose size={15} />
-                  : <PanelRight size={15} />
-                }
+                {expanded ? <PanelRightClose size={15} /> : <PanelRight size={15} />}
               </button>
-
-              {/* Close button */}
               <button
                 onClick={() => { setOpen(false); setExpanded(false); }}
-                className="w-8 h-8 rounded-lg bg-surface2 border border-border flex items-center justify-center text-muted hover:text-[var(--text)] transition-colors"
+                className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
               >
                 <X size={15} />
               </button>
@@ -129,21 +121,22 @@ export default function ChatDrawer() {
             {messages.map((m, i) => (
               <div
                 key={i}
-                className={`max-w-[88%] px-3.5 py-2.5 rounded-xl text-[13px] leading-relaxed whitespace-pre-wrap ${m.role === "bot"
-                  ? "self-start bg-surface2 border border-border rounded-bl-sm text-[var(--text)]"
-                  : "self-end bg-accent text-white rounded-br-sm"
-                  }`}
+                className={`max-w-[88%] px-3.5 py-2.5 rounded-xl text-[13px] leading-relaxed whitespace-pre-wrap ${
+                  m.role === "bot"
+                    ? "self-start bg-white/5 border border-white/5 rounded-bl-sm text-slate-200"
+                    : "self-end bg-primary text-white rounded-br-sm"
+                }`}
               >
                 {m.content}
               </div>
             ))}
             {loading && (
-              <div className="self-start bg-surface2 border border-border rounded-xl rounded-bl-sm px-4 py-3">
+              <div className="self-start bg-white/5 border border-white/5 rounded-xl rounded-bl-sm px-4 py-3">
                 <span className="flex gap-1">
                   {[0, 1, 2].map((i) => (
                     <span
                       key={i}
-                      className="w-1.5 h-1.5 rounded-full bg-muted animate-bounce"
+                      className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-bounce"
                       style={{ animationDelay: `${i * 0.15}s` }}
                     />
                   ))}
@@ -153,14 +146,14 @@ export default function ChatDrawer() {
             <div ref={bottomRef} />
           </div>
 
-          {/* Suggestions — dismissible */}
+          {/* Suggestions */}
           {showSuggestions && (
-            <div className="px-4 pt-2.5 pb-1 border-t border-border shrink-0">
+            <div className="px-4 pt-2.5 pb-1 border-t border-white/5 shrink-0">
               <div className="flex items-center justify-between mb-1.5">
-                <p className="text-[10px] uppercase tracking-wider text-muted-2 font-semibold">Quick ask</p>
+                <p className="text-[10px] uppercase tracking-wider text-slate-600 font-semibold">Quick ask</p>
                 <button
                   onClick={() => setShowSuggestions(false)}
-                  className="text-muted-2 hover:text-muted transition-colors"
+                  className="text-slate-600 hover:text-slate-400 transition-colors"
                   title="Dismiss suggestions"
                 >
                   <X size={12} />
@@ -171,7 +164,7 @@ export default function ChatDrawer() {
                   <button
                     key={s}
                     onClick={() => send(s)}
-                    className="text-left px-3 py-2 rounded-lg bg-surface2 border border-border text-xs text-muted hover:border-accent/30 hover:text-[var(--text)] transition-all"
+                    className="text-left px-3 py-2 rounded-xl bg-white/5 border border-white/5 text-xs text-slate-400 hover:border-primary/30 hover:text-white transition-all"
                   >
                     {s}
                   </button>
@@ -181,7 +174,7 @@ export default function ChatDrawer() {
           )}
 
           {/* Input */}
-          <div className="px-4 py-3 flex gap-2 items-end border-t border-border shrink-0">
+          <div className="px-4 py-3 flex gap-2 items-end border-t border-white/5 shrink-0">
             <textarea
               rows={1}
               className="flex-1 input-field resize-none text-[13px] min-h-[38px] max-h-24 py-2.5"
@@ -197,7 +190,7 @@ export default function ChatDrawer() {
             />
             <button
               onClick={() => send(input)}
-              className="w-9 h-9 rounded-lg bg-accent flex items-center justify-center shrink-0 hover:opacity-85 transition-opacity active:scale-95"
+              className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shrink-0 hover:bg-indigo-600 transition-colors active:scale-95"
             >
               <Send size={15} color="white" />
             </button>

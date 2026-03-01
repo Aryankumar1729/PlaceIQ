@@ -22,11 +22,11 @@ export function getDifficultyColor(diff: "Easy" | "Medium" | "Hard"): string {
 export function getStatusColor(status: string): string {
   return (
     {
-      offer: "bg-accent-green shadow-glow-green",
+      offer: "bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.5)]",
       interview: "bg-yellow-400",
-      applied: "bg-accent shadow-glow",
-      rejected: "bg-accent-pink shadow-glow-pink",
-    }[status] ?? "bg-muted"
+      applied: "bg-primary shadow-[0_0_8px_rgba(99,102,241,0.5)]",
+      rejected: "bg-pink-400 shadow-[0_0_8px_rgba(244,114,182,0.5)]",
+    }[status] ?? "bg-slate-500"
   );
 }
 

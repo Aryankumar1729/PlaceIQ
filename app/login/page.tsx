@@ -48,32 +48,32 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-bg px-4">
+        <div className="min-h-screen flex items-center justify-center bg-background-dark px-4">
             <div className="w-full max-w-md">
                 {/* Logo */}
                 <div className="text-center mb-8">
-                    <div className="flex items-center justify-center gap-2 font-syne font-extrabold text-2xl mb-2">
-                        <span className="w-2 h-2 rounded-full bg-accent"
-                            style={{ boxShadow: "0 0 10px var(--accent)" }} />
+                    <div className="flex items-center justify-center gap-2 font-display font-extrabold text-2xl mb-2">
+                        <span className="w-2 h-2 rounded-full bg-primary"
+                            style={{ boxShadow: "0 0 10px #6366f1" }} />
                         PlaceIQ
                     </div>
-                    <p className="text-muted text-sm">Campus placement intelligence for Indian BTech students</p>
+                    <p className="text-slate-400 text-sm">Campus placement intelligence for Indian BTech students</p>
                 </div>
 
                 {/* Card */}
                 <div className="card p-8">
                     {/* Mode toggle */}
-                    <div className="flex gap-1 bg-surface2 rounded-xl p-1 mb-6">
+                    <div className="flex gap-1 bg-white/5 rounded-xl p-1 mb-6">
                         <button
                             onClick={() => setMode("login")}
-                            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${mode === "login" ? "bg-surface text-[var(--text)] shadow-sm" : "text-muted"
+                            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${mode === "login" ? "bg-card-dark text-slate-100 shadow-sm" : "text-slate-400"
                                 }`}
                         >
                             Login
                         </button>
                         <button
                             onClick={() => setMode("register")}
-                            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${mode === "register" ? "bg-surface text-[var(--text)] shadow-sm" : "text-muted"
+                            className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${mode === "register" ? "bg-card-dark text-slate-100 shadow-sm" : "text-slate-400"
                                 }`}
                         >
                             Create Account
@@ -135,7 +135,7 @@ export default function LoginPage() {
 
                         {/* Error */}
                         {error && (
-                            <p className="text-xs text-accent-pink bg-accent-pink/10 border border-accent-pink/20 rounded-lg px-3 py-2">
+                            <p className="text-xs text-pink-400 bg-pink-400/10 border border-pink-400/20 rounded-lg px-3 py-2">
                                 {error}
                             </p>
                         )}
@@ -153,7 +153,7 @@ export default function LoginPage() {
                     </div>
                 </div>
 
-                <p className="text-center text-xs text-muted mt-4">
+                <p className="text-center text-xs text-slate-500 mt-4">
                     No spam. Your data stays private.
                 </p>
             </div>

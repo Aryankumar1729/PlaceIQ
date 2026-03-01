@@ -3,9 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
-import { User, LogOut, ChevronDown } from "lucide-react";
-import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
-import { PlusCircle } from "lucide-react";
+import { User, LogOut, ChevronDown, Bell } from "lucide-react";
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard" },
@@ -29,7 +27,8 @@ export default function Navbar() {
   useEffect(() => {
     fetch("/api/auth/me")
       .then((r) => r.json())
-      .then((data) => setUser(data.user));
+      .then((data) => setUser(data.user))
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -48,66 +47,53 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 border-b border-border bg-bg/80 backdrop-blur-xl">
-      {/* Logo */}
-      <div className="flex items-center gap-2 font-syne font-extrabold text-xl tracking-tight">
-        <span
-          className="w-2 h-2 rounded-full bg-accent"
-          style={{ boxShadow: "0 0 10px var(--accent)", animation: "pulse-glow 2s infinite" }}
-        />
-        PlaceIQ
-      </div>
-
-      {/* Links */}
-      <ul className="hidden md:flex items-center gap-8 list-none">
-        {navLinks.map((link) => (
-          <li key={link.href}>
+    <header className="px-6 md:px-12 py-5 flex justify-between items-center border-b border-transparent">
+      {/* Nav links */}
+      <div className="flex items-center gap-8">
+        <nav className="hidden md:flex gap-6">
+          {navLinks.map((link) => (
             <Link
+              key={link.href}
               href={link.href}
-              className={`nav-link ${pathname.startsWith(link.href) ? "active" : ""}`}
+              className={`text-sm font-medium transition-colors ${
+                pathname.startsWith(link.href)
+                  ? "text-primary"
+                  : "text-slate-400 hover:text-primary"
+              }`}
             >
               {link.label}
             </Link>
-          </li>
-        ))}
-      </ul>
-      <Link
-        href="/submit"
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-accent/30 text-accent text-xs font-medium hover:bg-accent/10 transition-all"
-      >
-        <PlusCircle size={13} />
-        Submit Question
-      </Link>
+          ))}
+        </nav>
+      </div>
+
       {/* Right side */}
-      <div className="flex items-center gap-3">
-        <ThemeSwitcher />
+      <div className="flex items-center gap-4">
+        <button className="p-2 text-slate-400 hover:text-white transition-colors">
+          <Bell size={20} />
+        </button>
+        <div className="h-6 w-px bg-white/10" />
 
         {user ? (
           <div ref={dropdownRef} className="relative">
             <button
               onClick={() => setDropdownOpen((v) => !v)}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-surface2 border border-border-2 hover:border-accent/40 transition-all"
+              className="flex items-center gap-3 pl-2 group"
             >
-              <div className="w-6 h-6 rounded-lg bg-accent/20 border border-accent/30 flex items-center justify-center font-syne font-bold text-xs text-accent">
-                {user.name?.charAt(0).toUpperCase()}
-              </div>
-              <span className="text-sm font-medium max-w-[100px] truncate">
-                {user.name?.split(" ")[0]}
-              </span>
-              <ChevronDown size={14} className="text-muted" />
+              <span className="text-sm font-medium text-white">{user.name?.split(" ")[0]}</span>
+              <ChevronDown size={14} className="text-slate-400 group-hover:text-white transition-colors" />
             </button>
 
             {dropdownOpen && (
               <div
-                className="absolute right-0 top-12 w-52 rounded-xl border border-border-2 shadow-card overflow-hidden animate-fade-up z-50"
-                style={{ background: "var(--surface)" }}
+                className="absolute right-0 top-10 w-52 rounded-2xl border border-white/10 bg-card-dark shadow-2xl shadow-black/40 overflow-hidden animate-fade-up z-50"
               >
                 {/* User info */}
-                <div className="px-4 py-3 border-b border-border">
-                  <p className="text-sm font-medium truncate">{user.name}</p>
-                  <p className="text-xs text-muted truncate">{user.email}</p>
+                <div className="px-4 py-3 border-b border-white/5">
+                  <p className="text-sm font-medium text-white truncate">{user.name}</p>
+                  <p className="text-xs text-slate-500 truncate">{user.email}</p>
                   {user.college && (
-                    <p className="text-xs text-muted-2 mt-0.5 truncate">{user.college}</p>
+                    <p className="text-xs text-slate-600 mt-0.5 truncate">{user.college}</p>
                   )}
                 </div>
 
@@ -115,7 +101,7 @@ export default function Navbar() {
                 <Link
                   href="/profile"
                   onClick={() => setDropdownOpen(false)}
-                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-muted hover:text-[var(--text)] hover:bg-surface2 transition-all"
+                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
                 >
                   <User size={14} />
                   View Profile
@@ -123,7 +109,7 @@ export default function Navbar() {
 
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-accent-pink hover:bg-accent-pink/10 transition-all"
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-pink-400 hover:bg-pink-500/10 transition-all"
                 >
                   <LogOut size={14} />
                   Logout
@@ -132,11 +118,11 @@ export default function Navbar() {
             )}
           </div>
         ) : (
-          <Link href="/login" className="btn-primary">
-            Login →
+          <Link href="/login" className="btn-primary text-sm px-5 py-2">
+            Login
           </Link>
         )}
       </div>
-    </nav>
+    </header>
   );
 }

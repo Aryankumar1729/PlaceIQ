@@ -23,7 +23,7 @@ def run_gfg(companies: list[str], max_pages: int = 2):
 
 if __name__ == "__main__":
     print("=== GFG Scraper ===")
-    '''run_gfg(GFG_COMPANIES)'''
+    run_gfg(GFG_COMPANIES)
     print("\n=== LeetCode Scraper ===")
     run_leetcode()
     print("\n✅ All done!")

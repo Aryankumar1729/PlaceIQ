@@ -27,15 +27,15 @@ type PYQ = {
 };
 
 const difficultyColor: Record<string, string> = {
-  Easy: "text-accent-green",
+  Easy: "text-green-400",
   Medium: "text-yellow-400",
-  Hard: "text-accent-pink",
+  Hard: "text-pink-400",
 };
 
 const difficultyDot: Record<string, string> = {
-  Easy: "bg-accent-green",
+  Easy: "bg-green-400",
   Medium: "bg-yellow-400",
-  Hard: "bg-accent-pink",
+  Hard: "bg-pink-400",
 };
 
 const roundData: Record<string, {
@@ -129,14 +129,14 @@ export default function CompanyDetailPage() {
   if (loading) {
     return (
       <div className="p-8 lg:p-10 max-w-3xl animate-pulse">
-        <div className="h-6 bg-surface2 rounded w-48 mb-6" />
-        <div className="h-20 bg-surface2 rounded-2xl mb-4" />
-        <div className="h-40 bg-surface2 rounded-2xl" />
+        <div className="h-6 bg-white/5 rounded w-48 mb-6" />
+        <div className="h-20 bg-white/5 rounded-2xl mb-4" />
+        <div className="h-40 bg-white/5 rounded-2xl" />
       </div>
     );
   }
 
-  if (!company) return <div className="p-10 text-muted">Company not found.</div>;
+  if (!company) return <div className="p-10 text-slate-400">Company not found.</div>;
 
   const rounds = roundData[company.tier]?.rounds ?? roundData.service.rounds;
   const dsaPct = Math.round((pyqs.filter(q => q.category === "DSA").length / Math.max(pyqs.length, 1)) * 100) || 45;
@@ -146,42 +146,42 @@ export default function CompanyDetailPage() {
   return (
     <div className="p-8 lg:p-10 max-w-3xl">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-xs text-muted mb-6 animate-fade-up">
-        <button onClick={() => router.back()} className="flex items-center gap-1 hover:text-[var(--text)] transition-colors">
+      <div className="flex items-center gap-2 text-xs text-slate-400 mb-6 animate-fade-up">
+        <button onClick={() => router.back()} className="flex items-center gap-1 hover:text-slate-100 transition-colors">
           <ArrowLeft size={14} />
           Back
         </button>
         <span>/</span>
-        <Link href="/companies" className="hover:text-[var(--text)] transition-colors uppercase tracking-wider">
+        <Link href="/companies" className="hover:text-slate-100 transition-colors uppercase tracking-wider">
           Companies
         </Link>
         <span>/</span>
-        <span className="text-accent uppercase tracking-wider">{company.name}</span>
+        <span className="text-primary uppercase tracking-wider">{company.name}</span>
       </div>
 
       {/* Hero */}
       <div className="card p-6 mb-4 animate-fade-up">
         <div className="flex items-center gap-4 mb-4">
-          <div className="w-14 h-14 rounded-2xl bg-accent/20 border border-accent/30 flex items-center justify-center font-syne font-bold text-sm text-accent shrink-0">
+          <div className="w-14 h-14 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center font-display font-bold text-sm text-primary shrink-0">
             {company.shortName.slice(0, 3)}
           </div>
           <div>
-            <h1 className="font-syne font-extrabold text-2xl">{company.name}</h1>
-            <p className="text-sm text-muted">{company.type} · {company.visitsTier2 ? "Visits 200+ colleges" : "Off-campus / Top colleges"}</p>
+            <h1 className="font-display font-extrabold text-2xl">{company.name}</h1>
+            <p className="text-sm text-slate-400">{company.type} · {company.visitsTier2 ? "Visits 200+ colleges" : "Off-campus / Top colleges"}</p>
           </div>
         </div>
 
         {/* Badges */}
         <div className="flex flex-wrap gap-2 mb-5">
           {company.visitsTier2 && (
-            <span className="text-xs px-3 py-1 rounded-full border border-border-2 text-muted">
+            <span className="text-xs px-3 py-1 rounded-full border border-white/10 text-slate-400">
               ✅ Visits Tier-2
             </span>
           )}
-          <span className="text-xs px-3 py-1 rounded-full border border-border-2 text-muted">
+          <span className="text-xs px-3 py-1 rounded-full border border-white/10 text-slate-400">
             {company.rounds} Rounds
           </span>
-          <span className="text-xs px-3 py-1 rounded-full border border-border-2 text-muted">
+          <span className="text-xs px-3 py-1 rounded-full border border-white/10 text-slate-400">
             {company.baseCTC}L Base CTC
           </span>
         </div>
@@ -225,8 +225,8 @@ export default function CompanyDetailPage() {
             }}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm transition-all ${
               targetAdded
-                ? "border-accent-green/40 text-accent-green bg-accent-green/10"
-                : "border-border-2 text-muted hover:text-[var(--text)] hover:border-accent/40"
+                ? "border-green-400/40 text-green-400 bg-green-400/10"
+                : "border-white/10 text-slate-400 hover:text-slate-100 hover:border-primary/40"
             }`}
           >
             <BookmarkPlus size={15} />
@@ -238,38 +238,38 @@ export default function CompanyDetailPage() {
       {/* Stats row */}
       <div className="grid grid-cols-2 gap-3 mb-4 animate-fade-up">
         <div className="card p-4">
-          <p className="text-[10px] uppercase tracking-widest text-muted-2 mb-1">Total PYQs</p>
-          <p className="font-syne font-extrabold text-3xl text-accent-green">{company._count.pyqs}</p>
+          <p className="text-[10px] uppercase tracking-widest text-slate-600 mb-1">Total PYQs</p>
+          <p className="font-display font-extrabold text-3xl text-green-400">{company._count.pyqs}</p>
         </div>
         <div className="card p-4">
-          <p className="text-[10px] uppercase tracking-widest text-muted-2 mb-1">DSA Focus</p>
-          <p className="font-syne font-extrabold text-3xl text-accent">{dsaPct}%</p>
+          <p className="text-[10px] uppercase tracking-widest text-slate-600 mb-1">DSA Focus</p>
+          <p className="font-display font-extrabold text-3xl text-primary">{dsaPct}%</p>
         </div>
         <div className="card p-4">
-          <p className="text-[10px] uppercase tracking-widest text-muted-2 mb-1">Aptitude</p>
-          <p className="font-syne font-extrabold text-3xl text-accent-pink">{aptPct}%</p>
+          <p className="text-[10px] uppercase tracking-widest text-slate-600 mb-1">Aptitude</p>
+          <p className="font-display font-extrabold text-3xl text-pink-400">{aptPct}%</p>
         </div>
         <div className="card p-4">
-          <p className="text-[10px] uppercase tracking-widest text-muted-2 mb-1">HR & Others</p>
-          <p className="font-syne font-extrabold text-3xl">{hrPct}%</p>
+          <p className="text-[10px] uppercase tracking-widest text-slate-600 mb-1">HR & Others</p>
+          <p className="font-display font-extrabold text-3xl">{hrPct}%</p>
         </div>
       </div>
 
       {/* Interview Rounds */}
       <div className="mb-6 animate-fade-up">
         <div className="flex items-center gap-3 mb-4">
-          <h2 className="font-syne font-bold text-lg">Interview Rounds</h2>
-          <div className="flex-1 h-px bg-accent/30" />
+          <h2 className="font-display font-bold text-lg">Interview Rounds</h2>
+          <div className="flex-1 h-px bg-primary/30" />
         </div>
         <div className="flex flex-col gap-3">
           {rounds.map((round, i) => (
-            <div key={i} className="card p-4 hover:border-border-2 transition-all">
+            <div key={i} className="card p-4 hover:border-white/10 transition-all">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-3">
-                  <span className="w-6 h-6 rounded-lg bg-accent/20 border border-accent/30 flex items-center justify-center text-xs font-bold text-accent">
+                  <span className="w-6 h-6 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center text-xs font-bold text-primary">
                     {i + 1}
                   </span>
-                  <p className="font-syne font-bold text-sm">{round.title}</p>
+                  <p className="font-display font-bold text-sm">{round.title}</p>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className={`w-1.5 h-1.5 rounded-full ${difficultyDot[round.difficulty]}`} />
@@ -278,10 +278,10 @@ export default function CompanyDetailPage() {
                   </span>
                 </div>
               </div>
-              <p className="text-xs text-muted mb-2">Duration: {round.duration}</p>
+              <p className="text-xs text-slate-400 mb-2">Duration: {round.duration}</p>
               <div className="flex flex-wrap gap-1.5">
                 {round.tags.map((tag) => (
-                  <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-surface2 border border-border text-muted">
+                  <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 border border-white/5 text-slate-400">
                     {tag}
                   </span>
                 ))}
@@ -304,10 +304,10 @@ export default function CompanyDetailPage() {
       {/* Top PYQs */}
       <div className="mb-6 animate-fade-up">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-syne font-bold text-lg">Top PYQs</h2>
+          <h2 className="font-display font-bold text-lg">Top PYQs</h2>
           <Link
             href={`/prep?company=${encodeURIComponent(company.name)}`}
-            className="flex items-center gap-1 text-xs text-accent hover:underline"
+            className="flex items-center gap-1 text-xs text-primary hover:underline"
           >
             View all {company._count.pyqs} questions
             <ExternalLink size={11} />
@@ -315,13 +315,13 @@ export default function CompanyDetailPage() {
         </div>
 
         {pyqs.length === 0 ? (
-          <div className="card p-6 text-center text-muted text-sm">
+          <div className="card p-6 text-center text-slate-400 text-sm">
             No questions scraped yet for this company.
           </div>
         ) : (
           <div className="flex flex-col gap-2">
             {pyqs.map((q) => (
-              <div key={q.id} className="card p-4 hover:border-border-2 transition-all cursor-pointer group">
+              <div key={q.id} className="card p-4 hover:border-white/10 transition-all cursor-pointer group">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium leading-relaxed line-clamp-2">{q.question}</p>
@@ -329,13 +329,13 @@ export default function CompanyDetailPage() {
                       <span className={`text-[10px] font-bold uppercase ${difficultyColor[q.difficulty]}`}>
                         {q.difficulty}
                       </span>
-                      <span className="text-[10px] uppercase tracking-wider text-muted-2">{q.category}</span>
+                      <span className="text-[10px] uppercase tracking-wider text-slate-600">{q.category}</span>
                       {q.tags.slice(0, 1).map((t) => (
-                        <span key={t} className="text-[10px] uppercase tracking-wider text-muted-2">{t}</span>
+                        <span key={t} className="text-[10px] uppercase tracking-wider text-slate-600">{t}</span>
                       ))}
                     </div>
                   </div>
-                  <ChevronRight size={14} className="text-muted shrink-0 group-hover:text-accent transition-colors" />
+                  <ChevronRight size={14} className="text-slate-400 shrink-0 group-hover:text-primary transition-colors" />
                 </div>
               </div>
             ))}
@@ -346,19 +346,19 @@ export default function CompanyDetailPage() {
       {/* Similar Companies */}
       {similarCompanies.length > 0 && (
         <div className="animate-fade-up">
-          <h2 className="font-syne font-bold text-lg mb-4">Similar Companies</h2>
+          <h2 className="font-display font-bold text-lg mb-4">Similar Companies</h2>
           <div className="grid grid-cols-3 gap-3">
             {similarCompanies.map((c) => (
               <Link
                 key={c.id}
                 href={`/companies/${c.id}`}
-                className="card p-4 hover:border-border-2 hover:-translate-y-0.5 transition-all text-center"
+                className="card p-4 hover:border-white/10 hover:-translate-y-0.5 transition-all text-center"
               >
-                <div className="w-10 h-10 rounded-xl bg-surface2 border border-border flex items-center justify-center font-syne font-bold text-xs mx-auto mb-2">
+                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center font-display font-bold text-xs mx-auto mb-2">
                   {c.shortName.slice(0, 3)}
                 </div>
-                <p className="font-syne font-bold text-xs mb-1">{c.name.split(" ")[0]}</p>
-                <p className="text-[10px] text-muted">{c.baseCTC}L CTC · {c._count.pyqs} PYQs</p>
+                <p className="font-display font-bold text-xs mb-1">{c.name.split(" ")[0]}</p>
+                <p className="text-[10px] text-slate-400">{c.baseCTC}L CTC · {c._count.pyqs} PYQs</p>
               </Link>
             ))}
           </div>

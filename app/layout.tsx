@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
-import { Syne, DM_Sans } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import ChatDrawer from "@/components/chat/ChatDrawer";
 import { ThemeProvider } from "@/components/providers/ThemeContext";
 
-const syne = Syne({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
-  variable: "--font-syne",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-inter",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -33,14 +33,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
-      <body>
+    <html lang="en" className={`dark ${inter.variable} ${jakarta.variable}`}>
+      <body className="bg-background-dark text-slate-100 antialiased min-h-screen">
         <ThemeProvider>
-          <div className="fixed inset-0 bg-hero-glow pointer-events-none z-0" />
-          <Navbar />
-          <div className="flex min-h-[calc(100vh-65px)] relative z-10">
+          <div className="flex">
             <Sidebar />
-            <main className="flex-1 overflow-y-auto">{children}</main>
+            <div className="flex-1 mesh-gradient min-h-screen">
+              <Navbar />
+              <main className="max-w-7xl mx-auto px-6 md:px-12 py-8">{children}</main>
+            </div>
           </div>
           <ChatDrawer />
         </ThemeProvider>

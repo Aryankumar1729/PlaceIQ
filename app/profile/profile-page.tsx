@@ -79,8 +79,8 @@ export default function ProfilePage() {
     return (
       <div className="p-8 lg:p-10 max-w-2xl">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-surface2 rounded w-1/3" />
-          <div className="h-40 bg-surface2 rounded-2xl" />
+          <div className="h-8 bg-white/5 rounded w-1/3" />
+          <div className="h-40 bg-white/5 rounded-2xl" />
         </div>
       </div>
     );
@@ -90,20 +90,20 @@ export default function ProfilePage() {
     <div className="p-8 lg:p-10 max-w-2xl">
       {/* Header */}
       <div className="mb-8 animate-fade-up">
-        <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">
+        <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
           ● Your Profile
         </p>
-        <h1 className="font-syne text-4xl font-extrabold tracking-tight mb-2">
+        <h1 className="font-display text-4xl font-extrabold tracking-tight mb-2">
           Hey, <span className="text-gradient">{user?.name?.split(" ")[0]}</span> 👋
         </h1>
-        <p className="text-muted text-[15px]">
+        <p className="text-slate-400 text-[15px]">
           Manage your profile and placement details.
         </p>
       </div>
 
       {/* Success message */}
       {success && (
-        <div className="mb-4 px-4 py-3 rounded-xl bg-accent-green/10 border border-accent-green/20 text-accent-green text-sm animate-fade-up">
+        <div className="mb-4 px-4 py-3 rounded-xl bg-green-400/10 border border-green-400/20 text-green-400 text-sm animate-fade-up">
           ✅ Profile updated successfully
         </div>
       )}
@@ -113,20 +113,20 @@ export default function ProfilePage() {
         {/* Avatar + name */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-accent/20 border border-accent/30 flex items-center justify-center font-syne font-bold text-xl text-accent">
+            <div className="w-14 h-14 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center font-display font-bold text-xl text-primary">
               {user?.name?.charAt(0).toUpperCase()}
             </div>
             <div>
-              <p className="font-syne font-bold text-lg">{user?.name}</p>
-              <p className="text-sm text-muted">{user?.email}</p>
+              <p className="font-display font-bold text-lg">{user?.name}</p>
+              <p className="text-sm text-slate-400">{user?.email}</p>
             </div>
           </div>
           <button
             onClick={() => setEditing((v) => !v)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border ${
               editing
-                ? "border-accent-pink/40 text-accent-pink bg-accent-pink/10"
-                : "border-border-2 text-muted hover:text-[var(--text)] hover:border-accent/40"
+                ? "border-pink-400/40 text-pink-400 bg-pink-400/10"
+                : "border-white/10 text-slate-400 hover:text-slate-100 hover:border-primary/40"
             }`}
           >
             {editing ? "Cancel" : "Edit Profile"}
@@ -137,7 +137,7 @@ export default function ProfilePage() {
         <div className="grid grid-cols-1 gap-4">
           {/* Name */}
           <div>
-            <label className="text-[11px] uppercase tracking-wider text-muted-2 font-semibold mb-1.5 block">
+            <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">
               Full Name
             </label>
             {editing ? (
@@ -153,15 +153,15 @@ export default function ProfilePage() {
 
           {/* Email — not editable */}
           <div>
-            <label className="text-[11px] uppercase tracking-wider text-muted-2 font-semibold mb-1.5 block">
+            <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">
               Email
             </label>
-            <p className="text-sm py-2.5 text-muted">{user?.email}</p>
+            <p className="text-sm py-2.5 text-slate-400">{user?.email}</p>
           </div>
 
           {/* College */}
           <div>
-            <label className="text-[11px] uppercase tracking-wider text-muted-2 font-semibold mb-1.5 block">
+            <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">
               College
             </label>
             {editing ? (
@@ -179,7 +179,7 @@ export default function ProfilePage() {
           {/* Branch + Grad Year */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-[11px] uppercase tracking-wider text-muted-2 font-semibold mb-1.5 block">
+              <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">
                 Branch
               </label>
               {editing ? (
@@ -194,7 +194,7 @@ export default function ProfilePage() {
               )}
             </div>
             <div>
-              <label className="text-[11px] uppercase tracking-wider text-muted-2 font-semibold mb-1.5 block">
+              <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">
                 Grad Year
               </label>
               {editing ? (
@@ -212,7 +212,7 @@ export default function ProfilePage() {
 
           {/* CGPA */}
           <div>
-            <label className="text-[11px] uppercase tracking-wider text-muted-2 font-semibold mb-1.5 block">
+            <label className="text-[11px] uppercase tracking-wider text-slate-600 font-semibold mb-1.5 block">
               CGPA
             </label>
             {editing ? (
@@ -241,14 +241,14 @@ export default function ProfilePage() {
       </div>
 
       {/* Danger zone */}
-      <div className="card p-6 border-accent-pink/20 animate-fade-up">
-        <p className="font-syne font-bold text-sm mb-1">Account</p>
-        <p className="text-xs text-muted mb-4">
+      <div className="card p-6 border-pink-400/20 animate-fade-up">
+        <p className="font-display font-bold text-sm mb-1">Account</p>
+        <p className="text-xs text-slate-400 mb-4">
           Logout from your PlaceIQ account on this device.
         </p>
         <button
           onClick={handleLogout}
-          className="px-5 py-2.5 rounded-lg text-sm font-medium border border-accent-pink/30 text-accent-pink bg-accent-pink/10 hover:bg-accent-pink/20 transition-all"
+          className="px-5 py-2.5 rounded-lg text-sm font-medium border border-pink-400/30 text-pink-400 bg-pink-400/10 hover:bg-pink-400/20 transition-all"
         >
           Logout →
         </button>

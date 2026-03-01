@@ -31,10 +31,10 @@ const tagSuggestions = [
 
 const difficultyConfig: Record<string, { color: string; bg: string; border: string; glow: string }> = {
   Easy: {
-    color: "text-accent-green",
-    bg: "bg-accent-green/10",
-    border: "border-accent-green/40",
-    glow: "shadow-[0_0_20px_rgba(67,233,123,0.15)]",
+    color: "text-green-400",
+    bg: "bg-green-400/10",
+    border: "border-green-400/40",
+    glow: "shadow-[0_0_20px_rgba(74,222,128,0.15)]",
   },
   Medium: {
     color: "text-yellow-400",
@@ -43,10 +43,10 @@ const difficultyConfig: Record<string, { color: string; bg: string; border: stri
     glow: "shadow-[0_0_20px_rgba(250,204,21,0.15)]",
   },
   Hard: {
-    color: "text-accent-pink",
-    bg: "bg-accent-pink/10",
-    border: "border-accent-pink/40",
-    glow: "shadow-[0_0_20px_rgba(255,101,132,0.15)]",
+    color: "text-pink-400",
+    bg: "bg-pink-400/10",
+    border: "border-pink-400/40",
+    glow: "shadow-[0_0_20px_rgba(244,114,182,0.15)]",
   },
 };
 
@@ -125,18 +125,18 @@ export default function SubmitPage() {
         <div className="text-center animate-fade-up max-w-md">
           {/* Glowing success icon */}
           <div className="relative inline-flex mb-6">
-            <div className="w-20 h-20 rounded-2xl bg-accent-green/10 border border-accent-green/30 flex items-center justify-center"
-              style={{ boxShadow: "0 0 40px rgba(67,233,123,0.2)" }}>
-              <CheckCircle2 size={36} className="text-accent-green" />
+            <div className="w-20 h-20 rounded-2xl bg-green-400/10 border border-green-400/30 flex items-center justify-center"
+              style={{ boxShadow: "0 0 40px rgba(74,222,128,0.2)" }}>
+              <CheckCircle2 size={36} className="text-green-400" />
             </div>
           </div>
 
-          <h2 className="font-syne font-extrabold text-3xl mb-3">
+          <h2 className="font-display font-extrabold text-3xl mb-3">
             Question Added! 🎉
           </h2>
-          <p className="text-muted text-sm leading-relaxed mb-8">
+          <p className="text-slate-400 text-sm leading-relaxed mb-8">
             Your question is now live in the database and visible to students prepping for{" "}
-            <span className="text-[var(--text)] font-medium">
+            <span className="text-slate-100 font-medium">
               {companies.find((c) => c.id === form.companyId)?.name}
             </span>
             . Thank you for contributing 🙏
@@ -148,7 +148,7 @@ export default function SubmitPage() {
             </button>
             <button
               onClick={() => router.push("/prep")}
-              className="px-6 py-2.5 rounded-xl border border-border-2 text-sm text-muted hover:text-[var(--text)] transition-all"
+              className="px-6 py-2.5 rounded-xl border border-white/10 text-sm text-slate-400 hover:text-slate-100 transition-all"
             >
               View Questions
             </button>
@@ -162,14 +162,14 @@ export default function SubmitPage() {
     <div className="p-8 lg:p-10 max-w-2xl">
       {/* Hero */}
       <div className="mb-10 animate-fade-up">
-        <p className="text-xs font-semibold tracking-widest uppercase text-accent mb-3">
+        <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
           ● Contribute
         </p>
-        <h1 className="font-syne text-4xl font-extrabold tracking-tight mb-3">
+        <h1 className="font-display text-4xl font-extrabold tracking-tight mb-3">
           Share what they{" "}
           <span className="text-gradient">actually asked</span>
         </h1>
-        <p className="text-muted text-[15px] leading-relaxed">
+        <p className="text-slate-400 text-[15px] leading-relaxed">
           Real questions from real interviews. Every submission helps a batchmate
           walk in prepared instead of guessing.
         </p>
@@ -180,7 +180,7 @@ export default function SubmitPage() {
 
         {/* Company selector */}
         <div className="card p-5">
-          <label className="text-[11px] uppercase tracking-widest text-muted-2 font-semibold mb-3 block">
+          <label className="text-[11px] uppercase tracking-widest text-slate-600 font-semibold mb-3 block">
             Which company? *
           </label>
           <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-1">
@@ -190,12 +190,12 @@ export default function SubmitPage() {
                 onClick={() => update("companyId", c.id)}
                 className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl border text-left transition-all ${
                   form.companyId === c.id
-                    ? "border-accent/50 bg-accent/10 text-[var(--text)]"
-                    : "border-border text-muted hover:border-border-2 hover:text-[var(--text)]"
+                    ? "border-primary/50 bg-primary/10 text-slate-100"
+                    : "border-white/5 text-slate-400 hover:border-white/10 hover:text-slate-100"
                 }`}
               >
-                <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-syne font-bold text-[9px] shrink-0 ${
-                  form.companyId === c.id ? "bg-accent/20 text-accent" : "bg-surface2 text-muted"
+                <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-display font-bold text-[9px] shrink-0 ${
+                  form.companyId === c.id ? "bg-primary/20 text-primary" : "bg-white/5 text-slate-400"
                 }`}>
                   {c.shortName.slice(0, 3)}
                 </div>
@@ -207,19 +207,19 @@ export default function SubmitPage() {
 
         {/* Question textarea */}
         <div className="card p-5">
-          <label className="text-[11px] uppercase tracking-widest text-muted-2 font-semibold mb-3 block">
+          <label className="text-[11px] uppercase tracking-widest text-slate-600 font-semibold mb-3 block">
             The Question *
           </label>
           <textarea
-            className="w-full bg-surface2 border border-border rounded-xl px-4 py-3 text-sm outline-none placeholder:text-muted resize-none focus:border-accent/40 transition-all leading-relaxed"
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none placeholder:text-slate-500 resize-none focus:border-primary/40 transition-all leading-relaxed"
             rows={5}
             placeholder="Type the exact question as it was asked in your interview. Be as specific as possible..."
             value={form.question}
             onChange={(e) => update("question", e.target.value)}
           />
           <div className="flex justify-between mt-2">
-            <p className="text-[10px] text-muted">Be specific — exact wording helps others prepare better</p>
-            <p className={`text-[10px] ${form.question.length > 400 ? "text-accent-pink" : "text-muted"}`}>
+            <p className="text-[10px] text-slate-500">Be specific — exact wording helps others prepare better</p>
+            <p className={`text-[10px] ${form.question.length > 400 ? "text-pink-400" : "text-slate-500"}`}>
               {form.question.length}/500
             </p>
           </div>
@@ -229,7 +229,7 @@ export default function SubmitPage() {
         <div className="card p-5">
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <label className="text-[11px] uppercase tracking-widest text-muted-2 font-semibold mb-3 block">
+              <label className="text-[11px] uppercase tracking-widest text-slate-600 font-semibold mb-3 block">
                 Difficulty *
               </label>
               <div className="flex flex-col gap-2">
@@ -243,7 +243,7 @@ export default function SubmitPage() {
                       className={`py-2.5 rounded-xl text-xs font-semibold border transition-all ${
                         isActive
                           ? `${cfg.color} ${cfg.bg} ${cfg.border} ${cfg.glow}`
-                          : "border-border text-muted hover:border-border-2"
+                          : "border-white/5 text-slate-400 hover:border-white/10"
                       }`}
                     >
                       {d}
@@ -254,7 +254,7 @@ export default function SubmitPage() {
             </div>
 
             <div>
-              <label className="text-[11px] uppercase tracking-widest text-muted-2 font-semibold mb-3 block">
+              <label className="text-[11px] uppercase tracking-widest text-slate-600 font-semibold mb-3 block">
                 Category *
               </label>
               <div className="flex flex-col gap-2">
@@ -264,8 +264,8 @@ export default function SubmitPage() {
                     onClick={() => update("category", c)}
                     className={`py-2.5 rounded-xl text-xs font-semibold border transition-all ${
                       form.category === c
-                        ? "border-accent/50 bg-accent/10 text-accent shadow-[0_0_20px_rgba(108,99,255,0.15)]"
-                        : "border-border text-muted hover:border-border-2"
+                        ? "border-primary/50 bg-primary/10 text-primary shadow-[0_0_20px_rgba(99,102,241,0.15)]"
+                        : "border-white/5 text-slate-400 hover:border-white/10"
                     }`}
                   >
                     {c}
@@ -280,7 +280,7 @@ export default function SubmitPage() {
         <div className="card p-5">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-[11px] uppercase tracking-widest text-muted-2 font-semibold mb-3 block">
+              <label className="text-[11px] uppercase tracking-widest text-slate-600 font-semibold mb-3 block">
                 Interview Round
               </label>
               <div className="flex flex-col gap-1.5">
@@ -290,8 +290,8 @@ export default function SubmitPage() {
                     onClick={() => update("round", r)}
                     className={`text-left px-3 py-2 rounded-lg text-xs transition-all ${
                       form.round === r
-                        ? "bg-surface2 text-[var(--text)] border border-border-2"
-                        : "text-muted hover:text-[var(--text)] hover:bg-surface2"
+                        ? "bg-white/5 text-slate-100 border border-white/10"
+                        : "text-slate-400 hover:text-slate-100 hover:bg-white/5"
                     }`}
                   >
                     {r}
@@ -301,7 +301,7 @@ export default function SubmitPage() {
             </div>
 
             <div>
-              <label className="text-[11px] uppercase tracking-widest text-muted-2 font-semibold mb-3 block">
+              <label className="text-[11px] uppercase tracking-widest text-slate-600 font-semibold mb-3 block">
                 Year Asked
               </label>
               <div className="flex flex-col gap-2">
@@ -311,8 +311,8 @@ export default function SubmitPage() {
                     onClick={() => update("year", y.toString())}
                     className={`py-2.5 rounded-xl text-xs font-semibold border transition-all ${
                       form.year === y.toString()
-                        ? "border-accent/50 bg-accent/10 text-accent"
-                        : "border-border text-muted hover:border-border-2"
+                        ? "border-primary/50 bg-primary/10 text-primary"
+                        : "border-white/5 text-slate-400 hover:border-white/10"
                     }`}
                   >
                     {y}
@@ -325,8 +325,8 @@ export default function SubmitPage() {
 
         {/* Tags */}
         <div className="card p-5">
-          <label className="text-[11px] uppercase tracking-widest text-muted-2 font-semibold mb-3 block">
-            Tags <span className="normal-case text-muted font-normal">(optional)</span>
+          <label className="text-[11px] uppercase tracking-widest text-slate-600 font-semibold mb-3 block">
+            Tags <span className="normal-case text-slate-500 font-normal">(optional)</span>
           </label>
 
           {form.tags.length > 0 && (
@@ -334,10 +334,10 @@ export default function SubmitPage() {
               {form.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent"
+                  className="flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary"
                 >
                   {tag}
-                  <button onClick={() => removeTag(tag)} className="hover:text-accent-pink transition-colors">
+                  <button onClick={() => removeTag(tag)} className="hover:text-pink-400 transition-colors">
                     <X size={10} />
                   </button>
                 </span>
@@ -347,7 +347,7 @@ export default function SubmitPage() {
 
           <div className="flex gap-2 mb-3">
             <input
-              className="flex-1 bg-surface2 border border-border rounded-xl px-3 py-2 text-sm outline-none placeholder:text-muted focus:border-accent/40 transition-all"
+              className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm outline-none placeholder:text-slate-500 focus:border-primary/40 transition-all"
               placeholder="Type a tag and press Enter..."
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
@@ -357,7 +357,7 @@ export default function SubmitPage() {
             />
             <button
               onClick={() => addTag(tagInput)}
-              className="w-9 h-9 rounded-xl border border-border-2 flex items-center justify-center text-muted hover:text-accent hover:border-accent/40 transition-all"
+              className="w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary/40 transition-all"
             >
               <Plus size={15} />
             </button>
@@ -370,7 +370,7 @@ export default function SubmitPage() {
                 <button
                   key={tag}
                   onClick={() => addTag(tag)}
-                  className="text-[10px] px-2.5 py-1 rounded-full border border-border text-muted hover:border-accent/40 hover:text-accent hover:bg-accent/5 transition-all"
+                  className="text-[10px] px-2.5 py-1 rounded-full border border-white/5 text-slate-400 hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all"
                 >
                   + {tag}
                 </button>
@@ -380,7 +380,7 @@ export default function SubmitPage() {
 
         {/* Error */}
         {error && (
-          <div className="px-4 py-3 rounded-xl bg-accent-pink/10 border border-accent-pink/20 text-accent-pink text-sm">
+          <div className="px-4 py-3 rounded-xl bg-pink-400/10 border border-pink-400/20 text-pink-400 text-sm">
             {error}
           </div>
         )}
@@ -390,7 +390,7 @@ export default function SubmitPage() {
           onClick={handleSubmit}
           disabled={saving || !form.companyId || !form.question.trim()}
           className="btn-primary w-full py-4 text-base flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
-          style={{ boxShadow: "0 0 30px rgba(108,99,255,0.3)" }}
+          style={{ boxShadow: "0 0 30px rgba(99,102,241,0.3)" }}
         >
           {saving ? (
             "Submitting..."
@@ -402,7 +402,7 @@ export default function SubmitPage() {
           )}
         </button>
 
-        <p className="text-center text-xs text-muted pb-4">
+        <p className="text-center text-xs text-slate-500 pb-4">
           Your submission is immediately live — no review needed.
           Help your batchmates ace their interviews 🎯
         </p>
