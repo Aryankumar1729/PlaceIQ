@@ -8,13 +8,13 @@ import {
   ClipboardList,
   BarChart3,
   FileText,
-  Users,
+  Shield,
   PlusCircle,
 } from "lucide-react";
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [user, setUser] = useState<{ name?: string } | null>(null);
+  const [user, setUser] = useState<{ name?: string; role?: string } | null>(null);
 
   useEffect(() => {
     fetch("/api/auth/me")
@@ -33,6 +33,9 @@ export default function Sidebar() {
   const secondaryLinks = [
     { href: "/resume", icon: FileText, label: "Resume" },
     { href: "/submit", icon: PlusCircle, label: "Submit" },
+    ...(user?.role === "admin"
+      ? [{ href: "/admin/pyqs", icon: Shield, label: "Admin" }]
+      : []),
   ];
 
   const isActive = (href: string) => pathname.startsWith(href);

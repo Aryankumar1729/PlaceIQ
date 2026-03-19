@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const protectedRoutes = ["/dashboard", "/prep", "/tracker", "/resume", "/profile", "/submit"];
+const protectedRoutes = ["/dashboard", "/prep", "/tracker", "/resume", "/profile", "/submit", "/admin"];
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("placeiq_token")?.value;
@@ -18,5 +18,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/prep/:path*", "/tracker/:path*", "/resume/:path*", "/profile/:path*"],
+  matcher: ["/dashboard/:path*", "/prep/:path*", "/tracker/:path*", "/resume/:path*", "/profile/:path*", "/admin/:path*"],
 };
