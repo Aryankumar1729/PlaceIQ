@@ -15,6 +15,52 @@ type PlanItem = {
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
+function generateMockInterviews(
+  days: number,
+  topCategories: string[],
+  focusCompanies: string[]
+) {
+  const interviewTypes = [
+    { type: "Phone Screen", duration: 45, prefix: "Introductory" },
+    { type: "Technical Round", duration: 90, prefix: "Coding-focused" },
+    { type: "System Design", duration: 75, prefix: "Architecture" },
+    { type: "Behavioral", duration: 60, prefix: "Soft skills" },
+  ];
+
+  const mockTests: Array<{
+    id: string;
+    title: string;
+    durationMinutes: number;
+    focus: string;
+    schedule: string;
+  }> = [];
+  const schedule = [];
+
+  if (days <= 7) {
+    schedule.push(2, 4, 6);
+  } else {
+    schedule.push(3, 6, 10, 14);
+  }
+
+  schedule.forEach((day, idx) => {
+    if (mockTests.length >= schedule.length) return;
+
+    const interview = interviewTypes[idx % interviewTypes.length];
+    const company = focusCompanies[idx % focusCompanies.length];
+    const topicOverride = idx === 1 && topCategories.length > 0 ? topCategories[0] : "mixed";
+
+    mockTests.push({
+      id: `mock-${idx + 1}`,
+      title: `${interview.type} - ${company}`,
+      durationMinutes: interview.duration,
+      focus: `${interview.prefix} round (${topicOverride})`,
+      schedule: `Day ${day}`,
+    });
+  });
+
+  return mockTests;
+}
+
 export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("placeiq_token")?.value;
@@ -129,27 +175,14 @@ export async function GET(req: NextRequest) {
       return acc;
     }, {});
 
-    const weakest = [...targetMeta].sort((a, b) => a.ratio - b.ratio)[0];
-    const focusCompanyText = weakest ? `${weakest.companyName} (${Math.round(weakest.ratio * 100)}%)` : "your targets";
+    const topCategories = Object.entries(mixByCategory)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 2)
+      .map(([cat]) => cat);
 
-    const topCategory = Object.entries(mixByCategory).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "DSA";
+    const focusCompanyNames = focusTargets.map((t) => t.companyName);
 
-    const mockTests = [
-      {
-        id: "mock-1",
-        title: "Timed DSA Mock",
-        durationMinutes: 90,
-        focus: `${topCategory} + medium/hard mix`,
-        schedule: days <= 7 ? "Day 4" : "Day 6",
-      },
-      {
-        id: "mock-2",
-        title: "Interview Simulation Mock",
-        durationMinutes: 60,
-        focus: `Top target: ${focusCompanyText}`,
-        schedule: days <= 7 ? "Day 7" : "Day 12",
-      },
-    ];
+    const mockTests = generateMockInterviews(days, topCategories, focusCompanyNames);
 
     const user = await prisma.user.findUnique({
       where: { id: payload.userId },
