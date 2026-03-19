@@ -34,9 +34,23 @@ model PYQ {
   lastSeen   DateTime
   verified   Boolean  @default(false)
   source     String?
+  sourceType String   @default("community")
+  sourceUrl  String?
+  sourceReputation Float @default(0.5)
+  confidenceScore Float @default(0.45)
+  dedupeGroup String?
+  reviewStatus String @default("pending")
+  reviewNotes String?
+  reviewedAt DateTime?
+  reviewedBy String?
   createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   progress         UserPYQProgress[]
 
+  @@index([reviewStatus])
+  @@index([confidenceScore])
+  @@index([dedupeGroup])
+  @@index([companyId, reviewStatus])
 
   @@unique([question, companyId])
 }
@@ -61,6 +75,7 @@ model User {
   email         String        @unique
   password      String?
   provider      String        @default("email")
+  role          String        @default("student")
   emailVerified Boolean       @default(false)
   college       String?
   branch        String?
@@ -70,6 +85,8 @@ model User {
   createdAt     DateTime      @default(now())
   prepTargets   PrepTarget[]
   progress      UserPYQProgress[]
+
+  @@index([role])
 }
 
 model PrepTarget {

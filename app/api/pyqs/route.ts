@@ -8,11 +8,13 @@ export async function GET(req: NextRequest) {
   const page = parseInt(searchParams.get("page") ?? "1");
   const limit = 20;
   const search = searchParams.get("search") ?? "";
+  const includePending = searchParams.get("includePending") === "true";
 
-  const where = {
+  const where: any = {
     ...(search && { question: { contains: search, mode: "insensitive" as const } }),
     ...(company && { company: { name: { contains: company, mode: "insensitive" as const } } }),
     ...(category && category !== "All" && { category }),
+    ...(!includePending && { reviewStatus: "approved" }),
   };
 
 
@@ -20,7 +22,11 @@ export async function GET(req: NextRequest) {
     prisma.pYQ.findMany({
       where,
       include: { company: true },
-      orderBy: { askedCount: "desc" },
+      orderBy: [
+        { confidenceScore: "desc" },
+        { askedCount: "desc" },
+        { lastSeen: "desc" },
+      ] as any,
       skip: (page - 1) * limit,
       take: limit,
     }),

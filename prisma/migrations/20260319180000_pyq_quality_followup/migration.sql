@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "PYQ" ALTER COLUMN "updatedAt" DROP DEFAULT;

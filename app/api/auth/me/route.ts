@@ -13,10 +13,10 @@ export async function GET(req: NextRequest) {
     where: { id: payload.userId },
     select: {
       id: true, name: true, email: true, college: true, branch: true,
-      gradYear: true, cgpa: true, provider: true, emailVerified: true,
+      gradYear: true, cgpa: true, provider: true, role: true, emailVerified: true,
       createdAt: true,
       _count: { select: { applications: true, prepTargets: true, progress: true } },
-    },
+    } as any,
   });
 
   return NextResponse.json({ user });

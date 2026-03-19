@@ -197,6 +197,26 @@ DATABASE_URL=postgresql://...
 JWT_SECRET=your_secret_here
 GROQ_API_KEY=gsk_...
 NEXTAUTH_URL=http://localhost:3000
+ADMIN_REVIEW_KEY=strong_random_key_for_admin_pyq_review_api
+```
+
+### PYQ Verification Pipeline (v1)
+
+- New quality fields on each PYQ: confidence score, source metadata, dedupe group, and review status.
+- Default listing (`/api/pyqs`) now returns only `approved` PYQs and auto-ranks by quality + frequency + recency.
+- Admin review API:
+        - `GET /api/admin/pyqs/review?status=pending&limit=25`
+        - `PATCH /api/admin/pyqs/review` with `{ pyqId, action, reviewNotes?, confidenceScore?, sourceType?, sourceUrl?, sourceReputation?, reviewedBy? }`
+        - Auth: logged-in user with `User.role = "admin"`
+        - Optional emergency access: header `x-admin-review-key: <ADMIN_REVIEW_KEY>`
+- `action` values: `approve`, `reject`, `needs_changes`.
+
+### Promote a user to admin
+
+Run once in your project root:
+
+```bash
+node -e 'const {PrismaClient}=require("@prisma/client"); const prisma=new PrismaClient(); (async()=>{ const email="your-email@example.com"; const r=await prisma.user.update({where:{email}, data:{role:"admin"}}); console.log("Promoted:", r.email); await prisma.$disconnect(); })().catch(async(e)=>{console.error(e); await prisma.$disconnect(); process.exit(1);});'
 ```
 
 ---

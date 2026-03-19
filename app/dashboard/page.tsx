@@ -5,6 +5,8 @@ import PrepTargets from "@/components/cards/PrepTargets";
 import DashboardGreeting from "@/components/ui/DashboardGreeting";
 import TrackerSummary from "@/components/cards/TrackerSummary";
 import SuggestedNextStep from "@/components/cards/SuggestedNextStep";
+import WeeklyPlanCard from "@/components/cards/WeeklyPlanCard";
+import InterviewReadinessCard from "@/components/cards/InterviewReadinessCard";
 
 
 export default function DashboardPage() {
@@ -18,6 +20,11 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
         <SuggestedNextStep />
         <PrepTargets />
+      </div>
+
+      <div className="mb-16 space-y-6">
+        <WeeklyPlanCard />
+        <InterviewReadinessCard />
       </div>
 
       <div className="mb-16">
