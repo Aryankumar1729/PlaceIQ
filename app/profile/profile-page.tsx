@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useTheme, themes } from "@/components/providers/ThemeContext";
 
 type User = {
   id: string;
@@ -19,6 +20,7 @@ type User = {
 
 export default function ProfilePage() {
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
   const [user, setUser] = useState<User | null>(null);
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -229,6 +231,40 @@ export default function ProfilePage() {
             {saving ? "Saving..." : "Save Changes →"}
           </button>
         )}
+      </div>
+
+      {/* Theme settings */}
+      <div className="card p-6 animate-fade-up">
+        <p className="font-display font-bold text-sm mb-1">Theme</p>
+        <p className="text-xs text-slate-400 mb-4">
+          Choose how PlaceIQ looks for your daily prep flow.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {themes.map((option) => {
+            const selected = option.id === theme;
+            return (
+              <button
+                key={option.id}
+                onClick={() => setTheme(option.id)}
+                className={`text-left rounded-xl border transition-all p-3 ${
+                  selected
+                    ? "border-primary/50 bg-primary/10"
+                    : "border-white/10 bg-white/5 hover:border-primary/30"
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-sm font-semibold text-slate-100 flex items-center gap-1.5">
+                    <span>{option.emoji}</span>
+                    <span>{option.label}</span>
+                  </span>
+                  {selected && <span className="w-2 h-2 rounded-full bg-primary" />}
+                </div>
+                <p className="text-[11px] text-slate-400 leading-relaxed">{option.description}</p>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Danger zone */}

@@ -14,11 +14,11 @@ const config: Config = {
         display: ["var(--font-display)", "Plus Jakarta Sans", "sans-serif"],
       },
       colors: {
-        primary: "#6366f1",
+        primary: "rgb(var(--color-primary) / <alpha-value>)",
         "background-light": "#ffffff",
-        "background-dark": "#0a0a0c",
-        "card-dark": "#121216",
-        "card-dark-2": "#18181c",
+        "background-dark": "rgb(var(--color-bg) / <alpha-value>)",
+        "card-dark": "rgb(var(--color-card) / <alpha-value>)",
+        "card-dark-2": "rgb(var(--color-card-2) / <alpha-value>)",
       },
       borderRadius: {
         DEFAULT: "12px",

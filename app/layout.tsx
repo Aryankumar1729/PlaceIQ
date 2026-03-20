@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`dark ${inter.variable} ${jakarta.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jakarta.variable}`}>
       <body className="bg-background-dark text-slate-100 antialiased min-h-screen">
         <ThemeProvider>
           <AppShell>{children}</AppShell>

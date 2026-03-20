@@ -30,7 +30,7 @@ export default function ThemeSwitcher() {
 
       {open && (
         <div className="absolute right-0 top-11 z-50 w-44 rounded-xl border border-white/10 shadow-xl overflow-hidden animate-fade-up"
-          style={{ background: "#121216" }}>
+          style={{ background: "rgb(var(--color-card))" }}>
           <p className="text-[10px] uppercase tracking-widest text-slate-600 font-semibold px-3 pt-3 pb-1.5">
             Theme
           </p>
