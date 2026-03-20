@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Navbar from "@/components/layout/Navbar";
 import ChatDrawer from "@/components/chat/ChatDrawer";
@@ -10,6 +11,7 @@ const authRoutes = ["/login"];
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAuth = authRoutes.includes(pathname);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
 
   if (isAuth) {
     return <>{children}</>;
@@ -17,7 +19,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <Sidebar />
+      <Sidebar expanded={isSidebarExpanded} onExpandedChange={setIsSidebarExpanded} />
       <div className="ml-20 mesh-gradient min-h-screen">
         <Navbar />
         <main className="max-w-7xl mx-auto px-6 md:px-12 py-8">{children}</main>
