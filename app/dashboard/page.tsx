@@ -2,18 +2,20 @@ import HeroSearch from "@/components/ui/HeroSearch";
 import StatsRow from "@/components/ui/StatsRow";
 import CompanyGrid from "@/components/cards/CompanyGrid";
 import PrepTargets from "@/components/cards/PrepTargets";
+import { Suspense } from "react";
 import DashboardGreeting from "@/components/ui/DashboardGreeting";
 import TrackerSummary from "@/components/cards/TrackerSummary";
 import SuggestedNextStep from "@/components/cards/SuggestedNextStep";
 import WeeklyPlanCard from "@/components/cards/WeeklyPlanCard";
 import InterviewReadinessCard from "@/components/cards/InterviewReadinessCard";
 
-
 export default function DashboardPage() {
   return (
     <div className="py-4">
       <DashboardGreeting />
-      <HeroSearch />
+      <Suspense fallback={<div className="h-20 bg-slate-100 rounded-xl animate-pulse mb-8" />}>
+        <HeroSearch />
+      </Suspense>
       <StatsRow />
 
       {/* Grid for prep targets + tracker */}
