@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { Search } from "lucide-react";
 import { useSearchParams } from "next/navigation";
@@ -32,7 +32,7 @@ const tierColor: Record<string, string> = {
   service: "text-pink-400 border-pink-400/30 bg-pink-400/10",
 };
 
-export default function CompaniesPage() {
+function CompaniesContent() {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const searchParams = useSearchParams();
@@ -216,5 +216,13 @@ export default function CompaniesPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function CompaniesPage() {
+  return (
+    <Suspense fallback={<div className="p-10 animate-pulse text-slate-500">Loading companies...</div>}>
+      <CompaniesContent />
+    </Suspense>
   );
 }
