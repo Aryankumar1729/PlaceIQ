@@ -44,11 +44,11 @@ export default function ResumePage() {
             className={`flex-1 rounded-xl px-4 py-3 text-left transition-all border ${
               roleType === opt.value
                 ? "border-primary/60 bg-primary/10"
-                : "border-white/10 hover:border-white/20 bg-white/[0.02]"
+                : "border-slate-200 hover:border-slate-200 bg-white/[0.02]"
             }`}
           >
             <p className={`font-display font-bold text-sm ${
-              roleType === opt.value ? "text-primary" : "text-slate-300"
+              roleType === opt.value ? "text-primary" : "text-slate-700"
             }`}>{opt.label}</p>
             <p className="text-[11px] text-slate-500 mt-0.5">{opt.desc}</p>
           </button>
@@ -76,10 +76,10 @@ export default function ResumePage() {
                 return (
                   <div key={b.label}>
                     <div className="flex justify-between text-xs mb-1.5">
-                      <span className="text-slate-400">{b.label}</span>
+                      <span className="text-slate-500">{b.label}</span>
                       <span style={{ color }}>{b.status} · {b.score}%</span>
                     </div>
-                    <div className="h-1.5 rounded-full overflow-hidden bg-white/5">
+                    <div className="h-1.5 rounded-full overflow-hidden bg-slate-100">
                       <div
                         className="h-full rounded-full transition-all duration-700"
                         style={{ width: `${b.score}%`, background: color }}
@@ -96,7 +96,7 @@ export default function ResumePage() {
             <p className="font-display font-bold text-sm mb-4">💡 Suggestions</p>
             <ul className="space-y-3">
               {result.suggestions.map((s, i) => (
-                <li key={i} className="flex items-start gap-3 text-sm text-slate-300">
+                <li key={i} className="flex items-start gap-3 text-sm text-slate-700">
                   <span className="text-primary mt-0.5 shrink-0">→</span>
                   {s}
                 </li>

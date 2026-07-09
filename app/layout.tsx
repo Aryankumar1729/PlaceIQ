@@ -32,7 +32,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${jakarta.variable}`}>
-      <body className="bg-background-dark text-slate-100 antialiased min-h-screen">
+      <body className="bg-background-light text-slate-900 antialiased min-h-screen">
         <ThemeProvider>
           <AppShell>{children}</AppShell>
         </ThemeProvider>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { CheckCircle2, Circle } from "lucide-react";
+import { CheckCircle2, Circle, ExternalLink } from "lucide-react";
 
 type PYQ = {
   id: string;
@@ -12,6 +12,7 @@ type PYQ = {
   tags: string[];
   askedCount: number;
   company: { id: string; name: string };
+  sourceUrl?: string;
 };
 
 const tabs = ["All", "DSA", "Aptitude", "HR", "Technical"] as const;
@@ -113,15 +114,15 @@ export default function PYQList() {
   return (
     <div>
       {/* Filter tabs */}
-      <div className="flex gap-1 bg-card-dark border border-white/5 rounded-xl p-1 w-fit mb-6">
+      <div className="flex gap-1 bg-white border border-slate-200 rounded-xl p-1 w-fit mb-6">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActive(tab)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
+            className={` ${
               active === tab
-                ? "bg-white/5 text-slate-100 shadow-sm"
-                : "text-slate-400 hover:text-slate-100"
+                ? "bg-slate-100 text-slate-900 shadow-sm"
+                : "text-slate-500 hover:text-slate-900"
             }`}
           >
             {tab}
@@ -135,7 +136,7 @@ export default function PYQList() {
           <h2 className="font-display text-lg font-bold">
             {searchParam ? `Results for "${searchParam}"` : "Most Asked Questions"}
           </h2>
-          <span className="text-xs text-slate-400">{pyqs.length} of {total} questions</span>
+          <span className="text-xs text-slate-500">{pyqs.length} of {total} questions</span>
         </div>
 
         {/* Progress bar — only show when prep target exists */}
@@ -145,9 +146,9 @@ export default function PYQList() {
               <p className="text-xs font-medium">
                 🎯 Prep Progress — <span className="text-primary">{donePyqIds.size}/{total} done</span>
               </p>
-              <span className="text-xs text-slate-400">{pct}%</span>
+              <span className="text-xs text-slate-500">{pct}%</span>
             </div>
-            <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+            <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
               <div
                 className="h-full rounded-full transition-all duration-500"
                 style={{
@@ -165,8 +166,8 @@ export default function PYQList() {
         <div className="flex flex-col gap-3">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="card p-4 animate-pulse">
-              <div className="h-4 bg-white/5 rounded w-3/4 mb-3" />
-              <div className="h-3 bg-white/5 rounded w-1/2" />
+              <div className="h-4 bg-slate-100 rounded w-3/4 mb-3" />
+              <div className="h-3 bg-slate-100 rounded w-1/2" />
             </div>
           ))}
         </div>
@@ -178,7 +179,7 @@ export default function PYQList() {
               return (
                 <div
                   key={q.id}
-                  className={`card p-4 hover:border-white/10 animate-fade-up transition-all ${
+                  className={`card p-4 hover:border-slate-200 animate-fade-up transition-all ${
                     isDone ? "opacity-60 border-green-400/20" : ""
                   }`}
                 >
@@ -188,26 +189,33 @@ export default function PYQList() {
                       <button
                         onClick={() => toggleDone(q.id)}
                         disabled={toggling === q.id}
-                        className="shrink-0 mt-0.5 transition-all"
+                        className="btn-icon mt-0.5"
                       >
                         {isDone ? (
                           <CheckCircle2 size={18} className="text-green-400" />
                         ) : (
-                          <Circle size={18} className="text-slate-400 hover:text-primary transition-colors" />
+                          <Circle size={18} className="text-slate-500 link" />
                         )}
                       </button>
                     )}
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-3 mb-3">
-                        <p className={`text-sm font-medium leading-relaxed ${isDone ? "line-through text-slate-400" : ""}`}>
-                          {q.question}
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <p className={`text-sm font-medium leading-relaxed ${isDone ? "line-through text-slate-500" : ""}`}>
+                            {q.question}
+                          </p>
+                          {q.sourceUrl && (
+                            <a href={q.sourceUrl} target="_blank" rel="noreferrer" className="text-slate-500 link" title="Solve on LeetCode">
+                              <ExternalLink size={15} />
+                            </a>
+                          )}
+                        </div>
                         <span className={`badge shrink-0 ${difficultyClass[q.difficulty] ?? "badge-medium"}`}>
                           {q.difficulty}
                         </span>
                       </div>
-                      <div className="flex flex-wrap gap-3 text-[11px] text-slate-400">
+                      <div className="flex flex-wrap gap-3 text-[11px] text-slate-500">
                         <span>🏢 {q.company.name}</span>
                         <span>📊 {q.category}</span>
                         {q.tags.slice(0, 2).map((t) => (
@@ -226,14 +234,14 @@ export default function PYQList() {
             <button
               onClick={loadMore}
               disabled={loadingMore}
-              className="w-full py-3 rounded-xl border border-white/10 text-sm text-slate-400 hover:text-slate-100 hover:border-primary/40 transition-all mt-4"
+              className="w-full py-3 rounded-xl border border-slate-200 text-sm text-slate-500 hover:text-slate-900 hover:border-primary/40 transition-all mt-4"
             >
               {loadingMore ? "Loading..." : `Load more (${total - pyqs.length} remaining)`}
             </button>
           )}
 
           {pyqs.length === 0 && (
-            <div className="card p-10 text-center text-slate-400">
+            <div className="card p-10 text-center text-slate-500">
               <div className="text-3xl mb-2">🔍</div>
               <p className="text-sm">
                 {searchParam

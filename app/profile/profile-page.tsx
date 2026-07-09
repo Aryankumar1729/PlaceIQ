@@ -82,8 +82,8 @@ export default function ProfilePage() {
     return (
       <div className="p-8 lg:p-10 max-w-2xl">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-white/5 rounded w-1/3" />
-          <div className="h-48 bg-white/5 rounded-2xl" />
+          <div className="h-8 bg-slate-100 rounded w-1/3" />
+          <div className="h-48 bg-slate-100 rounded-2xl" />
         </div>
       </div>
     );
@@ -108,7 +108,7 @@ export default function ProfilePage() {
         <h1 className="font-display text-4xl font-extrabold tracking-tight mb-1">
           Hey, <span className="text-gradient">{user?.name?.split(" ")[0]}</span> 👋
         </h1>
-        <p className="text-slate-400 text-[15px]">
+        <p className="text-slate-500 text-[15px]">
           Manage your account and placement details.
         </p>
       </div>
@@ -124,7 +124,7 @@ export default function ProfilePage() {
       <div className="grid grid-cols-3 gap-3 animate-fade-up">
         {stats.map((s) => (
           <div key={s.label} className="card p-4 text-center">
-            <p className="font-display text-2xl font-bold text-slate-100">{s.value}</p>
+            <p className="font-display text-2xl font-bold text-slate-900">{s.value}</p>
             <p className="text-[11px] text-slate-500 uppercase tracking-wider mt-1">{s.label}</p>
           </div>
         ))}
@@ -140,7 +140,7 @@ export default function ProfilePage() {
             </div>
             <div>
               <p className="font-display font-bold text-lg">{user?.name}</p>
-              <div className="flex items-center gap-2 text-sm text-slate-400">
+              <div className="flex items-center gap-2 text-sm text-slate-500">
                 <span>{user?.email}</span>
                 {user?.provider === "google" && (
                   <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
@@ -158,7 +158,7 @@ export default function ProfilePage() {
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border ${
               editing
                 ? "border-pink-400/40 text-pink-400 bg-pink-400/10"
-                : "border-white/10 text-slate-400 hover:text-slate-100 hover:border-primary/40"
+                : "border-slate-200 text-slate-500 hover:text-slate-900 hover:border-primary/40"
             }`}
           >
             {editing ? "Cancel" : "Edit"}
@@ -173,7 +173,7 @@ export default function ProfilePage() {
             {editing ? (
               <input className="input-field" value={form.name} onChange={(e) => update("name", e.target.value)} />
             ) : (
-              <p className="text-sm py-2.5 text-slate-300">{user?.name || "—"}</p>
+              <p className="text-sm py-2.5 text-slate-700">{user?.name || "—"}</p>
             )}
           </div>
 
@@ -189,7 +189,7 @@ export default function ProfilePage() {
             {editing ? (
               <input className="input-field" placeholder="e.g. DTU, VIT, AKTU" value={form.college} onChange={(e) => update("college", e.target.value)} />
             ) : (
-              <p className="text-sm py-2.5 text-slate-300">{user?.college || "—"}</p>
+              <p className="text-sm py-2.5 text-slate-700">{user?.college || "—"}</p>
             )}
           </div>
 
@@ -200,7 +200,7 @@ export default function ProfilePage() {
               {editing ? (
                 <input className="input-field" placeholder="e.g. CSE" value={form.branch} onChange={(e) => update("branch", e.target.value)} />
               ) : (
-                <p className="text-sm py-2.5 text-slate-300">{user?.branch || "—"}</p>
+                <p className="text-sm py-2.5 text-slate-700">{user?.branch || "—"}</p>
               )}
             </div>
             <div>
@@ -208,7 +208,7 @@ export default function ProfilePage() {
               {editing ? (
                 <input className="input-field" placeholder="e.g. 2026" value={form.gradYear} onChange={(e) => update("gradYear", e.target.value)} />
               ) : (
-                <p className="text-sm py-2.5 text-slate-300">{user?.gradYear || "—"}</p>
+                <p className="text-sm py-2.5 text-slate-700">{user?.gradYear || "—"}</p>
               )}
             </div>
             <div>
@@ -216,7 +216,7 @@ export default function ProfilePage() {
               {editing ? (
                 <input className="input-field" placeholder="e.g. 8.5" value={form.cgpa} onChange={(e) => update("cgpa", e.target.value)} />
               ) : (
-                <p className="text-sm py-2.5 text-slate-300">{user?.cgpa || "—"}</p>
+                <p className="text-sm py-2.5 text-slate-700">{user?.cgpa || "—"}</p>
               )}
             </div>
           </div>
@@ -226,7 +226,7 @@ export default function ProfilePage() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="btn-primary w-full mt-6 py-3 disabled:opacity-60"
+            className="btn-primary"
           >
             {saving ? "Saving..." : "Save Changes →"}
           </button>
@@ -236,7 +236,7 @@ export default function ProfilePage() {
       {/* Theme settings */}
       <div className="card p-6 animate-fade-up">
         <p className="font-display font-bold text-sm mb-1">Theme</p>
-        <p className="text-xs text-slate-400 mb-4">
+        <p className="text-xs text-slate-500 mb-4">
           Choose how PlaceIQ looks for your daily prep flow.
         </p>
 
@@ -250,17 +250,17 @@ export default function ProfilePage() {
                 className={`text-left rounded-xl border transition-all p-3 ${
                   selected
                     ? "border-primary/50 bg-primary/10"
-                    : "border-white/10 bg-white/5 hover:border-primary/30"
+                    : "border-slate-200 bg-slate-100 hover:border-primary/30"
                 }`}
               >
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-sm font-semibold text-slate-100 flex items-center gap-1.5">
+                  <span className="text-sm font-semibold text-slate-900 flex items-center gap-1.5">
                     <span>{option.emoji}</span>
                     <span>{option.label}</span>
                   </span>
                   {selected && <span className="w-2 h-2 rounded-full bg-primary" />}
                 </div>
-                <p className="text-[11px] text-slate-400 leading-relaxed">{option.description}</p>
+                <p className="text-[11px] text-slate-500 leading-relaxed">{option.description}</p>
               </button>
             );
           })}
@@ -270,7 +270,7 @@ export default function ProfilePage() {
       {/* Danger zone */}
       <div className="card p-6 border-pink-400/20 animate-fade-up">
         <p className="font-display font-bold text-sm mb-1">Account</p>
-        <p className="text-xs text-slate-400 mb-4">
+        <p className="text-xs text-slate-500 mb-4">
           Logout from your PlaceIQ account on this device.
         </p>
         <button

@@ -22,7 +22,7 @@ export default function StatsRow() {
   }, []);
 
   const rows = [
-    { label: "Companies Tracked", value: stats.companies.toString(), sub: "Updated weekly", color: "text-white" },
+    { label: "Companies Tracked", value: stats.companies.toString(), sub: "Updated weekly", color: "text-slate-900" },
     { label: "PYQs Collected", value: stats.pyqs > 999 ? `${(stats.pyqs / 1000).toFixed(1)}k` : stats.pyqs.toString(), sub: "Verified from open sources", color: "text-green-500" },
     { label: "Students Joined", value: stats.users.toString(), sub: "And growing", color: "text-primary" },
     { label: "Your Prep Score", value: stats.prepScore ?? "—", sub: stats.prepScore === "—" ? "Complete profile" : "Across your targets", color: "text-slate-600" },
@@ -36,7 +36,7 @@ export default function StatsRow() {
           <h2 className={`text-5xl font-display font-bold mb-2 ${s.color}`}>
             {s.value}
           </h2>
-          <p className="text-sm text-slate-400">{s.sub}</p>
+          <p className="text-sm text-slate-500">{s.sub}</p>
         </div>
       ))}
     </section>

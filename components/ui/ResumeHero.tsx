@@ -9,7 +9,7 @@ export default function ResumeHero() {
         <br />
         <span className="text-gradient">your resume?</span>
       </h1>
-      <p className="text-slate-400 text-[15px]">
+      <p className="text-slate-500 text-[15px]">
         Upload and get a score tailored to your target companies.
       </p>
     </div>

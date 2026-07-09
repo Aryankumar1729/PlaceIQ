@@ -27,9 +27,9 @@ const companyColors: Record<string, string> = {
   HCL: "bg-blue-500/10 text-blue-400",
   ACC: "bg-violet-500/10 text-violet-500",
   ATL: "bg-blue-600/10 text-blue-600",
-  UBE: "bg-slate-400/10 text-slate-300",
+  UBE: "bg-slate-400/10 text-slate-700",
   VIS: "bg-amber-500/10 text-amber-500",
-  JPM: "bg-slate-500/10 text-slate-400",
+  JPM: "bg-slate-500/10 text-slate-500",
   GOL: "bg-blue-500/10 text-blue-300",
 };
 
@@ -57,10 +57,10 @@ export default function CompanyGrid() {
   if (loading) {
     return (
       <section className="mb-8">
-        <h3 className="text-2xl font-display font-bold text-white mb-6">Trending Companies</h3>
+        <h3 className="text-2xl font-display font-bold text-slate-900 mb-6">Trending Companies</h3>
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-card-dark border border-white/5 rounded-2xl p-6 h-24 animate-pulse" />
+            <div key={i} className="card p-6 h-24 animate-pulse" />
           ))}
         </div>
       </section>
@@ -71,7 +71,7 @@ export default function CompanyGrid() {
     <section>
       <div className="flex justify-between items-end mb-10">
         <div>
-          <h3 className="text-2xl font-display font-bold text-white">Trending Companies</h3>
+          <h3 className="text-2xl font-display font-bold text-slate-900">Trending Companies</h3>
           <p className="text-slate-500 mt-1">Hiring active for 2026 graduate roles</p>
         </div>
         <Link
@@ -87,7 +87,7 @@ export default function CompanyGrid() {
           <Link
             key={c.id}
             href={`/companies/${c.id}`}
-            className="group relative bg-card-dark border border-white/5 rounded-2xl p-6 hover:border-primary/30 transition-all duration-300 block"
+            className="group relative card p-6 hover:border-primary/30 transition-all duration-300 block"
           >
             <div className="flex flex-col md:flex-row md:items-center gap-6">
               {/* Company info */}
@@ -96,7 +96,7 @@ export default function CompanyGrid() {
                   {c.shortName.slice(0, 3)}
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-white">{c.name}</h4>
+                  <h4 className="text-lg font-bold text-slate-900">{c.name}</h4>
                   <p className="text-xs text-slate-500 flex items-center gap-2 mt-1">
                     <span>{c.type}</span>
                     <span className="w-1 h-1 rounded-full bg-slate-700" />
@@ -108,15 +108,15 @@ export default function CompanyGrid() {
               {/* Stats */}
               <div className="flex flex-1 items-center justify-between gap-6">
                 <div className="text-center">
-                  <p className="text-xl font-display font-bold text-white">{c.baseCTC}L</p>
+                  <p className="text-xl font-display font-bold text-slate-900">{c.baseCTC}L</p>
                   <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Base CTC</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xl font-display font-bold text-white">{c._count.pyqs}</p>
+                  <p className="text-xl font-display font-bold text-slate-900">{c._count.pyqs}</p>
                   <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">PYQs</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-xl font-display font-bold text-white">{c.rounds} Rds</p>
+                  <p className="text-xl font-display font-bold text-slate-900">{c.rounds} Rds</p>
                   <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Process</p>
                 </div>
               </div>
@@ -126,7 +126,7 @@ export default function CompanyGrid() {
                 <div className="flex justify-between text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-2">
                   <span>Topic distribution</span>
                 </div>
-                <div className="flex h-1.5 w-full rounded-full overflow-hidden bg-white/5">
+                <div className="flex h-1.5 w-full rounded-full overflow-hidden bg-slate-100">
                   <div className="h-full bg-indigo-500 w-[50%]" />
                   <div className="h-full bg-pink-500 w-[30%] ml-[2px]" />
                   <div className="h-full bg-green-500 w-[20%] ml-[2px]" />

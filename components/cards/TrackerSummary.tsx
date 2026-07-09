@@ -15,7 +15,7 @@ const statusColor: Record<string, string> = {
   Offer: "text-green-400",
   Interview: "text-yellow-400",
   OA: "text-primary",
-  Applied: "text-slate-400",
+  Applied: "text-slate-500",
   Rejected: "text-pink-400",
 };
 
@@ -52,19 +52,19 @@ export default function TrackerSummary() {
 
   if (loading) {
     return (
-      <div className="bg-card-dark border border-white/5 rounded-2xl p-5 animate-pulse">
-        <div className="h-4 bg-white/5 rounded w-1/3 mb-4" />
-        <div className="h-12 bg-white/5 rounded-xl mb-3" />
-        <div className="h-12 bg-white/5 rounded-xl" />
+      <div className="card p-5 animate-pulse">
+        <div className="h-4 bg-slate-100 rounded w-1/3 mb-4" />
+        <div className="h-12 bg-slate-100 rounded-xl mb-3" />
+        <div className="h-12 bg-slate-100 rounded-xl" />
       </div>
     );
   }
 
   return (
-    <div className="bg-card-dark border border-white/5 rounded-2xl p-5">
+    <div className="card p-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="font-display font-bold text-sm text-white">Application Tracker</h2>
+        <h2 className="font-display font-bold text-sm text-slate-900">Application Tracker</h2>
         <Link href="/tracker" className="text-xs text-primary hover:underline">
           View all →
         </Link>
@@ -72,7 +72,7 @@ export default function TrackerSummary() {
 
       {applications.length === 0 ? (
         <div className="text-center py-6">
-          <p className="text-sm text-slate-400 mb-1">No applications yet.</p>
+          <p className="text-sm text-slate-500 mb-1">No applications yet.</p>
           <p className="text-xs text-slate-600 mb-4">
             Start tracking your placement drives.
           </p>
@@ -90,13 +90,13 @@ export default function TrackerSummary() {
             {stats.map((s) => (
               <div
                 key={s.label}
-                className="bg-white/5 rounded-xl p-2 text-center"
+                className="bg-slate-100 rounded-xl p-2 text-center"
               >
                 <p className={`font-display font-bold text-base ${
                   s.label === "Offer" ? "text-green-400" :
                   s.label === "Rejected" ? "text-pink-400" :
                   s.label === "Interview" ? "text-yellow-400" :
-                  s.label === "OA" ? "text-primary" : "text-white"
+                  s.label === "OA" ? "text-primary" : "text-slate-900"
                 }`}>
                   {s.count}
                 </p>
@@ -110,12 +110,12 @@ export default function TrackerSummary() {
             {recent.map((app) => (
               <div
                 key={app.id}
-                className="flex items-center justify-between py-2 border-b border-white/5 last:border-0"
+                className="flex items-center justify-between py-2 border-b border-slate-200 last:border-0"
               >
                 <div className="flex items-center gap-2.5">
                   <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${statusDot[app.status] ?? "bg-slate-500"}`} />
                   <div>
-                    <p className="text-xs font-medium text-white">{app.companyName}</p>
+                    <p className="text-xs font-medium text-slate-900">{app.companyName}</p>
                     <p className="text-[10px] text-slate-500">{app.role}</p>
                   </div>
                 </div>

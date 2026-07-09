@@ -31,21 +31,21 @@ export default function SuggestedNextStep() {
 
   if (loading) {
     return (
-      <div className="bg-card-dark border border-white/5 rounded-2xl p-5 animate-pulse">
-        <div className="h-4 bg-white/5 rounded w-1/2 mb-3" />
-        <div className="h-8 bg-white/5 rounded w-3/4" />
+      <div className="card p-5 animate-pulse">
+        <div className="h-4 bg-slate-100 rounded w-1/2 mb-3" />
+        <div className="h-8 bg-slate-100 rounded w-3/4" />
       </div>
     );
   }
 
   if (!target) {
     return (
-      <div className="bg-card-dark border border-white/5 rounded-2xl p-5">
+      <div className="card p-5">
         <div className="flex items-center gap-2 mb-2">
           <Zap size={14} className="text-primary" />
-          <p className="font-display font-bold text-sm text-white">Suggested Next Step</p>
+          <p className="font-display font-bold text-sm text-slate-900">Suggested Next Step</p>
         </div>
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-slate-500">
           Add a prep target to get personalized suggestions.
         </p>
         <Link href="/companies" className="text-xs text-primary hover:underline mt-2 block">
@@ -66,11 +66,11 @@ export default function SuggestedNextStep() {
   };
 
   return (
-    <div className="bg-card-dark border border-primary/20 rounded-2xl p-5"
+    <div className="card border-primary/30 p-5"
       style={{ boxShadow: "0 0 20px rgba(99,102,241,0.06)" }}>
       <div className="flex items-center gap-2 mb-3">
         <Zap size={14} className="text-primary" />
-        <p className="font-display font-bold text-sm text-white">Suggested Next Step</p>
+        <p className="font-display font-bold text-sm text-slate-900">Suggested Next Step</p>
       </div>
 
       <div className="flex items-center gap-3 mb-3">
@@ -78,12 +78,12 @@ export default function SuggestedNextStep() {
           {target.company.shortName.slice(0, 3)}
         </div>
         <div>
-          <p className="font-display font-bold text-sm text-white">{target.company.name}</p>
+          <p className="font-display font-bold text-sm text-slate-900">{target.company.name}</p>
           <p className="text-[11px] text-slate-500">{target.done}/{target.total} done · {pct}%</p>
         </div>
       </div>
 
-      <div className="h-1.5 bg-white/5 rounded-full overflow-hidden mb-3">
+      <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden mb-3">
         <div
           className="h-full rounded-full transition-all duration-500"
           style={{
@@ -93,11 +93,11 @@ export default function SuggestedNextStep() {
         />
       </div>
 
-      <p className="text-xs text-slate-400 mb-4">{getMessage()}</p>
+      <p className="text-xs text-slate-500 mb-4">{getMessage()}</p>
 
       <Link
         href={`/prep?company=${encodeURIComponent(target.company.name)}`}
-        className="btn-primary w-full py-2.5 text-sm flex items-center justify-center gap-2"
+        className="btn-primary"
       >
         Continue Prep →
       </Link>

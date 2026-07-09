@@ -86,7 +86,7 @@ export default function AdminPyqReviewPage() {
   };
 
   if (!user || user.role !== "admin") {
-    return <div className="p-8 lg:p-10 text-slate-400">Checking admin access...</div>;
+    return <div className="p-8 lg:p-10 text-slate-500">Checking admin access...</div>;
   }
 
   return (
@@ -94,15 +94,15 @@ export default function AdminPyqReviewPage() {
       <div className="mb-6">
         <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">● Admin</p>
         <h1 className="font-display text-4xl font-extrabold tracking-tight mb-2">PYQ Review Queue</h1>
-        <p className="text-slate-400 text-sm">Review, approve, or reject questions before they impact ranking.</p>
+        <p className="text-slate-500 text-sm">Review, approve, or reject questions before they impact ranking.</p>
       </div>
 
-      <div className="bg-card-dark border border-white/5 rounded-2xl p-4 mb-5 flex items-center justify-between">
-        <p className="text-sm text-slate-300">Logged in as {user.email}</p>
+      <div className="card p-4 mb-5 flex items-center justify-between">
+        <p className="text-sm text-slate-700">Logged in as {user.email}</p>
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-xs text-slate-200 outline-none"
+          className="bg-slate-100 border border-slate-200 rounded-lg px-3 py-1.5 text-xs text-slate-800 outline-none"
         >
           {statusOptions.map((s) => (
             <option value={s} key={s}>
@@ -115,15 +115,15 @@ export default function AdminPyqReviewPage() {
       {loading ? (
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-28 bg-card-dark border border-white/5 rounded-2xl animate-pulse" />
+            <div key={i} className="h-28 card animate-pulse" />
           ))}
         </div>
       ) : items.length === 0 ? (
-        <div className="card p-8 text-center text-slate-400 text-sm">No questions found for status: {status}</div>
+        <div className="card p-8 text-center text-slate-500 text-sm">No questions found for status: {status}</div>
       ) : (
         <div className="space-y-3">
           {items.map((pyq) => (
-            <div key={pyq.id} className="bg-card-dark border border-white/5 rounded-2xl p-4">
+            <div key={pyq.id} className="card p-4">
               <div className="flex flex-wrap items-center gap-2 mb-2 text-[11px] text-slate-500">
                 <span>{pyq.company.name}</span>
                 <span>•</span>
@@ -135,13 +135,13 @@ export default function AdminPyqReviewPage() {
                 <span>•</span>
                 <span>{pyq.sourceType}</span>
               </div>
-              <p className="text-sm text-slate-200 mb-3">{pyq.question}</p>
+              <p className="text-sm text-slate-800 mb-3">{pyq.question}</p>
 
               <textarea
                 value={notes[pyq.id] ?? pyq.reviewNotes ?? ""}
                 onChange={(e) => setNotes((prev) => ({ ...prev, [pyq.id]: e.target.value }))}
                 placeholder="Review notes (optional)"
-                className="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-xs text-slate-200 outline-none mb-3"
+                className="w-full bg-slate-100 border border-slate-200 rounded-lg p-2.5 text-xs text-slate-800 outline-none mb-3"
                 rows={2}
               />
 

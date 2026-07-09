@@ -9,7 +9,7 @@ export default function TrackerHero() {
         <br />
         <span className="text-gradient">journey</span>
       </h1>
-      <p className="text-slate-400 text-[15px]">
+      <p className="text-slate-500 text-[15px]">
         Track every application. Know exactly where you stand.
       </p>
     </div>

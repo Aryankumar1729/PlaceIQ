@@ -58,7 +58,7 @@ export default function Navbar() {
               className={`text-sm font-medium transition-colors ${
                 pathname.startsWith(link.href)
                   ? "text-primary"
-                  : "text-slate-400 hover:text-primary"
+                  : "text-slate-500 hover:text-primary"
               }`}
             >
               {link.label}
@@ -69,7 +69,7 @@ export default function Navbar() {
 
       {/* Right side */}
       <div className="flex items-center gap-4">
-        <button className="p-2 text-slate-400 hover:text-white transition-colors">
+        <button className="btn-icon">
           <Bell size={20} />
         </button>
         <div className="h-6 w-px bg-white/10" />
@@ -80,17 +80,17 @@ export default function Navbar() {
               onClick={() => setDropdownOpen((v) => !v)}
               className="flex items-center gap-3 pl-2 group"
             >
-              <span className="text-sm font-medium text-white">{user.name?.split(" ")[0]}</span>
-              <ChevronDown size={14} className="text-slate-400 group-hover:text-white transition-colors" />
+              <span className="text-sm font-medium text-slate-900">{user.name?.split(" ")[0]}</span>
+              <ChevronDown size={14} className="text-slate-500 group-hover:text-slate-900 transition-colors" />
             </button>
 
             {dropdownOpen && (
               <div
-                className="absolute right-0 top-10 w-52 rounded-2xl border border-white/10 bg-card-dark shadow-2xl shadow-black/40 overflow-hidden animate-fade-up z-50"
+                className="absolute right-0 top-10 w-52 rounded-2xl border border-slate-200 bg-white shadow-2xl shadow-black/40 overflow-hidden animate-fade-up z-50"
               >
                 {/* User info */}
-                <div className="px-4 py-3 border-b border-white/5">
-                  <p className="text-sm font-medium text-white truncate">{user.name}</p>
+                <div className="px-4 py-3 border-b border-slate-200">
+                  <p className="text-sm font-medium text-slate-900 truncate">{user.name}</p>
                   <p className="text-xs text-slate-500 truncate">{user.email}</p>
                   {user.college && (
                     <p className="text-xs text-slate-600 mt-0.5 truncate">{user.college}</p>
@@ -101,7 +101,7 @@ export default function Navbar() {
                 <Link
                   href="/profile"
                   onClick={() => setDropdownOpen(false)}
-                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+                  className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all"
                 >
                   <User size={14} />
                   View Profile
@@ -118,7 +118,7 @@ export default function Navbar() {
             )}
           </div>
         ) : (
-          <Link href="/login" className="btn-primary text-sm px-5 py-2">
+          <Link href="/login" className="btn-primary">
             Login
           </Link>
         )}

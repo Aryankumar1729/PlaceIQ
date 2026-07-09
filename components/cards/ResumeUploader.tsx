@@ -45,7 +45,7 @@ export default function ResumeUploader({ onScore, roleType = "tech" }: Props) {
       className={`border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-200 mb-6 ${
         dragging
           ? "border-primary/60 bg-primary/5"
-          : "border-white/10 hover:border-primary/40 hover:bg-white/[0.02]"
+          : "border-slate-200 hover:border-primary/40 hover:bg-white/[0.02]"
       }`}
       onClick={() => !scoring && inputRef.current?.click()}
       onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
@@ -69,7 +69,7 @@ export default function ResumeUploader({ onScore, roleType = "tech" }: Props) {
         <>
           <Loader2 size={32} className="mx-auto mb-3 text-primary animate-spin" />
           <p className="font-display font-bold text-lg mb-1">Analyzing {fileName}...</p>
-          <p className="text-sm text-slate-400">Extracting text & scoring with AI</p>
+          <p className="text-sm text-slate-500">Extracting text & scoring with AI</p>
         </>
       ) : fileName && !error ? (
         <>
@@ -81,8 +81,8 @@ export default function ResumeUploader({ onScore, roleType = "tech" }: Props) {
         <>
           <Upload size={32} className="mx-auto mb-3 text-slate-600" />
           <p className="font-display font-bold text-lg mb-1">Drop your resume here</p>
-          <p className="text-sm text-slate-400">PDF · Analyzed & scored with AI in seconds</p>
-          <button className="btn-primary mt-5 text-sm">Browse File</button>
+          <p className="text-sm text-slate-500">PDF · Analyzed & scored with AI in seconds</p>
+          <button className="btn-primary">Browse File</button>
         </>
       )}
 

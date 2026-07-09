@@ -58,20 +58,20 @@ export default function WeeklyPlanCard() {
 
   if (loading) {
     return (
-      <div className="bg-card-dark border border-white/5 rounded-2xl p-6 animate-pulse">
-        <div className="h-5 bg-white/5 rounded w-1/4 mb-4" />
+      <div className="card p-6 animate-pulse">
+        <div className="h-5 bg-slate-100 rounded w-1/4 mb-4" />
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-12 bg-white/5 rounded-xl mb-2" />
+          <div key={i} className="h-12 bg-slate-100 rounded-xl mb-2" />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="bg-card-dark border border-white/5 rounded-2xl p-6">
+    <div className="card p-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
         <div>
-          <h2 className="font-display font-bold text-base text-white">Weekly Plan Engine</h2>
+          <h2 className="font-display font-bold text-base text-slate-900">Weekly Plan Engine</h2>
           <p className="text-xs text-slate-500 mt-1">One focused plan for this week&apos;s prep execution.</p>
         </div>
         <div className="flex items-center gap-2">
@@ -79,7 +79,7 @@ export default function WeeklyPlanCard() {
           <select
             value={days}
             onChange={(e) => setDays(Number(e.target.value))}
-            className="bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-xs text-slate-200 outline-none"
+            className="bg-slate-100 border border-slate-200 rounded-lg px-2 py-1 text-xs text-slate-800 outline-none"
           >
             <option value={7}>7 days</option>
             <option value={14}>14 days</option>
@@ -88,12 +88,12 @@ export default function WeeklyPlanCard() {
       </div>
 
       {!plan || plan.pyqs.length === 0 ? (
-        <p className="text-sm text-slate-400">Add prep targets to generate your plan.</p>
+        <p className="text-sm text-slate-500">Add prep targets to generate your plan.</p>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
           <div className="lg:col-span-3">
-            <p className="text-xs text-slate-400 mb-4">{plan.summary}</p>
-            <div className="bg-white/5 border border-white/5 rounded-xl p-3">
+            <p className="text-xs text-slate-500 mb-4">{plan.summary}</p>
+            <div className="bg-slate-100 border border-slate-200 rounded-xl p-3">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-[11px] uppercase tracking-wider text-slate-500">PYQ Queue</p>
                 <p className="text-[11px] text-slate-500">{plan.pyqs.length} tasks</p>
@@ -103,12 +103,12 @@ export default function WeeklyPlanCard() {
                   <Link
                     key={item.pyqId}
                     href={`/prep?company=${encodeURIComponent(item.companyName)}&search=${encodeURIComponent(item.question.slice(0, 30))}`}
-                    className="bg-card-dark rounded-lg p-3 border border-white/5 hover:border-primary/30 transition-colors"
+                    className="card-static p-4 hover:border-primary/30 transition-colors"
                   >
                     <p className="text-[11px] text-slate-500 mb-1">#{index + 1} · {item.companyName}</p>
-                    <p className="text-sm text-slate-200 line-clamp-2">{item.question}</p>
+                    <p className="text-sm text-slate-800 line-clamp-2">{item.question}</p>
                     <p className="text-[11px] text-slate-500 mt-1.5">
-                      {item.category} · <span className={difficultyClass[item.difficulty] ?? "text-slate-300"}>{item.difficulty}</span>
+                      {item.category} · <span className={difficultyClass[item.difficulty] ?? "text-slate-700"}>{item.difficulty}</span>
                     </p>
                   </Link>
                 ))}
@@ -117,13 +117,13 @@ export default function WeeklyPlanCard() {
           </div>
 
           <div className="lg:col-span-2 lg:sticky lg:top-4 h-fit">
-            <div className="bg-white/5 border border-white/5 rounded-xl p-3 mb-3">
+            <div className="bg-slate-100 border border-slate-200 rounded-xl p-3 mb-3">
               <p className="text-[11px] uppercase tracking-wider text-slate-500 mb-2">Mock Tests</p>
               <div className="flex flex-col gap-2">
                 {plan.mockTests.map((mock) => (
-                  <div key={mock.id} className="bg-card-dark rounded-lg p-3 border border-white/5">
-                    <p className="text-sm font-semibold text-white mb-1">{mock.title}</p>
-                    <p className="text-[11px] text-slate-400">{mock.focus}</p>
+                  <div key={mock.id} className="card-static p-4">
+                    <p className="text-sm font-semibold text-slate-900 mb-1">{mock.title}</p>
+                    <p className="text-[11px] text-slate-500">{mock.focus}</p>
                     <p className="text-[11px] text-slate-500 mt-1">{mock.durationMinutes} min · {mock.schedule}</p>
                   </div>
                 ))}
@@ -133,8 +133,8 @@ export default function WeeklyPlanCard() {
             {plan.resumeTask && (
               <div className="bg-primary/5 border border-primary/20 rounded-xl p-3">
                 <p className="text-[11px] uppercase tracking-wider text-primary mb-1">Resume Task</p>
-                <p className="text-sm text-slate-200">{plan.resumeTask.title}</p>
-                <p className="text-[11px] text-slate-400 mt-1">{plan.resumeTask.detail}</p>
+                <p className="text-sm text-slate-800">{plan.resumeTask.title}</p>
+                <p className="text-[11px] text-slate-500 mt-1">{plan.resumeTask.detail}</p>
               </div>
             )}
           </div>

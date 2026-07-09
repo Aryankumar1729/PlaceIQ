@@ -1,7 +1,7 @@
+
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,35 +14,20 @@ const config: Config = {
         display: ["var(--font-display)", "Plus Jakarta Sans", "sans-serif"],
       },
       colors: {
-        primary: "rgb(var(--color-primary) / <alpha-value>)",
-        "background-light": "#ffffff",
-        "background-dark": "rgb(var(--color-bg) / <alpha-value>)",
-        "card-dark": "rgb(var(--color-card) / <alpha-value>)",
-        "card-dark-2": "rgb(var(--color-card-2) / <alpha-value>)",
+        primary: "#4f46e5",
+        "background-light": "#f8fafc",
+        "background-dark": "#f8fafc", /* overridden for safety */
+        "card-dark": "rgba(255, 255, 255, 0.7)", /* overridden */
+        "card-dark-2": "#ffffff",
       },
       borderRadius: {
         DEFAULT: "12px",
         xl: "20px",
       },
       boxShadow: {
-        glow: "0 0 24px rgba(99,102,241,0.3)",
-        "glow-sm": "0 0 12px rgba(99,102,241,0.2)",
-        card: "0 8px 32px rgba(0,0,0,0.4)",
-      },
-      animation: {
-        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "fade-up": "fadeUp 0.4s ease both",
-        "slide-in": "slideIn 0.25s cubic-bezier(0.34,1.56,0.64,1)",
-      },
-      keyframes: {
-        fadeUp: {
-          "0%": { opacity: "0", transform: "translateY(12px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        slideIn: {
-          "0%": { opacity: "0", transform: "scale(0.9) translateY(20px)" },
-          "100%": { opacity: "1", transform: "scale(1) translateY(0)" },
-        },
+        glow: "0 0 24px rgba(79, 70, 229, 0.3)",
+        "glow-sm": "0 0 12px rgba(79, 70, 229, 0.2)",
+        card: "0 8px 32px rgba(15, 23, 42, 0.08)",
       },
     },
   },

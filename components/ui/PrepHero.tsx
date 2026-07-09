@@ -30,14 +30,14 @@ export default function PrepHero() {
           <>Most asked questions<br /><span className="text-gradient">by company</span></>
         )}
       </h1>
-      <p className="text-slate-400 text-[15px] mb-6">
+      <p className="text-slate-500 text-[15px] mb-6">
         {company
           ? `Showing questions specifically asked in ${company} interviews.`
           : "Sourced from real interview experiences. Updated monthly."}
       </p>
 
       {/* Search bar */}
-      <div className="flex gap-3 p-2 bg-card-dark border border-white/5 rounded-2xl max-w-xl">
+      <div className="flex gap-3 p-2 card max-w-xl">
         <div className="flex items-center gap-3 flex-1 px-3">
           <Search size={16} className="text-slate-500 shrink-0" />
           <input
@@ -53,13 +53,13 @@ export default function PrepHero() {
                 setQuery("");
                 router.push("/prep");
               }}
-              className="text-slate-400 hover:text-slate-100 transition-colors text-xs"
+              className="text-slate-500 hover:text-slate-900 transition-colors text-xs"
             >
               ✕
             </button>
           )}
         </div>
-        <button onClick={handleSearch} className="btn-primary px-5 py-2 text-sm">
+        <button onClick={handleSearch} className="btn-primary">
           Search →
         </button>
       </div>

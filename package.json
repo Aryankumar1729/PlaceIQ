@@ -20,6 +20,7 @@
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
     "cookie": "^1.1.1",
+    "csv-parser": "^3.2.1",
     "framer-motion": "^11.3.8",
     "google-auth-library": "^10.6.1",
     "groq-sdk": "^0.37.0",

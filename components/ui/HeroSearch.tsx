@@ -30,7 +30,7 @@ export default function PrepHero() {
           <><span className="text-gradient">Most asked questions</span><br /><span className="accent-gradient">by company</span></>
         )}
       </h1>
-      <p className="text-slate-400 text-lg max-w-2xl mb-12">
+      <p className="text-slate-500 text-lg max-w-2xl mb-12">
         {company
           ? `Showing questions specifically asked in ${company} interviews.`
           : (<>Sourced from real interview experiences across top-tier tech companies. <br />Updated in real-time by our global community.</>)}
@@ -39,10 +39,10 @@ export default function PrepHero() {
       {/* Search bar */}
       <div className="w-full max-w-2xl relative group">
         <div className="absolute inset-0 bg-primary/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        <div className="relative flex items-center p-2 rounded-2xl bg-white/5 border border-white/10 focus-within:border-primary/50 transition-all duration-300">
-          <Search size={20} className="ml-4 text-slate-400" />
+        <div className="relative flex items-center p-2 rounded-2xl bg-slate-100 border border-slate-200 focus-within:border-primary/50 transition-all duration-300">
+          <Search size={20} className="ml-4 text-slate-500" />
           <input
-            className="w-full bg-transparent border-none focus:ring-0 text-white px-4 py-3 text-lg placeholder:text-slate-500 outline-none"
+            className="w-full bg-transparent border-none focus:ring-0 text-slate-900 px-4 py-3 text-lg placeholder:text-slate-500 outline-none"
             placeholder="Search by topic, e.g. arrays, DP, SQL..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -50,7 +50,7 @@ export default function PrepHero() {
           />
           <button
             onClick={handleSearch}
-            className="bg-primary hover:bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 whitespace-nowrap shadow-lg shadow-primary/20"
+            className="bg-primary hover:bg-indigo-600 text-slate-900 px-8 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 whitespace-nowrap shadow-lg shadow-primary/20"
           >
             Search <ArrowRight size={14} />
           </button>

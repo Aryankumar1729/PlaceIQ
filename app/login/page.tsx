@@ -233,7 +233,7 @@ export default function LoginPage() {
                             />
                             PlaceIQ
                         </div>
-                        <p className="text-slate-400 text-sm">
+                        <p className="text-slate-500 text-sm">
                             Campus placement intelligence for Indian BTech students
                         </p>
                     </div>
@@ -242,13 +242,13 @@ export default function LoginPage() {
                     <div className="card p-8">
                         {/* Mode toggle (hidden during OTP step) */}
                         {step === "form" && (
-                            <div className="flex gap-1 bg-white/5 rounded-xl p-1 mb-6">
+                            <div className="flex gap-1 bg-slate-100 rounded-xl p-1 mb-6">
                                 <button
                                     onClick={() => switchMode("login")}
                                     className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
                                         mode === "login"
-                                            ? "bg-card-dark text-slate-100 shadow-sm"
-                                            : "text-slate-400"
+                                            ? "bg-white text-slate-900 shadow-sm"
+                                            : "text-slate-500"
                                     }`}
                                 >
                                     Login
@@ -257,8 +257,8 @@ export default function LoginPage() {
                                     onClick={() => switchMode("register")}
                                     className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
                                         mode === "register"
-                                            ? "bg-card-dark text-slate-100 shadow-sm"
-                                            : "text-slate-400"
+                                            ? "bg-white text-slate-900 shadow-sm"
+                                            : "text-slate-500"
                                     }`}
                                 >
                                     Create Account
@@ -277,8 +277,8 @@ export default function LoginPage() {
                                 {!gsiReady && (
                                     <button
                                         disabled
-                                        className="w-full py-3 rounded-full bg-white/5 border border-white/10
-                                                   text-slate-400 text-sm flex items-center justify-center gap-2"
+                                        className="w-full py-3 rounded-full bg-slate-100 border border-slate-200
+                                                   text-slate-500 text-sm flex items-center justify-center gap-2"
                                     >
                                         <svg className="w-4 h-4" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59a14.5 14.5 0 010-9.18l-7.98-6.19a24.01 24.01 0 000 21.56l7.98-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
                                         Loading Google…
@@ -352,7 +352,7 @@ export default function LoginPage() {
                                 <button
                                     onClick={handleSubmit}
                                     disabled={loading}
-                                    className="btn-primary w-full py-3 mt-1 disabled:opacity-60"
+                                    className="btn-primary"
                                 >
                                     {loading
                                         ? "Please wait..."
@@ -373,12 +373,12 @@ export default function LoginPage() {
                                 </div>
 
                                 <div className="text-center">
-                                    <h2 className="text-lg font-semibold text-slate-100">
+                                    <h2 className="text-lg font-semibold text-slate-900">
                                         Check your email
                                     </h2>
-                                    <p className="text-sm text-slate-400 mt-1">
+                                    <p className="text-sm text-slate-500 mt-1">
                                         We sent a 6-digit code to{" "}
-                                        <span className="text-slate-200">{form.email}</span>
+                                        <span className="text-slate-800">{form.email}</span>
                                     </p>
                                 </div>
 
@@ -395,7 +395,7 @@ export default function LoginPage() {
                                             onChange={(e) => handleOtpChange(i, e.target.value)}
                                             onKeyDown={(e) => handleOtpKeyDown(i, e)}
                                             className="w-11 h-12 text-center text-lg font-semibold rounded-xl
-                                                       bg-white/5 border border-white/10 text-slate-100
+                                                       bg-slate-100 border border-slate-200 text-slate-900
                                                        focus:border-primary focus:ring-1 focus:ring-primary/40
                                                        outline-none transition-all"
                                         />
@@ -416,7 +416,7 @@ export default function LoginPage() {
                                 <button
                                     onClick={verifyOtp}
                                     disabled={loading || otp.join("").length !== 6}
-                                    className="btn-primary w-full py-3 disabled:opacity-60"
+                                    className="btn-primary"
                                 >
                                     {loading ? "Verifying..." : "Verify & Continue →"}
                                 </button>
@@ -434,7 +434,7 @@ export default function LoginPage() {
 
                                 <button
                                     onClick={() => { setStep("form"); setError(""); setSuccess(""); setOtp(["","","","","",""]); }}
-                                    className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                                    className="text-xs text-slate-500 hover:text-slate-700 transition-colors"
                                 >
                                     ← Back to {mode === "register" ? "sign up" : "login"}
                                 </button>

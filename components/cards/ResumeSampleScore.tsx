@@ -19,10 +19,10 @@ export default function ResumeSampleScore() {
         {scores.map((s) => (
           <div key={s.label}>
             <div className="flex justify-between text-xs mb-1.5">
-              <span className="text-slate-400">{s.label}</span>
+              <span className="text-slate-500">{s.label}</span>
               <span style={{ color: s.color }}>{s.status}</span>
             </div>
-            <div className="h-1.5 rounded-full overflow-hidden bg-white/5">
+            <div className="h-1.5 rounded-full overflow-hidden bg-slate-100">
               <div
                 className="h-full rounded-full transition-all duration-700"
                 style={{ width: `${s.pct}%`, background: s.color }}

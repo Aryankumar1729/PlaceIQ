@@ -134,21 +134,21 @@ export default function SubmitPage() {
           <h2 className="font-display font-extrabold text-3xl mb-3">
             Question Added! 🎉
           </h2>
-          <p className="text-slate-400 text-sm leading-relaxed mb-8">
+          <p className="text-slate-500 text-sm leading-relaxed mb-8">
             Your question is now live in the database and visible to students prepping for{" "}
-            <span className="text-slate-100 font-medium">
+            <span className="text-slate-900 font-medium">
               {companies.find((c) => c.id === form.companyId)?.name}
             </span>
             . Thank you for contributing 🙏
           </p>
 
           <div className="flex gap-3 justify-center">
-            <button onClick={handleAnother} className="btn-primary px-6 py-2.5">
+            <button onClick={handleAnother} className="btn-primary">
               Submit Another
             </button>
             <button
               onClick={() => router.push("/prep")}
-              className="px-6 py-2.5 rounded-xl border border-white/10 text-sm text-slate-400 hover:text-slate-100 transition-all"
+              className="px-6 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-500 hover:text-slate-900 transition-all"
             >
               View Questions
             </button>
@@ -169,7 +169,7 @@ export default function SubmitPage() {
           Share what they{" "}
           <span className="text-gradient">actually asked</span>
         </h1>
-        <p className="text-slate-400 text-[15px] leading-relaxed">
+        <p className="text-slate-500 text-[15px] leading-relaxed">
           Real questions from real interviews. Every submission helps a batchmate
           walk in prepared instead of guessing.
         </p>
@@ -190,12 +190,12 @@ export default function SubmitPage() {
                 onClick={() => update("companyId", c.id)}
                 className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl border text-left transition-all ${
                   form.companyId === c.id
-                    ? "border-primary/50 bg-primary/10 text-slate-100"
-                    : "border-white/5 text-slate-400 hover:border-white/10 hover:text-slate-100"
+                    ? "border-primary/50 bg-primary/10 text-slate-900"
+                    : "border-slate-200 text-slate-500 hover:border-slate-200 hover:text-slate-900"
                 }`}
               >
                 <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-display font-bold text-[9px] shrink-0 ${
-                  form.companyId === c.id ? "bg-primary/20 text-primary" : "bg-white/5 text-slate-400"
+                  form.companyId === c.id ? "bg-primary/20 text-primary" : "bg-slate-100 text-slate-500"
                 }`}>
                   {c.shortName.slice(0, 3)}
                 </div>
@@ -211,7 +211,7 @@ export default function SubmitPage() {
             The Question *
           </label>
           <textarea
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none placeholder:text-slate-500 resize-none focus:border-primary/40 transition-all leading-relaxed"
+            className="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none placeholder:text-slate-500 resize-none focus:border-primary/40 transition-all leading-relaxed"
             rows={5}
             placeholder="Type the exact question as it was asked in your interview. Be as specific as possible..."
             value={form.question}
@@ -243,7 +243,7 @@ export default function SubmitPage() {
                       className={`py-2.5 rounded-xl text-xs font-semibold border transition-all ${
                         isActive
                           ? `${cfg.color} ${cfg.bg} ${cfg.border} ${cfg.glow}`
-                          : "border-white/5 text-slate-400 hover:border-white/10"
+                          : "border-slate-200 text-slate-500 hover:border-slate-200"
                       }`}
                     >
                       {d}
@@ -265,7 +265,7 @@ export default function SubmitPage() {
                     className={`py-2.5 rounded-xl text-xs font-semibold border transition-all ${
                       form.category === c
                         ? "border-primary/50 bg-primary/10 text-primary shadow-[0_0_20px_rgba(99,102,241,0.15)]"
-                        : "border-white/5 text-slate-400 hover:border-white/10"
+                        : "border-slate-200 text-slate-500 hover:border-slate-200"
                     }`}
                   >
                     {c}
@@ -290,8 +290,8 @@ export default function SubmitPage() {
                     onClick={() => update("round", r)}
                     className={`text-left px-3 py-2 rounded-lg text-xs transition-all ${
                       form.round === r
-                        ? "bg-white/5 text-slate-100 border border-white/10"
-                        : "text-slate-400 hover:text-slate-100 hover:bg-white/5"
+                        ? "bg-slate-100 text-slate-900 border border-slate-200"
+                        : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
                     }`}
                   >
                     {r}
@@ -312,7 +312,7 @@ export default function SubmitPage() {
                     className={`py-2.5 rounded-xl text-xs font-semibold border transition-all ${
                       form.year === y.toString()
                         ? "border-primary/50 bg-primary/10 text-primary"
-                        : "border-white/5 text-slate-400 hover:border-white/10"
+                        : "border-slate-200 text-slate-500 hover:border-slate-200"
                     }`}
                   >
                     {y}
@@ -347,7 +347,7 @@ export default function SubmitPage() {
 
           <div className="flex gap-2 mb-3">
             <input
-              className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm outline-none placeholder:text-slate-500 focus:border-primary/40 transition-all"
+              className="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none placeholder:text-slate-500 focus:border-primary/40 transition-all"
               placeholder="Type a tag and press Enter..."
               value={tagInput}
               onChange={(e) => setTagInput(e.target.value)}
@@ -357,7 +357,7 @@ export default function SubmitPage() {
             />
             <button
               onClick={() => addTag(tagInput)}
-              className="w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center text-slate-400 hover:text-primary hover:border-primary/40 transition-all"
+              className="w-9 h-9 rounded-xl border border-slate-200 flex items-center justify-center text-slate-500 hover:text-primary hover:border-primary/40 transition-all"
             >
               <Plus size={15} />
             </button>
@@ -370,7 +370,7 @@ export default function SubmitPage() {
                 <button
                   key={tag}
                   onClick={() => addTag(tag)}
-                  className="text-[10px] px-2.5 py-1 rounded-full border border-white/5 text-slate-400 hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all"
+                  className="text-[10px] px-2.5 py-1 rounded-full border border-slate-200 text-slate-500 hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all"
                 >
                   + {tag}
                 </button>
@@ -389,7 +389,7 @@ export default function SubmitPage() {
         <button
           onClick={handleSubmit}
           disabled={saving || !form.companyId || !form.question.trim()}
-          className="btn-primary w-full py-4 text-base flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+          className="btn-primary"
           style={{ boxShadow: "0 0 30px rgba(99,102,241,0.3)" }}
         >
           {saving ? (

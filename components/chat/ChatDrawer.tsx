@@ -59,7 +59,7 @@ export default function ChatDrawer() {
       {/* Overlay when expanded */}
       {expanded && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+          className="fixed inset-0 bg-slate-900/10 backdrop-blur-sm z-40"
           onClick={() => setExpanded(false)}
         />
       )}
@@ -68,75 +68,75 @@ export default function ChatDrawer() {
       {!expanded && (
         <button
           onClick={() => setOpen((v) => !v)}
-          className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center shadow-xl shadow-primary/40 hover:scale-110 transition-transform active:scale-95"
+          className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center shadow-xl shadow-primary/30 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 ease-out active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           aria-label="Open AI chat"
         >
-          <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-background-dark rounded-full" />
-          {open ? <X size={22} /> : <MessageCircle size={22} />}
+          <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full" />
+          {open ? <X size={24} /> : <MessageCircle size={24} />}
         </button>
       )}
 
       {/* Chat panel */}
       {(open || expanded) && (
         <div
-          className={`fixed z-50 flex flex-col border border-white/10 shadow-2xl shadow-black/40 transition-all duration-300
+          className={`fixed z-50 flex flex-col border border-white/60 shadow-2xl shadow-slate-900/10 transition-all duration-300 ease-out bg-white/40 backdrop-blur-2xl
           ${expanded
               ? "top-0 right-0 h-full w-[380px] rounded-none animate-none"
-              : "bottom-28 right-8 w-[360px] max-h-[560px] rounded-2xl animate-slide-in-drawer"
+              : "bottom-28 right-8 w-[360px] max-h-[560px] rounded-3xl animate-slide-in-drawer"
             }`}
-          style={{ background: "#121216" }}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-white/5 shrink-0">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-white/40 shrink-0 bg-white/20">
             <div>
-              <div className="flex items-center gap-2 font-display font-bold text-sm text-white">
+              <div className="flex items-center gap-2 font-display font-bold text-sm text-slate-900">
                 <span
-                  className="w-2 h-2 rounded-full bg-green-500"
-                  style={{ boxShadow: "0 0 8px #22c55e", animation: "pulse-glow 1.5s infinite" }}
+                  className="w-2 h-2 rounded-full bg-green-500 shadow-sm"
+                  style={{ boxShadow: "0 0 8px rgba(34, 197, 94, 0.5)", animation: "pulse-glow 1.5s infinite" }}
                 />
                 PlaceIQ AI
               </div>
-              <p className="text-[11px] text-slate-500 mt-0.5">Ask anything about your upcoming drives</p>
+              <p className="text-[11px] text-slate-600 mt-0.5 font-medium">Ask anything about your upcoming drives</p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <button
                 onClick={() => { setExpanded((v) => !v); setOpen(true); }}
-                className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
+                className="btn-icon hover:bg-white/50"
                 title={expanded ? "Collapse" : "Open as sidebar"}
               >
-                {expanded ? <PanelRightClose size={15} /> : <PanelRight size={15} />}
+                {expanded ? <PanelRightClose size={18} /> : <PanelRight size={18} />}
               </button>
               <button
                 onClick={() => { setOpen(false); setExpanded(false); }}
-                className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-colors"
+                className="btn-icon hover:bg-white/50"
+                title="Close chat"
               >
-                <X size={15} />
+                <X size={18} />
               </button>
             </div>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-3 flex flex-col gap-3">
+          <div className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-4">
             {messages.map((m, i) => (
               <div
                 key={i}
-                className={`max-w-[88%] px-3.5 py-2.5 rounded-xl text-[13px] leading-relaxed whitespace-pre-wrap ${
+                className={`max-w-[88%] px-4 py-3 rounded-2xl text-[13px] leading-relaxed whitespace-pre-wrap shadow-sm backdrop-blur-md ${
                   m.role === "bot"
-                    ? "self-start bg-white/5 border border-white/5 rounded-bl-sm text-slate-200"
-                    : "self-end bg-primary text-white rounded-br-sm"
+                    ? "self-start bg-white/60 border border-white/60 rounded-tl-sm text-slate-800"
+                    : "self-end bg-primary/90 border border-primary/20 text-white rounded-tr-sm"
                 }`}
               >
                 {m.content}
               </div>
             ))}
             {loading && (
-              <div className="self-start bg-white/5 border border-white/5 rounded-xl rounded-bl-sm px-4 py-3">
-                <span className="flex gap-1">
+              <div className="self-start bg-white/60 border border-white/60 shadow-sm rounded-2xl rounded-tl-sm px-4 py-3 backdrop-blur-md">
+                <span className="flex gap-1.5">
                   {[0, 1, 2].map((i) => (
                     <span
                       key={i}
-                      className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-bounce"
+                      className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
                       style={{ animationDelay: `${i * 0.15}s` }}
                     />
                   ))}
@@ -148,23 +148,23 @@ export default function ChatDrawer() {
 
           {/* Suggestions */}
           {showSuggestions && (
-            <div className="px-4 pt-2.5 pb-1 border-t border-white/5 shrink-0">
-              <div className="flex items-center justify-between mb-1.5">
-                <p className="text-[10px] uppercase tracking-wider text-slate-600 font-semibold">Quick ask</p>
+            <div className="px-4 pt-3 pb-2 border-t border-white/40 shrink-0 bg-white/20">
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-[10px] uppercase tracking-wider text-slate-600 font-bold">Quick ask</p>
                 <button
                   onClick={() => setShowSuggestions(false)}
-                  className="text-slate-600 hover:text-slate-400 transition-colors"
+                  className="text-slate-500 hover:text-slate-800 transition-colors"
                   title="Dismiss suggestions"
                 >
-                  <X size={12} />
+                  <X size={14} />
                 </button>
               </div>
-              <div className="flex flex-col gap-1.5 pb-2">
+              <div className="flex flex-col gap-2 pb-2">
                 {suggestions.map((s) => (
                   <button
                     key={s}
                     onClick={() => send(s)}
-                    className="text-left px-3 py-2 rounded-xl bg-white/5 border border-white/5 text-xs text-slate-400 hover:border-primary/30 hover:text-white transition-all"
+                    className="text-left px-3.5 py-2.5 rounded-xl bg-white/50 border border-white/60 text-xs font-medium text-slate-700 hover:bg-white/80 hover:shadow-sm hover:text-slate-900 transition-all duration-200 ease-out"
                   >
                     {s}
                   </button>
@@ -174,10 +174,10 @@ export default function ChatDrawer() {
           )}
 
           {/* Input */}
-          <div className="px-4 py-3 flex gap-2 items-end border-t border-white/5 shrink-0">
+          <div className="px-4 py-3 flex gap-2 items-end border-t border-white/40 shrink-0 bg-white/30">
             <textarea
               rows={1}
-              className="flex-1 input-field resize-none text-[13px] min-h-[38px] max-h-24 py-2.5"
+              className="flex-1 bg-white/60 border border-white/60 rounded-xl px-4 py-3 text-[13px] text-slate-900 placeholder-slate-500 outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 focus:bg-white/80 transition-all duration-200 resize-none min-h-[44px] max-h-24 backdrop-blur-md shadow-sm"
               placeholder="Ask about any company..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -190,9 +190,9 @@ export default function ChatDrawer() {
             />
             <button
               onClick={() => send(input)}
-              className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shrink-0 hover:bg-indigo-600 transition-colors active:scale-95"
+              className="w-11 h-11 rounded-xl bg-primary/90 flex items-center justify-center shrink-0 hover:bg-indigo-600 transition-all duration-200 ease-out active:scale-95 shadow-md shadow-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 backdrop-blur-md"
             >
-              <Send size={15} color="white" />
+              <Send size={18} color="white" />
             </button>
           </div>
         </div>

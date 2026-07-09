@@ -43,7 +43,7 @@ export default function ApplicationList() {
       <div className="grid grid-cols-4 gap-3 mb-8 stagger">
         {summaryStats.map((s) => (
           <div key={s.label} className="card text-center animate-fade-up p-4">
-            <p className="text-[11px] uppercase tracking-wider text-slate-400 mb-2">{s.label}</p>
+            <p className="text-[11px] uppercase tracking-wider text-slate-500 mb-2">{s.label}</p>
             <p className={`font-display text-3xl font-bold ${s.color}`}>{s.value}</p>
           </div>
         ))}
@@ -52,7 +52,7 @@ export default function ApplicationList() {
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="font-display text-lg font-bold">Applications</h2>
-        <button className="btn-primary text-xs py-2 px-4">+ Add Application</button>
+        <button className="btn-primary">+ Add Application</button>
       </div>
 
       {/* List */}
@@ -69,7 +69,7 @@ export default function ApplicationList() {
                 <p className="text-sm font-medium truncate">
                   {app.company} — {app.note}
                 </p>
-                <p className="text-xs text-slate-400 mt-0.5">{app.role}</p>
+                <p className="text-xs text-slate-500 mt-0.5">{app.role}</p>
               </div>
               <span className="text-xs text-slate-600 shrink-0">{app.date}</span>
             </div>

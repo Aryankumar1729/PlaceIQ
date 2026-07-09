@@ -29,8 +29,8 @@ export default function DashboardGreeting() {
   if (!user) {
     return (
       <div className="mb-6 animate-pulse">
-        <div className="h-5 bg-white/5 rounded w-48 mb-3" />
-        <div className="h-4 bg-white/5 rounded w-32" />
+        <div className="h-5 bg-slate-100 rounded w-48 mb-3" />
+        <div className="h-4 bg-slate-100 rounded w-32" />
       </div>
     );
   }
@@ -40,7 +40,7 @@ export default function DashboardGreeting() {
   return (
     <div className="mb-4 animate-fade-up">
       <p className="text-sm text-slate-500">
-        {getGreeting()}, <span className="text-white font-medium">{firstName}</span>
+        {getGreeting()}, <span className="text-slate-900 font-medium">{firstName}</span>
       </p>
     </div>
   );

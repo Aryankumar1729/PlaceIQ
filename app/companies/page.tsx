@@ -66,7 +66,7 @@ export default function CompaniesPage() {
           {companies.length} companies,{" "}
           <span className="text-gradient">real data</span>
         </h1>
-        <p className="text-slate-400 text-[15px]">
+        <p className="text-slate-500 text-[15px]">
           Filter by CTC, tier, or role type. Click any company to see their PYQs.
         </p>
       </div>
@@ -90,14 +90,14 @@ export default function CompaniesPage() {
         {/* Filter pills */}
         <div className="flex flex-wrap gap-4">
           {/* Tier filter */}
-          <div className="flex gap-1 bg-card-dark border border-white/5 rounded-xl p-1">
+          <div className="flex gap-1 bg-white border border-slate-200 rounded-xl p-1">
             {tierFilters.map((t) => (
               <button
                 key={t}
                 onClick={() => setTier(t)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${tier === t
-                  ? "bg-white/5 text-slate-100"
-                  : "text-slate-400 hover:text-slate-100"
+                  ? "bg-slate-100 text-slate-900"
+                  : "text-slate-500 hover:text-slate-900"
                   }`}
               >
                 {t === "All" ? "All Tiers" : tierLabel[t] ?? t}
@@ -106,14 +106,14 @@ export default function CompaniesPage() {
           </div>
 
           {/* Type filter */}
-          <div className="flex gap-1 bg-card-dark border border-white/5 rounded-xl p-1">
+          <div className="flex gap-1 bg-white border border-slate-200 rounded-xl p-1">
             {typeFilters.map((t) => (
               <button
                 key={t}
                 onClick={() => setType(t)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${type === t
-                  ? "bg-white/5 text-slate-100"
-                  : "text-slate-400 hover:text-slate-100"
+                  ? "bg-slate-100 text-slate-900"
+                  : "text-slate-500 hover:text-slate-900"
                   }`}
               >
                 {t}
@@ -128,14 +128,14 @@ export default function CompaniesPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <div key={i} className="card p-5 animate-pulse">
-              <div className="h-5 bg-white/5 rounded w-2/3 mb-3" />
-              <div className="h-3 bg-white/5 rounded w-1/2 mb-6" />
-              <div className="h-10 bg-white/5 rounded" />
+              <div className="h-5 bg-slate-100 rounded w-2/3 mb-3" />
+              <div className="h-3 bg-slate-100 rounded w-1/2 mb-6" />
+              <div className="h-10 bg-slate-100 rounded" />
             </div>
           ))}
         </div>
       ) : companies.length === 0 ? (
-        <div className="card p-12 text-center text-slate-400">
+        <div className="card p-12 text-center text-slate-500">
           <div className="text-4xl mb-3">🔍</div>
           <p className="text-sm">No companies found. Try a different search.</p>
         </div>
@@ -150,16 +150,16 @@ export default function CompaniesPage() {
               {/* Top row */}
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center font-display font-bold text-xs">
+                  <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-display font-bold text-xs">
                     {c.shortName.slice(0, 3)}
                   </div>
                   <div>
                     <p className="font-display font-bold text-sm leading-tight">{c.name}</p>
-                    <p className="text-xs text-slate-400 mt-0.5">{c.type}</p>
+                    <p className="text-xs text-slate-500 mt-0.5">{c.type}</p>
                   </div>
                 </div>
                 <span
-                  className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${tierColor[c.tier] ?? "text-slate-400 border-white/10"
+                  className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${tierColor[c.tier] ?? "text-slate-500 border-slate-200"
                     }`}
                 >
                   {tierLabel[c.tier] ?? c.tier}
@@ -168,19 +168,19 @@ export default function CompaniesPage() {
 
               {/* Stats row */}
               <div className="grid grid-cols-3 gap-2 mb-4">
-                <div className="bg-white/5 rounded-lg p-2.5 text-center">
+                <div className="bg-slate-100 rounded-lg p-2.5 text-center">
                   <p className="font-display font-bold text-sm text-primary">
                     {c.baseCTC}L
                   </p>
                   <p className="text-[10px] text-slate-500 mt-0.5">Base CTC</p>
                 </div>
-                <div className="bg-white/5 rounded-lg p-2.5 text-center">
+                <div className="bg-slate-100 rounded-lg p-2.5 text-center">
                   <p className="font-display font-bold text-sm text-green-400">
                     {c._count.pyqs}
                   </p>
                   <p className="text-[10px] text-slate-500 mt-0.5">PYQs</p>
                 </div>
-                <div className="bg-white/5 rounded-lg p-2.5 text-center">
+                <div className="bg-slate-100 rounded-lg p-2.5 text-center">
                   <p className="font-display font-bold text-sm">
                     {c.rounds} Rds
                   </p>
@@ -190,20 +190,20 @@ export default function CompaniesPage() {
 
               {/* Footer */}
               <div className="flex items-center justify-between mt-3">
-                <span className="text-xs text-slate-400">
+                <span className="text-xs text-slate-500">
                   {c.visitsTier2 ? "✅ Visits Tier-2" : "🎯 Off-campus"}
                 </span>
                 <div className="flex items-center gap-3">
                   <Link
                     href={`/prep?company=${encodeURIComponent(c.name)}`}
-                    className="text-xs px-3 py-1.5 rounded-xl font-medium transition-all text-white hover:scale-105 hover:shadow-[0_0_12px_rgba(59,130,246,0.6)] active:scale-95"
+                    className="text-xs px-3 py-1.5 rounded-xl font-medium transition-all text-slate-900 hover:scale-105 hover:shadow-[0_0_12px_rgba(59,130,246,0.6)] active:scale-95"
                     style={{ background: "#3b82f6" }}
                   >
                     View PYQs
                   </Link>
                   <Link
                     href={`/companies/${c.id}`}
-                    className="text-xs px-3 py-1.5 rounded-xl font-medium transition-all text-white hover:scale-105 hover:shadow-[0_0_12px_rgba(29,78,216,0.6)] active:scale-95"
+                    className="text-xs px-3 py-1.5 rounded-xl font-medium transition-all text-slate-900 hover:scale-105 hover:shadow-[0_0_12px_rgba(29,78,216,0.6)] active:scale-95"
                     style={{ background: "#1d4ed8" }}
                     onClick={(e) => e.stopPropagation()}
                   >

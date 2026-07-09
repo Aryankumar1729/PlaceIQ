@@ -20,7 +20,7 @@ const statusStyle: Record<string, string> = {
   Offer: "text-green-400 border-green-400/30 bg-green-400/10",
   Interview: "text-yellow-400 border-yellow-400/30 bg-yellow-400/10",
   OA: "text-primary border-primary/30 bg-primary/10",
-  Applied: "text-slate-400 border-white/10 bg-white/5",
+  Applied: "text-slate-500 border-slate-200 bg-slate-100",
   Rejected: "text-pink-400 border-pink-400/30 bg-pink-400/10",
 };
 
@@ -113,13 +113,13 @@ export default function TrackerPage() {
             <h1 className="font-display text-4xl font-extrabold tracking-tight mb-2">
               Your <span className="text-gradient">applications</span>
             </h1>
-            <p className="text-slate-400 text-[15px]">
+            <p className="text-slate-500 text-[15px]">
               Track every drive, OA, and interview in one place.
             </p>
           </div>
           <button
             onClick={() => setShowForm((v) => !v)}
-            className="btn-primary flex items-center gap-2 shrink-0"
+            className="btn-primary"
           >
             <Plus size={16} />
             Add Application
@@ -135,7 +135,7 @@ export default function TrackerPage() {
               s.label === "Offer" ? "text-green-400" :
               s.label === "Rejected" ? "text-pink-400" :
               s.label === "Interview" ? "text-yellow-400" :
-              s.label === "OA" ? "text-primary" : "text-slate-100"
+              s.label === "OA" ? "text-primary" : "text-slate-900"
             }`}>
               {s.count}
             </p>
@@ -194,13 +194,13 @@ export default function TrackerPage() {
             <button
               onClick={handleAdd}
               disabled={saving || !form.companyName || !form.role}
-              className="btn-primary disabled:opacity-50"
+              className="btn-primary"
             >
               {saving ? "Saving..." : "Save Application →"}
             </button>
             <button
               onClick={() => setShowForm(false)}
-              className="px-4 py-2 rounded-lg border border-white/10 text-sm text-slate-400 hover:text-slate-100 transition-all"
+              className="px-4 py-2 rounded-lg border border-slate-200 text-sm text-slate-500 hover:text-slate-900 transition-all"
             >
               Cancel
             </button>
@@ -213,13 +213,13 @@ export default function TrackerPage() {
         <div className="flex flex-col gap-3">
           {[1, 2, 3].map((i) => (
             <div key={i} className="card p-5 animate-pulse">
-              <div className="h-4 bg-white/5 rounded w-1/3 mb-2" />
-              <div className="h-3 bg-white/5 rounded w-1/4" />
+              <div className="h-4 bg-slate-100 rounded w-1/3 mb-2" />
+              <div className="h-3 bg-slate-100 rounded w-1/4" />
             </div>
           ))}
         </div>
       ) : applications.length === 0 ? (
-        <div className="card p-12 text-center text-slate-400 animate-fade-up">
+        <div className="card p-12 text-center text-slate-500 animate-fade-up">
           <div className="text-4xl mb-3">📋</div>
           <p className="text-sm mb-1">No applications yet.</p>
           <p className="text-xs text-slate-600">Click "Add Application" to start tracking.</p>
@@ -229,7 +229,7 @@ export default function TrackerPage() {
           {applications.map((app) => (
             <div
               key={app.id}
-              className="card p-5 animate-fade-up hover:border-white/10 transition-all"
+              className="card p-5 animate-fade-up hover:border-slate-200 transition-all"
             >
               <div className="flex items-center justify-between">
                 {/* Left */}
@@ -237,7 +237,7 @@ export default function TrackerPage() {
                   <span className={`w-2 h-2 rounded-full shrink-0 ${statusDot[app.status] ?? "bg-slate-500"}`} />
                   <div>
                     <p className="font-display font-bold text-sm">{app.companyName}</p>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-slate-500">
                       {app.role} {app.ctc ? `· ${app.ctc}` : ""}
                     </p>
                   </div>
@@ -260,7 +260,7 @@ export default function TrackerPage() {
                   {/* Expand */}
                   <button
                     onClick={() => setExpandedId(expandedId === app.id ? null : app.id)}
-                    className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-slate-100 transition-all"
+                    className="w-7 h-7 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-900 transition-all"
                   >
                     <ChevronDown
                       size={13}
@@ -271,7 +271,7 @@ export default function TrackerPage() {
                   {/* Delete */}
                   <button
                     onClick={() => handleDelete(app.id)}
-                    className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-pink-400 transition-all"
+                    className="w-7 h-7 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-500 hover:text-pink-400 transition-all"
                   >
                     <Trash2 size={13} />
                   </button>
@@ -280,7 +280,7 @@ export default function TrackerPage() {
 
               {/* Expanded details */}
               {expandedId === app.id && (
-                <div className="mt-4 pt-4 border-t border-white/5 text-xs text-slate-400 space-y-1.5 animate-fade-up">
+                <div className="mt-4 pt-4 border-t border-slate-200 text-xs text-slate-500 space-y-1.5 animate-fade-up">
                   <p>📅 Applied: {new Date(app.appliedDate).toLocaleDateString("en-IN")}</p>
                   {app.nextStep && <p>⏭ Next: {app.nextStep}</p>}
                   {app.notes && <p>📝 Notes: {app.notes}</p>}
@@ -296,7 +296,7 @@ export default function TrackerPage() {
         <>
           <div className="fixed inset-0 z-[90]" onClick={() => { setOpenStatusId(null); setDropdownPos(null); }} />
           <div
-            className="fixed w-36 z-[100] rounded-xl border border-white/10 shadow-2xl overflow-hidden"
+            className="fixed w-36 z-[100] rounded-xl border border-slate-200 shadow-2xl overflow-hidden"
             style={{ top: dropdownPos.top, left: dropdownPos.left, background: "#121216" }}
           >
             {statusOptions.map((s) => (
@@ -307,10 +307,10 @@ export default function TrackerPage() {
                   setOpenStatusId(null);
                   setDropdownPos(null);
                 }}
-                className={`w-full text-left px-3 py-2.5 text-xs transition-all hover:bg-white/5 ${
+                className={`w-full text-left px-3 py-2.5 text-xs transition-all hover:bg-slate-100 ${
                   applications.find((a) => a.id === openStatusId)?.status === s
-                    ? "text-slate-100 font-medium"
-                    : "text-slate-400 hover:text-slate-100"
+                    ? "text-slate-900 font-medium"
+                    : "text-slate-500 hover:text-slate-900"
                 }`}
               >
                 {s}

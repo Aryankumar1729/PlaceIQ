@@ -83,14 +83,14 @@ export default function PrepProgressRing({
         <div className="flex-1">
           <div className="flex items-center justify-between mb-1">
             <p className="font-display font-bold text-sm">Overall Progress</p>
-            <p className="text-xs text-slate-400">{done}/{total}</p>
+            <p className="text-xs text-slate-500">{done}/{total}</p>
           </div>
 
           <div className="flex flex-col gap-1.5 mt-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-green-400" />
-                <span className="text-xs text-slate-400">Easy</span>
+                <span className="text-xs text-slate-500">Easy</span>
               </div>
               <span className="text-xs font-medium">
                 <span className="text-green-400">{progress.easy}</span>
@@ -101,7 +101,7 @@ export default function PrepProgressRing({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-yellow-400" />
-                <span className="text-xs text-slate-400">Medium</span>
+                <span className="text-xs text-slate-500">Medium</span>
               </div>
               <span className="text-xs font-medium">
                 <span className="text-yellow-400">{progress.medium}</span>
@@ -112,7 +112,7 @@ export default function PrepProgressRing({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-pink-400" />
-                <span className="text-xs text-slate-400">Hard</span>
+                <span className="text-xs text-slate-500">Hard</span>
               </div>
               <span className="text-xs font-medium">
                 <span className="text-pink-400">{progress.hard}</span>
